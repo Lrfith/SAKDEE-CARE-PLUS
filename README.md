@@ -25,20 +25,20 @@ Start the App in Android Simulator
 ```
 ## How to Update Code
 
-1.Pull the latest changes: Run the following Git command to fetch the latest updates from the remote repository and merge them into your local branch:
+1. Pull the latest changes: Run the following Git command to fetch the latest updates from the remote repository and merge them into your local branch:
 ```bash
   git pull origin main
 ```
 (Note: Replace main with the appropriate branch name if you're working with a different one.)
-2.Resolve conflicts (if any): If there are merge conflicts, resolve them manually in your code editor, then stage the changes:
+2. Resolve conflicts (if any): If there are merge conflicts, resolve them manually in your code editor, then stage the changes:
 ```bash
   git add .
 ```
-3.Commit your changes (if you made updates to the code): Once your changes are resolved and staged, commit the updates:
+3. Commit your changes (if you made updates to the code): Once your changes are resolved and staged, commit the updates:
 ```bash
   git commit -m "Updated code with latest changes"
 ```
-4.Push your changes (if necessary): After committing, if you need to push your updates back to the remote repository, use:
+4. Push your changes (if necessary): After committing, if you need to push your updates back to the remote repository, use:
 ```bash
   git push origin main
 ```
