@@ -30,6 +30,7 @@ Start the App in Android Simulator
   git pull origin main
 ```
 (Note: Replace main with the appropriate branch name if you're working with a different one.)
+
 2. Resolve conflicts (if any): If there are merge conflicts, resolve them manually in your code editor, then stage the changes:
 ```bash
   git add .
