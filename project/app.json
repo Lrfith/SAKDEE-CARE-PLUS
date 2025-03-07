@@ -23,6 +23,26 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "fonts": {
+      "Kanit-Black": "./assets/fonts/Kanit-Black.ttf",
+      "Kanit-BlackItalic": "./assets/fonts/Kanit-BlackItalic.ttf",
+      "Kanit-Bold": "./assets/fonts/Kanit-Bold.ttf",
+      "Kanit-BoldItalic": "./assets/fonts/Kanit-BoldItalic.ttf",
+      "Kanit-ExtraBold": "./assets/fonts/Kanit-ExtraBold.ttf",
+      "Kanit-ExtraBoldItalic": "./assets/fonts/Kanit-ExtraBoldItalic.ttf",
+      "Kanit-ExtraLight": "./assets/fonts/Kanit-ExtraLight.ttf",
+      "Kanit-ExtraLightItalic": "./assets/fonts/Kanit-ExtraLightItalic.ttf",
+      "Kanit-Italic": "./assets/fonts/Kanit-Italic.ttf",
+      "Kanit-Light": "./assets/fonts/Kanit-Light.ttf",
+      "Kanit-LightItalic": "./assets/fonts/Kanit-LightItalic.ttf",
+      "Kanit-Medium": "./assets/fonts/Kanit-Medium.ttf",
+      "Kanit-MediumItalic": "./assets/fonts/Kanit-MediumItalic.ttf",
+      "Kanit-Regular": "./assets/fonts/Kanit-Regular.ttf",
+      "Kanit-SemiBold": "./assets/fonts/Kanit-SemiBold.ttf",
+      "Kanit-SemiBoldItalic": "./assets/fonts/Kanit-SemiBoldItalic.ttf",
+      "Kanit-Thin": "./assets/fonts/Kanit-Thin.ttf",
+      "Kanit-ThinItalic": "./assets/fonts/Kanit-ThinItalic.ttf"
     }
   }
 }
