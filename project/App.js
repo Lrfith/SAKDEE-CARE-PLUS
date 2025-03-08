@@ -2,8 +2,10 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';  // ใช้ useFonts จาก expo-font
 import { StatusBar } from 'expo-status-bar';
+
 import { styles } from './src/styles/app.styles';  // ตรวจสอบเส้นทางไฟล์ styles ให้ถูกต้อง
 import AppNavigator from './src/navigations/AppNavigator';
+import WelcomeScreen from './src/screens/WelcomeScreen' 
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -30,6 +32,7 @@ const App = () => {
     // </View>
 
     <View style={styles.container}>
+      <WelcomeScreen/>
       <AppNavigator/>
     </View>
   );
