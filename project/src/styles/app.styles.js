@@ -3,9 +3,6 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   defaultText: {
     fontFamily: 'Kanit-Regular',
@@ -18,5 +15,9 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: '#333',
     marginBottom: 10, // เพิ่มระยะห่างด้านล่าง
+  },
+  screenContainer: {
+    alignSelf: 'center',
+    top: 10
   },
 });

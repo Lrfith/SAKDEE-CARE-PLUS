@@ -22,7 +22,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/play_store_512.png"
+      "favicon": "./assets/favicon.png"
     },
     "fonts": {
       "Kanit-Black": "./assets/fonts/Kanit-Black.ttf",

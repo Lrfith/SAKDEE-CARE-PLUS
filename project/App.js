@@ -3,6 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';  // ใช้ useFonts จาก expo-font
 import { StatusBar } from 'expo-status-bar';
 import { styles } from './src/styles/app.styles';  // ตรวจสอบเส้นทางไฟล์ styles ให้ถูกต้อง
+import AppNavigator from './src/navigations/AppNavigator';
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -20,12 +21,16 @@ const App = () => {
   }
 
   return (
+    // <View style={styles.container}>
+    //   <Text style={styles.defaultText}>Hello, First Project!</Text>
+    //   <Text style={styles.title}>This is a title with Kanit-Bold font.</Text>
+    //   <Text style={styles.defaultText}>สวัสดีจร้า</Text>
+    //   <Text>This is a title with Kanit-Bold font.</Text>
+    //   <StatusBar style="auto" />
+    // </View>
+
     <View style={styles.container}>
-      <Text style={styles.defaultText}>Hello, First Project!</Text>
-      <Text style={styles.title}>This is a title with Kanit-Bold font.</Text>
-      <Text style={styles.defaultText}>สวัสดีจร้า</Text>
-      <Text>This is a title with Kanit-Bold font.</Text>
-      <StatusBar style="auto" />
+      <AppNavigator/>
     </View>
   );
 }
