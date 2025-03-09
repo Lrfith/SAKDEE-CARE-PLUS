@@ -35,7 +35,7 @@ const RegisterScreen = () => {
         <Animated.View style={[styles.card,{height: 600}, { transform: [{ translateY: slideAnim }] }]}>
           <Text style={styles.title}>สมัครสมาชิก</Text>
           <Text style={styles.defaultText}>
-            ยินดีต้อนรับสู่ SAKDEE CARE+ ในการเริ่มต้น กรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
+            ในการเริ่มต้นกรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
           </Text>
           {/* Form */}
         <View style={{ marginTop: 20 }}>

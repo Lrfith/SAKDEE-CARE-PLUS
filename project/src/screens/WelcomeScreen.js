@@ -32,7 +32,7 @@ const WelcomeScreen = () => {
         <Animated.View style={[styles.card, { transform: [{ translateY: slideAnim }] }]}>
           <Text style={styles.title}>ยินดีต้อนรับ</Text>
           <Text style={styles.defaultText}>
-            ยินดีต้อนรับสู่ SAKDEE CARE+ ในการเริ่มต้น กรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
+            ในการเริ่มต้นกรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 50 }}>
             <ButtonCustom 
