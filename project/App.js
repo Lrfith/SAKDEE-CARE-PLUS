@@ -9,6 +9,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import AppNavigator from "./src/navigations/AppNavigator";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import VerificationScreen from "./src/screens/VerificationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Verification" component={VerificationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -78,7 +78,7 @@ const RegisterScreen = () => {
               lable="สมัครสมาชิก"
               color="#3180E1"
               colorText="#fff"
-              onPress={() => navigation.navigate("AppNavigator")}
+              onPress={() => navigation.navigate("Verification")}
             />
           </View>
 
