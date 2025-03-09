@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Text, View, Animated } from 'react-native';
+import { Text, View, Animated, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/app.styles';
 import ButtonCustom from '../components/ButtonCustom';
@@ -22,7 +22,10 @@ const WelcomeScreen = () => {
       {/* Linear Gradient Background */}
       <LinearGradient colors={['#68B9F2', '#3180E1']} style={{ flex: 1 }}>
         <View style={styles.screenContainer}>
-          <Text style={styles.title}>SAKDEE CARE+</Text>
+        <Image 
+          source={require('../../assets/image/IconSymbols.png')}  // Update the path to point to your image
+          style={{ width: 300, height: 350, marginTop: 100 }}  // You can adjust the size as needed
+        />
         </View>
 
         {/* Animated Card */}
@@ -44,7 +47,7 @@ const WelcomeScreen = () => {
               colorText='#3180E1' 
               border='#3180E1' 
               // onPress={() => navigation.navigate('Register')}  // ✅ นำทางไปหน้าสมัครสมาชิก
-              onPress={() => console.log('CLICK GOTO REGISTER')}  // ✅ นำทางไปหน้าสมัครสมาชิก
+              onPress={() => navigation.navigate('Register')}  // ✅ นำทางไปหน้าสมัครสมาชิก
             />
           </View>
         </Animated.View>

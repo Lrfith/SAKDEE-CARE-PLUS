@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   },
   defaultText: {
     fontFamily: 'Kanit-Regular',
-    fontSize: 18,
+    fontSize: 16,
     color: '#000',
   },
   title: {
@@ -51,5 +51,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     borderWidth: 1,
-  },  
+    borderColor: '#C0C0C0FF'
+  },
+  linkText: {
+    color: '#3180E1',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
+    
 });
