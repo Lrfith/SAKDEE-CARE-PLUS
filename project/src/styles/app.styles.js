@@ -43,4 +43,14 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: 'center',
   },
+  input: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    paddingHorizontal: 15,
+    fontSize: 16,
+    marginBottom: 20,
+    borderWidth: 1,
+  },  
 });

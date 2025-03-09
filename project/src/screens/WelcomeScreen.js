@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { Text, View, Animated } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/app.styles';
 import ButtonCustom from '../components/ButtonCustom';
@@ -31,8 +30,8 @@ const WelcomeScreen = () => {
             ยินดีต้อนรับสู่ SAKDEE CARE+ ในการเริ่มต้น กรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
           </Text>
           <View style={{ flexDirection: 'row', marginTop: 50 }}>
-            <ButtonCustom lable='เข้าสู่ระบบ' color='#3180E1' colorText='#fff' />
-            <ButtonCustom lable='สมัครสมาชิก' color='#fff' colorText='#3180E1' border='#3180E1' />
+            <ButtonCustom lable='เข้าสู่ระบบ' color='#3180E1' colorText='#fff' onPress={() => console.log('CLICK GOTO LOGIN')}/>
+            <ButtonCustom lable='สมัครสมาชิก' color='#fff' colorText='#3180E1' border='#3180E1' onPress={() => console.log('CLICK GOTO REGISTER')}/>
           </View>
         </Animated.View>
       </LinearGradient>
