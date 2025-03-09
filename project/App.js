@@ -1,11 +1,15 @@
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { useFonts } from 'expo-font';  // ใช้ useFonts จาก expo-font
-import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import { NavigationContainer } from '@react-navigation/native';
+import { styles } from './src/styles/app.styles';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { styles } from './src/styles/app.styles';  // ตรวจสอบเส้นทางไฟล์ styles ให้ถูกต้อง
+import LoginScreen from './src/screens/LoginScreen';
 import AppNavigator from './src/navigations/AppNavigator';
-import WelcomeScreen from './src/screens/WelcomeScreen' 
+import WelcomeScreen from './src/screens/WelcomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [fontsLoaded] = useFonts({
@@ -13,7 +17,6 @@ const App = () => {
     'Kanit-Bold': require('./assets/fonts/Kanit-Bold.ttf'),
   });
 
-  // ถ้ายังโหลดฟอนต์ไม่เสร็จ ให้แสดง ActivityIndicator
   if (!fontsLoaded) {
     return (
       <View style={styles.loaderContainer}>
@@ -23,19 +26,14 @@ const App = () => {
   }
 
   return (
-    // <View style={styles.container}>
-    //   <Text style={styles.defaultText}>Hello, First Project!</Text>
-    //   <Text style={styles.title}>This is a title with Kanit-Bold font.</Text>
-    //   <Text style={styles.defaultText}>สวัสดีจร้า</Text>
-    //   <Text>This is a title with Kanit-Bold font.</Text>
-    //   <StatusBar style="auto" />
-    // </View>
-
-    <View style={styles.container}>
-      <WelcomeScreen/>
-      <AppNavigator/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="AppNavigator" component={AppNavigator} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 export default App;
