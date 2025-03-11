@@ -41,6 +41,7 @@ Start the App in Android Simulator
 ```bash
   git commit -m "Updated code with latest changes"
 ```
+### Warning ⚠️ PLEASE MAKE SURE YOU PUSH TO BRANCH NOT "MAIN" ⚠️
 4. Push your changes (if necessary): After committing, if you need to push your updates back to the remote repository, use:
 ```bash
   git push origin main

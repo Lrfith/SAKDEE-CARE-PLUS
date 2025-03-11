@@ -6,7 +6,6 @@ import * as Location from 'expo-location';
 import { getDistance } from 'geolib';
 import { Platform, Linking } from 'react-native';
 import stores from '../components/dataDept';
-import Feather from '@expo/vector-icons/Feather';
 
 export default function StoreInfoScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -121,19 +120,17 @@ export default function StoreInfoScreen() {
               <Text style={styles.modalTitle}>{selectedStore?.name || 'ไม่มีข้อมูล'}</Text>
               <Text style={styles.modalDescription}>{selectedStore?.description || 'ไม่มีรายละเอียด'}</Text>
               <Text style={styles.modalDescription2}>{selectedStore?.aboutdept || ''}</Text>
-
+              {distance !== null && (
+                <Text style={styles.modalDistance}>
+                  ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.
+                </Text>
+              )}
 
               <TouchableOpacity
                 style={styles.navigateButton}
                 onPress={() => openMap(selectedStore?.latitude, selectedStore?.longitude, selectedStore?.name)}
               >
-                {distance !== null && (
-                 <Text style={styles.modalDistance}>
-                 <Feather name="map" size={24} style={{ marginRight: 10 }} />
-                 ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.
-               </Text>
-               
-                )}
+                <Text style={styles.navigateButtonText}>นำทางไปยังร้านนี้</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -212,16 +209,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   modalDistance: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'green',
   },
   navigateButton: {
-    backgroundColor: '#3180E1',
+    backgroundColor: '#28a745',
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
     alignSelf: 'flex-start', // จัดปุ่มให้ชิดซ้าย
-    borderRadius: 20,
+  },
+  navigateButtonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
