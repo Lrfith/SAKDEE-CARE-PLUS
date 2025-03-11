@@ -65,7 +65,7 @@ const AppNavigator = () => {
         ),
         headerRight: () => (
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Ionicons name="person-circle" size={35} color='grey' style={{ marginRight: 15, marginTop: 2 }} />
+            <Ionicons name="person-circle" size={40} color='#6c757d' style={{ marginRight: 15, marginTop: 2 }} />
           </TouchableOpacity>
         ),
       }} 
