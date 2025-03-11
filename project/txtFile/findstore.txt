@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput, FlatList, } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import Modal from 'react-native-modal';
 import * as Location from 'expo-location';
 import { getDistance } from 'geolib';
 import { Platform, Linking } from 'react-native';
 import stores from '../components/dataDept';
-import Feather from '@expo/vector-icons/Feather';
 
 export default function StoreInfoScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -116,26 +123,29 @@ export default function StoreInfoScreen() {
       >
         {selectedStore && (
           <View style={styles.modalContent}>
-            <Image source={{ uri: selectedStore?.image }} style={styles.modalImage} />
-            <View style={styles.modalTextContainer}>
+            <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>{selectedStore?.name || 'ไม่มีข้อมูล'}</Text>
-              <Text style={styles.modalDescription}>{selectedStore?.description || 'ไม่มีรายละเอียด'}</Text>
-              <Text style={styles.modalDescription2}>{selectedStore?.aboutdept || ''}</Text>
-
-
-              <TouchableOpacity
-                style={styles.navigateButton}
-                onPress={() => openMap(selectedStore?.latitude, selectedStore?.longitude, selectedStore?.name)}
-              >
-                {distance !== null && (
-                 <Text style={styles.modalDistance}>
-                 <Feather name="map" size={24} style={{ marginRight: 10 }} />
-                 ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.
-               </Text>
-               
-                )}
+              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                <Text style={styles.closeText}>✕</Text>
               </TouchableOpacity>
             </View>
+
+            <Image source={{ uri: selectedStore?.image }} style={styles.modalImage} />
+
+            <Text style={styles.modalDescription}>{selectedStore?.description || 'ไม่มีรายละเอียด'}</Text>
+            <Text style={styles.modalDescription}>{selectedStore?.aboutdept || ''}</Text>
+            {distance !== null && (
+              <Text style={styles.modalDistance}>
+                ระยะห่างจากคุณ: ~{Math.round(distance / 1000)} กิโลเมตร
+              </Text>
+            )}
+
+            <TouchableOpacity
+              style={styles.navigateButton}
+              onPress={() => openMap(selectedStore?.latitude, selectedStore?.longitude, selectedStore?.name)}
+            >
+              <Text style={styles.navigateButtonText}>นำทางไปยังร้านนี้</Text>
+            </TouchableOpacity>
           </View>
         )}
       </Modal>
@@ -157,6 +167,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#f9f9f9',
     zIndex: 1,
+    
   },
   dropdown: {
     position: 'absolute',
@@ -180,48 +191,43 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    flexDirection: 'row', // จัดเรียงรูปภาพกับข้อความให้อยู่ในแนวนอน
     backgroundColor: 'white',
     padding: 20,
     borderTopLeftRadius: 20,
+    //borderTopRightRadius: 20,
+    //borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    alignItems: 'center', // จัดเนื้อหาให้อยู่ตรงกลางแนวตั้ง
-    height: '20%',
+    alignItems: 'center',
+    height: '42%',
     marginBottom: 100,
-    margin: 10,
+    margin:10,
   },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  // closeText: {
+  //   fontSize: 20,
+  //   color: 'red',
+  // },
   modalImage: {
     width: 100,
     height: 100,
     borderRadius: 10,
-    marginRight: 15, // ให้มีระยะห่างระหว่างภาพกับข้อความ
+    marginVertical: 10,
   },
-  modalTextContainer: {
-    flex: 1, // ให้กล่องข้อความขยายเต็มพื้นที่ที่เหลือ
-  },
-  modalTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  modalDescription: {
-    fontSize: 14,
-    marginBottom: 5,
-  },
-  modalDescription2: {
-    fontSize: 10,
-    marginBottom: 5,
-  },
+  modalDescription: { fontSize: 16, marginBottom: 10, textAlign: 'center' },
   modalDistance: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: 'green',
   },
-  navigateButton: {
-    backgroundColor: '#3180E1',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
-    alignSelf: 'flex-start', // จัดปุ่มให้ชิดซ้าย
-    borderRadius: 20,
-  },
+  navigateButton: { backgroundColor: '#28a745', padding: 10, borderRadius: 5, marginTop: 10 },
+  navigateButtonText: { color: 'white', fontSize: 16, textAlign: 'center' },
 });
+

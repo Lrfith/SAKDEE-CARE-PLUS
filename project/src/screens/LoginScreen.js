@@ -38,10 +38,10 @@ const LoginScreen = () => {
     }
 
     // Check if email ends with @gmail.com
-    if (!email.includes("@gmail.com")) {
-      Alert.alert("อีเมลไม่ถูกต้อง");
-      return;
-    }
+    // if (!email.includes("@gmail.com")) {
+    //   Alert.alert("อีเมลไม่ถูกต้อง");
+    //   return;
+    // }
 
     // Proceed with navigation if both fields are filled
     navigation.navigate("AppNavigator");
