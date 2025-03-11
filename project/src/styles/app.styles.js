@@ -58,5 +58,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'underline',
   },
+  eyeIcon: {
+    position: 'absolute',
+    right: 20,
+    top: '68%'
+  }
     
 });

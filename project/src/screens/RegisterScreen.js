@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert } from "react-native";
 import { Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -12,6 +13,11 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  // Refs for each input field
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   useEffect(() => {
     Animated.timing(slideAnim, {
@@ -20,6 +26,28 @@ const RegisterScreen = () => {
       useNativeDriver: true,
     }).start();
   }, []);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  // Function to handle the register logic
+  const handleRegister = () => {
+    // Check if any field is empty
+    if (!userName || !email || !password) {
+      Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
+      return;
+    }
+
+    // Check if email ends with @gmail.com
+    if (!email.includes("@gmail.com")) {
+      Alert.alert("อีเมลไม่ถูกต้อง");
+      return;
+    }
+
+    // Proceed with navigation to the next screen
+    navigation.navigate("Verification");
+  };
 
   return (
     <View style={styles.container}>
@@ -34,11 +62,7 @@ const RegisterScreen = () => {
 
         {/* Animated Card */}
         <Animated.View
-          style={[
-            styles.card,
-            { height: 600 },
-            { transform: [{ translateY: slideAnim }] },
-          ]}
+          style={[styles.card, { height: 600 }, { transform: [{ translateY: slideAnim }] }]}
         >
           <Text style={styles.title}>สมัครสมาชิก</Text>
           <Text style={styles.defaultText}>
@@ -53,6 +77,8 @@ const RegisterScreen = () => {
               value={userName}
               onChangeText={setUserName}
               keyboardType="default"
+              returnKeyType="next" // Show "next" button on keyboard
+              onSubmitEditing={() => emailRef.current.focus()} // Focus email field when "next" is pressed
             />
             <Text style={styles.defaultText}>อีเมล</Text>
             <TextInput
@@ -61,6 +87,9 @@ const RegisterScreen = () => {
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
+              ref={emailRef}
+              returnKeyType="next" // Show "next" button on keyboard
+              onSubmitEditing={() => passwordRef.current.focus()} // Focus password field when "next" is pressed
             />
             <Text style={styles.defaultText}>รหัสผ่าน</Text>
             <TextInput
@@ -68,17 +97,21 @@ const RegisterScreen = () => {
               placeholder="กรอกรหัสผ่าน"
               value={password}
               onChangeText={setPassword}
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
+              ref={passwordRef}
+              returnKeyType="done" // Show "done" button on keyboard
+              onSubmitEditing={handleRegister} // Trigger the register function when "done" is pressed
             />
+            <TouchableOpacity style={[styles.eyeIcon, { top: '79%' }]} onPress={togglePasswordVisibility}>
+              <Ionicons name={passwordVisible ? 'eye-off' : 'eye'} size={30} color='grey' />
+            </TouchableOpacity>
           </View>
-          <View
-            style={{ flexDirection: "row", marginTop: 30, marginBottom: 30 }}
-          >
+          <View style={{ flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
             <ButtonCustom
               lable="สมัครสมาชิก"
               color="#3180E1"
               colorText="#fff"
-              onPress={() => navigation.navigate("Verification")}
+              onPress={handleRegister} // Use handleRegister instead of direct navigation
             />
           </View>
 
