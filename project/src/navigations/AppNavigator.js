@@ -25,8 +25,6 @@ const AppNavigator = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: '#fff', // โปร่งใส 50%
-            borderTopLeftRadius: 40, // ทำให้มุมซ้ายบนโค้ง
-            borderTopRightRadius: 40, // ทำให้มุมขวาบนโค้ง
             height: 80, // ความสูงของ Tab Bar
             shadowColor: '#000', // ใส่เงาของ Tab Bar
             shadowOpacity: 0.1, // ความโปร่งใสของเงา
