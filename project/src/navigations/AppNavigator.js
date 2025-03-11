@@ -68,7 +68,8 @@ const AppNavigator = () => {
             <Ionicons name="person-circle" size={35} color='grey' style={{ marginRight: 15, marginTop: 2 }} />
           </TouchableOpacity>
         ),
-      }} />
+      }} 
+      />
       <Tab.Screen name="Symbols" component={SymbolsScreen} />
       <Tab.Screen name="Camera" component={CameraScreen} />
       <Tab.Screen name="Store" component={StoreScreen} />
