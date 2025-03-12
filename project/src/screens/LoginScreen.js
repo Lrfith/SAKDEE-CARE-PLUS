@@ -32,16 +32,16 @@ const LoginScreen = () => {
 
   const handleLogin = () => {
     // Check if email or password is empty
-    if (!email || !password) {
-      Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "อีเมลและรหัสผ่านจำเป็นต้องกรอก");
-      return;
-    }
+    // if (!email || !password) {
+    //   Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "อีเมลและรหัสผ่านจำเป็นต้องกรอก");
+    //   return;
+    // }
 
-    // Check if email ends with @gmail.com
-    if (!email.includes("@gmail.com")) {
-      Alert.alert("อีเมลไม่ถูกต้อง");
-      return;
-    }
+    // // Check if email ends with @gmail.com
+    // if (!email.includes("@gmail.com")) {
+    //   Alert.alert("อีเมลไม่ถูกต้อง");
+    //   return;
+    // }
 
     // Proceed with navigation if both fields are filled
     navigation.navigate("AppNavigator");
