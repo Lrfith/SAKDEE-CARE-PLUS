@@ -21,6 +21,7 @@ const HomeScreen = () => {
         style={{ width: '100%', height: '78%', marginTop: 90 }}
       />
       <Text style={{ fontSize: 40, position: 'absolute', fontWeight: 'bold', top: '78%', alignSelf: 'center' }}>COMMING SOON</Text>
+      <Text>This is From Arch Linux</Text>
     </View>
   );
 };
