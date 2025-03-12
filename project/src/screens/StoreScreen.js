@@ -113,6 +113,9 @@ export default function StoreInfoScreen() {
         isVisible={isModalVisible}
         onBackdropPress={() => setIsModalVisible(false)}
         style={styles.bottomModal}
+
+        // coverScreen={false} // ✅ ทำให้หน้าหลังยังสามารถกดได้
+        // backdropOpacity={0}  // ✅ เอาเงาดำออกเพื่อให้ดูเป็นส่วนหนึ่งของ UI
       >
         {selectedStore && (
           <View style={styles.modalContent}>
@@ -128,11 +131,13 @@ export default function StoreInfoScreen() {
                 onPress={() => openMap(selectedStore?.latitude, selectedStore?.longitude, selectedStore?.name)}
               >
                 {distance !== null && (
-                 <Text style={styles.modalDistance}>
-                 <Feather name="map" size={24} style={{ marginRight: 10 }} />
-                 ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.
-               </Text>
-               
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Feather name="map" size={24} color={'white'} style={{ marginRight: 10 }} />
+                    <Text style={styles.modalDistance}>ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.</Text>
+                  </View>
+
+
+
                 )}
               </TouchableOpacity>
             </View>
@@ -154,7 +159,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 20,
     paddingLeft: 10,
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomRightRadius: 20,
     backgroundColor: '#f9f9f9',
     zIndex: 1,
   },
@@ -164,20 +170,24 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderTopLeftRadius: 20,
+    borderBottomRightRadius: 20,
     borderWidth: 1,
     maxHeight: 200,
     zIndex: 2,
+    borderColor: '#ddd',
   },
   dropdownItem: {
     padding: 10,
     borderBottomWidth: 1,
     borderColor: '#ddd',
   },
-  dropdownText: { fontSize: 16 },
+  dropdownText: { fontSize: 15, fontFamily: 'Kanit-Regular', },
   bottomModal: {
     justifyContent: 'flex-end',
     margin: 0,
+
+
   },
   modalContent: {
     flexDirection: 'row', // จัดเรียงรูปภาพกับข้อความให้อยู่ในแนวนอน
@@ -186,13 +196,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
     alignItems: 'center', // จัดเนื้อหาให้อยู่ตรงกลางแนวตั้ง
-    height: '20%',
+    height: '22%',
     marginBottom: 100,
     margin: 10,
   },
   modalImage: {
     width: 100,
-    height: 100,
+    height: 120,
     borderRadius: 10,
     marginRight: 15, // ให้มีระยะห่างระหว่างภาพกับข้อความ
   },
@@ -200,28 +210,34 @@ const styles = StyleSheet.create({
     flex: 1, // ให้กล่องข้อความขยายเต็มพื้นที่ที่เหลือ
   },
   modalTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 18, 
+    fontFamily: 'Kanit-Regular',
+
   },
   modalDescription: {
     fontSize: 14,
     marginBottom: 5,
+    fontFamily: 'Kanit-Regular',
   },
   modalDescription2: {
-    fontSize: 10,
+    fontSize: 11,
     marginBottom: 5,
+    fontFamily: 'Kanit-Regular',
+    color: '#787878',
   },
   modalDistance: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
+    fontSize: 12,
+    fontFamily: 'Kanit-Regular',
+    color: 'white',
   },
   navigateButton: {
-    backgroundColor: '#3180E1',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
+    backgroundColor: '#00a14b',
+    borderColor: '#3180E1',
+    borderWidth: 0,
+    padding: 8,
+    marginTop: 5,
     alignSelf: 'flex-start', // จัดปุ่มให้ชิดซ้าย
-    borderRadius: 20,
+    borderRadius: 30,
+
   },
 });
