@@ -114,9 +114,9 @@ const LoginScreen = () => {
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 16 }}>ยังไม่ได้เป็นสมาชิก? </Text>
+            <Text style={{ fontSize: 16, fontFamily: 'Kanit-Regular' }}>ยังไม่ได้เป็นสมาชิก? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={[styles.linkText, { marginLeft: 5 }]}>สมัครสมาชิก</Text>
+              <Text style={[styles.linkText, { marginLeft: 5, fontFamily: 'Kanit-Regular' }]}>สมัครสมาชิก</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
