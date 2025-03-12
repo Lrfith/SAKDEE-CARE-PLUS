@@ -1,9 +1,10 @@
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { styles } from "./src/styles/app.styles";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import AppNavigator from "./src/navigations/AppNavigator";
@@ -30,16 +31,31 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false,
-      // DONT FORGET TO CHANGE TO 'FALSE'
-        gestureEnabled: true
-       }}>
+      <Stack.Navigator screenOptions={{
+        headerShown: false,
+        // DONT FORGET TO CHANGE TO 'FALSE'
+        gestureEnabled: false
+      }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={({ navigation }) => ({
+            headerShown: true,  // Make sure the header is visible
+            headerTitle: null,  // Hide the title
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()} // Go back to the previous screen
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
