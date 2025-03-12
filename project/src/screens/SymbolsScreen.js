@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   selectedSymbol: {
     width: 50,
     height: 50,
-    tintColor: 'default', // Change color to red when selected (change to any color of your choice)
+    tintColor: '#3180E1', // Change color to red when selected (change to any color of your choice)
   },
 });
 
