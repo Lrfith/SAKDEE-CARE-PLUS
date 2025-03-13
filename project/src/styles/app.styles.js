@@ -51,7 +51,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#C0C0C0FF'
+    borderColor: '#C0C0C0FF',
+    fontFamily: 'Kanit-Regular',
   },
   linkText: {
     color: '#3180E1',

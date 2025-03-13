@@ -159,7 +159,7 @@ const Home = () => {
         {/* Tips Section */}
         <View style={styles.sectionTitleTip}>
       <Text style={styles.TitleTip}>Tips ในการดูแลผ้า</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('TipsScreen')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Tips')}>
         <Text style={styles.TitleTip2}>ดูทั้งหมด</Text>
       </TouchableOpacity>
     </View>
