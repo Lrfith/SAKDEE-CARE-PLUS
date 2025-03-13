@@ -1,14 +1,39 @@
-import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet, FlatList, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, Image, ScrollView, StyleSheet, FlatList, SafeAreaView, TouchableOpacity } from "react-native";
 import { Card } from "@rneui/themed";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation
 
-const weatherData = {
-  location: "กรุงเทพมหานคร",
-  date: "8 มีนาคม 2568",
-  temperature: "32°C",
-  humidity: "65%",
-  rainChance: "0%",
-  condition: "เหมาะสม",
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) {
+    return "สวัสดีตอนเช้า";
+  } else if (hour >= 12 && hour < 15) {
+    return "สวัสดีตอนเที่ยง";
+  } else if (hour >= 15 && hour < 18) {
+    return "สวัสดีตอนบ่าย";
+  } else if (hour >= 18 && hour < 22) {
+    return "สวัสดีตอนเย็น";
+  } else {
+    return "สวัสดีตอนดึก";
+  }
+};
+
+// Function to map weather conditions to icons
+const getWeatherIcon = (condition) => {
+  switch (condition.toLowerCase()) {
+    case "clear":
+      return "weather-sunny";
+    case "clouds":
+      return "weather-cloudy";
+    case "rain":
+      return "weather-rainy";
+    case "snow":
+      return "weather-snowy";
+    default:
+      return "weather-sunny";
+  }
 };
 
 const tips = [
@@ -33,16 +58,95 @@ const tips = [
 ];
 
 const Home = () => {
+  const [weatherData, setWeatherData] = useState({
+
+  });
+
+
+
+  useEffect(() => {
+    const located = "Bangkok,TH"; // ตำแหน่งที่ตั้ง
+
+    // Fetch weather data from OpenWeatherMap API (example)
+    const fetchWeather = async () => {
+      try {
+        const response = await axios.get("http://api.openweathermap.org/data/2.5/weather", {
+          params: {
+            q: located, // Change the location to your preferred city
+            appid: "c125eee6cba494a329341c56fcfbb227", // Replace with your OpenWeatherMap API key
+            units: "metric", // To get temperature in Celsius
+            lang: "th", // Thai language for weather conditions
+          },
+        });
+
+        const data = response.data;
+        const temperature = `${Math.round(data.main.temp)}°C`;
+        const humidity = `${data.main.humidity}%`;
+        const rainChance = data.pop ? `${(data.pop * 100).toFixed(0)}%` : "0%";
+        const condition = data.weather[0].description;
+        const icon = getWeatherIcon(data.weather[0].main);
+
+        setWeatherData({
+          location: located,  // You can change this based on the response if needed
+          temperature,
+          humidity,
+          rainChance,
+          condition,
+          icon,
+        });
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
+  const getLaundryRecommendation = () => {
+    if (!weatherData.rainChance || !weatherData.humidity) return "กำลังโหลด...";
+  
+    const rain = parseInt(weatherData.rainChance); // แปลงเป็นตัวเลข
+    const humidity = parseInt(weatherData.humidity);
+  
+    if (rain < 30 && humidity < 70) {
+      return "เหมาะสำหรับซักผ้า";
+    } else {
+      return "ไม่เหมาะสำหรับซักผ้า";
+    }
+  };
+
+
+
+  const navigation = useNavigation(); // Get navigation object
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+
+        {/* Greeting Section */}
+        <Text style={styles.sectionGeeting}>{getGreeting()}, Lake!</Text>
+
         {/* Weather Section */}
         <Card containerStyle={styles.weatherCard}>
-          <Text style={styles.weatherTitle}>แนะนำสภาพอากาศ</Text>
-          <Text>{weatherData.location} - {weatherData.date}</Text>
-          <Text style={styles.temp}>{weatherData.temperature}</Text>
-          <Text>ความชื้น {weatherData.humidity}</Text>
-          <Text>โอกาสฝนตก {weatherData.rainChance}</Text>
+          <View style={styles.weatherHeader}>
+            <Text style={styles.location}>{weatherData.location}</Text>
+            <View style={styles.statusButton}>
+            <Text style={styles.statusText}>{getLaundryRecommendation()}</Text>
+            </View>
+          </View>
+
+          <View style={styles.weatherContent}>
+            <MaterialCommunityIcons name={weatherData.icon} size={85} color="orange" style={styles.weatherIcon} />
+            <View style={styles.weatherText}>
+              <Text style={styles.temp}>{weatherData.temperature}</Text>
+              <View style={styles.weatherDetails}>
+                <MaterialCommunityIcons name="water" size={20} color="gray" />
+                <Text style={styles.detailText}>ความชื้น {weatherData.humidity}</Text>
+                <MaterialCommunityIcons name="weather-rainy" size={20} color="gray" paddingLeft={10} />
+                <Text style={styles.detailText}> โอกาสฝนตก {weatherData.rainChance}</Text>
+              </View>
+            </View>
+          </View>
         </Card>
 
         {/* Banner Section */}
@@ -53,7 +157,13 @@ const Home = () => {
         </ScrollView>
 
         {/* Tips Section */}
-        <Text style={styles.sectionTitle}>Tips ในการดูแลผ้า</Text>
+        <View style={styles.sectionTitleTip}>
+      <Text style={styles.TitleTip}>Tips ในการดูแลผ้า</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('TipsScreen')}>
+        <Text style={styles.TitleTip2}>ดูทั้งหมด</Text>
+      </TouchableOpacity>
+    </View>
+        
         <FlatList
           horizontal
           data={tips}
@@ -82,26 +192,83 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContainer: {
-    paddingBottom: 80, // ป้องกันเนื้อหาถูก TabNavigator ทับ
+    paddingBottom: 80,
   },
+
+  sectionGeeting: {
+    fontSize: 20,
+    marginTop: 15,
+    marginRight: 15,
+    fontFamily: 'Kanit-Regular',
+    textAlign: 'right', // เพิ่มบรรทัดนี้เพื่อให้ข้อความชิดขวา
+    color: "orange",
+  },
+
+  // Weather Section
   weatherCard: {
-    alignItems: "center",
-    padding: 15,
-    borderRadius: 10,
+    borderRadius: 15,
+    padding: 10,
+    backgroundColor: "white", // เพิ่มสีพื้นหลังให้ชัดเจนขึ้น
+    shadowColor: "#000", // สีเงา
+    shadowOffset: { width: 2, height: 2 }, // ทิศทางเงา
+    shadowOpacity: 0.3, // ความเข้มของเงา
+    shadowRadius: 4, // ความฟุ้งของเงา
+    elevation: 5, // เงาสำหรับ Android
   },
-  weatherTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    fontFamily: 'Kanit-Regular'
+  weatherHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  location: {
+    fontSize: 20,
+    fontFamily: 'Kanit-Regular',
+    color: "#3180e1",
+    paddingLeft: 10,
+  },
+  weatherContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  weatherIcon: {
+    marginRight: 15,
+  },
+  weatherText: {
+    flex: 1,
   },
   temp: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#ff5733",
-    fontFamily: 'Kanit-Regular'
+    // marginVertical: 5,
+    //fontFamily: 'Kanit-Bold',
+    fontFamily: 'Kanit-Regular',
+    color: "#3180e1"
   },
+  weatherDetails: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  detailText: {
+    fontSize: 13,
+    fontFamily: 'Kanit-Regular',
+    color: "gray",
+  },
+  statusButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 2,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+  },
+  statusText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    fontFamily: 'Kanit-Regular',
+  },
+
+  // Banner Section
   bannerContainer: {
-    marginVertical: 10,
+    marginTop: 20,
+    marginBottom: 10,
   },
   banner: {
     width: 300,
@@ -109,11 +276,28 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     borderRadius: 10,
   },
-  sectionTitle: {
-    fontSize: 18,
+  
+  // Tips Section
+  TitleTip: {
+    fontSize: 20,
     margin: 15,
-    fontFamily: 'Kanit-Regular'
+    fontFamily: 'Kanit-Regular',
   },
+  TitleTip2: {
+    fontSize: 14,
+    margin: 15,
+    fontFamily: 'Kanit-Regular',
+    color: "green"
+  },
+  sectionTitleTip: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: 'center',  // ทำให้ข้อความแนวตั้งตรงกัน
+
+  },
+
+
+
   tipCard: {
     width: 180,
     marginLeft: 15,
@@ -129,12 +313,17 @@ const styles = StyleSheet.create({
   tipTitle: {
     fontFamily: 'Kanit-Regular',
     fontSize: 16,
-    margin: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
   },
   tipDesc: {
+    fontSize: 12,
+    color: '#787878',
     fontFamily: 'Kanit-Regular',
-    fontSize: 16,
-    margin: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 10,
   },
 });
 
