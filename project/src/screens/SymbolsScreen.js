@@ -74,7 +74,7 @@ const SymbolsScreen = () => {
       <TouchableOpacity onPress={() => handleSymbolPress(6)}>
         <View style={styles.symbolContainer}>
           <Image
-            source={require('../../assets/laundry_symbols/tumble-dry.png')} // replace with your logo path
+            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
             style={getSymbolStyle(6)}
           />
         </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   selectedSymbol: {
     width: 50,
     height: 50,
-    tintColor: 'default', // Change color to red when selected (change to any color of your choice)
+    tintColor: '#3180E1', // Change color to red when selected (change to any color of your choice)
   },
 });
 

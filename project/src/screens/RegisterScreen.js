@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Alert } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -50,6 +50,7 @@ const RegisterScreen = () => {
   };
 
   return (
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
     <View style={styles.container}>
       {/* Linear Gradient Background */}
       <LinearGradient colors={["#68B9F2", "#3180E1"]} style={{ flex: 1 }}>
@@ -99,8 +100,6 @@ const RegisterScreen = () => {
               onChangeText={setPassword}
               secureTextEntry={!passwordVisible}
               ref={passwordRef}
-              returnKeyType="done" // Show "done" button on keyboard
-              onSubmitEditing={handleRegister} // Trigger the register function when "done" is pressed
             />
             <TouchableOpacity style={[styles.eyeIcon, { top: '79%' }]} onPress={togglePasswordVisibility}>
               <Ionicons name={passwordVisible ? 'eye-off' : 'eye'} size={30} color='grey' />
@@ -111,7 +110,7 @@ const RegisterScreen = () => {
               lable="สมัครสมาชิก"
               color="#3180E1"
               colorText="#fff"
-              onPress={handleRegister} // Use handleRegister instead of direct navigation
+              onPress={handleRegister} 
             />
           </View>
 
@@ -132,6 +131,7 @@ const RegisterScreen = () => {
         </Animated.View>
       </LinearGradient>
     </View>
+    </ScrollView>
   );
 };
 

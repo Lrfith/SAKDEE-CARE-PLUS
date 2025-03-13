@@ -1,8 +1,9 @@
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { styles } from "./src/styles/app.styles";
 
 import LoginScreen from "./src/screens/LoginScreen";
@@ -44,7 +45,20 @@ const App = () => {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={({ navigation }) => ({
+            headerShown: true,  
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
 
         {/* Main App Screens */}
         <Stack.Screen name="Home" component={Home} />
