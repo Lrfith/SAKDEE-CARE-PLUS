@@ -23,8 +23,8 @@ const WelcomeScreen = () => {
       <LinearGradient colors={['#68B9F2', '#3180E1']} style={{ flex: 1 }}>
         <View style={styles.screenContainer}>
         <Image 
-          source={require('../../assets/image/IconSymbols.png')}  // Update the path to point to your image
-          style={{ width: 300, height: 350, marginTop: 100 }}  // You can adjust the size as needed
+          source={require('../../assets/image/IconSymbols.png')}  
+          style={{ width: 300, height: 350, marginTop: 100 }}
         />
         </View>
 
@@ -39,15 +39,14 @@ const WelcomeScreen = () => {
               lable='เข้าสู่ระบบ' 
               color='#3180E1' 
               colorText='#fff' 
-              onPress={() => navigation.navigate('Login')}  // ✅ ใช้ navigation.navigate()
+              onPress={() => navigation.navigate('Login')} 
             />
             <ButtonCustom 
               lable='สมัครสมาชิก' 
               color='#fff' 
               colorText='#3180E1' 
               border='#3180E1' 
-              // onPress={() => navigation.navigate('Register')}  // ✅ นำทางไปหน้าสมัครสมาชิก
-              onPress={() => navigation.navigate('Register')}  // ✅ นำทางไปหน้าสมัครสมาชิก
+              onPress={() => navigation.navigate('Register')} 
             />
           </View>
         </Animated.View>

@@ -34,7 +34,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{
         headerShown: false,
         // DONT FORGET TO CHANGE TO 'FALSE'
-        gestureEnabled: false
+        gestureEnabled: true
       }}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
@@ -45,11 +45,10 @@ const App = () => {
           name="Profile"
           component={ProfileScreen}
           options={({ navigation }) => ({
-            headerShown: true,  // Make sure the header is visible
-            headerTitle: null,  // Hide the title
+            headerShown: true,  
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()} // Go back to the previous screen
+                onPress={() => navigation.goBack()}
               >
                 <Ionicons name="chevron-back" size={30} color="black" />
               </TouchableOpacity>
