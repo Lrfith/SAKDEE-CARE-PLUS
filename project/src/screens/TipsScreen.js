@@ -5,6 +5,7 @@ import Page404View from '../components/404page' // ✅ Import the 404 page compo
 const TipsScreen = () => {
   return (
     <Page404View/>
+    
   )
 }
 
