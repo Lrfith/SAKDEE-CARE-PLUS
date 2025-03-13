@@ -74,7 +74,7 @@ const SymbolsScreen = () => {
       <TouchableOpacity onPress={() => handleSymbolPress(6)}>
         <View style={styles.symbolContainer}>
           <Image
-            source={require('../../assets/laundry_symbols/tumble-dry.png')} // replace with your logo path
+            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
             style={getSymbolStyle(6)}
           />
         </View>

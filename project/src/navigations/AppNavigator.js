@@ -24,17 +24,15 @@ const AppNavigator = () => {
         },
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#fff', // โปร่งใส 50%
-          height: 80, // ความสูงของ Tab Bar
-          shadowColor: '#000', // ใส่เงาของ Tab Bar
-          shadowOpacity: 0.1, // ความโปร่งใสของเงา
-          shadowRadius: 10, // ความเบลอของเงา
-          shadowOffset: { width: 0, height: -4 }, // การตั้งค่าเงา
-          elevation: 5, // สำหรับ Android เพื่อเพิ่มเงา
-          position: 'absolute', // ทำให้ตำแหน่งของ tab bar อยู่ที่ด้านล่าง
-          // left: 5,
-          // right: 5,
-          // bottom: 0
+          backgroundColor: '#fff', 
+          height: 80, 
+          shadowColor: '#000', 
+          shadowOpacity: 0.1, 
+          shadowRadius: 10, 
+          shadowOffset: { width: 0, height: -4 }, 
+          elevation: 5, 
+          position: 'absolute', 
+
         },
         tabBarIcon: ({ focused, color, size }) => {
           const icons = {

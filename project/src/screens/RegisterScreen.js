@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Alert,ScrollView } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
