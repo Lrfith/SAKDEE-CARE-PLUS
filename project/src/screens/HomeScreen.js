@@ -141,7 +141,7 @@ const Home = () => {
               <Text style={styles.temp}>{weatherData.temperature}</Text>
               <View style={styles.weatherDetails}>
                 <MaterialCommunityIcons name="water" size={20} color="gray" />
-                <Text style={styles.detailText}> ความชื้น {weatherData.humidity}</Text>
+                <Text style={styles.detailText}>ความชื้น {weatherData.humidity}</Text>
                 <MaterialCommunityIcons name="weather-rainy" size={20} color="gray" paddingLeft={10} />
                 <Text style={styles.detailText}> โอกาสฝนตก {weatherData.rainChance}</Text>
               </View>
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   location: {
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: 'Kanit-Regular',
     color: "#3180e1",
     paddingLeft: 10,
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "bold",
     // marginVertical: 5,
+    //fontFamily: 'Kanit-Bold',
     fontFamily: 'Kanit-Regular',
     color: "#3180e1"
   },
@@ -247,8 +248,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   detailText: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: 'Kanit-Regular',
+    color: "gray",
   },
   statusButton: {
     backgroundColor: "#4CAF50",
