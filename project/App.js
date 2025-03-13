@@ -2,9 +2,9 @@ import React from "react";
 import { ActivityIndicator, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
-import { styles } from "./src/styles/app.styles";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { styles } from "./src/styles/app.styles";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import AppNavigator from "./src/navigations/AppNavigator";
@@ -12,6 +12,8 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
+import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
 
 const Stack = createNativeStackNavigator();
 
@@ -31,11 +33,13 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerShown: false,
-        // DONT FORGET TO CHANGE TO 'FALSE'
-        gestureEnabled: true
-      }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false, // DONT FORGET TO CHANGE TO 'FALSE'
+          gestureEnabled: true,
+        }}
+      >
+        {/* Authentication Screens */}
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
@@ -55,6 +59,10 @@ const App = () => {
             ),
           })}
         />
+
+        {/* Main App Screens */}
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="TipsScreen" component={TipsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
