@@ -32,7 +32,7 @@ const getWeatherIcon = (condition) => {
     case "snow":
       return "weather-snowy";
     default:
-      return "weather-sunny";
+      return "weather-sunny"; blocationButorderRadius
   }
 };
 
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   tipImage: {
     width: "100%",
     height: 200,
-    borderRadius: 5,
+    borderRadius: 5, 
   },
   tipTitle: {
     fontFamily: 'Kanit-Regular',

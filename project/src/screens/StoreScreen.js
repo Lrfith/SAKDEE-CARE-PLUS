@@ -114,28 +114,31 @@ export default function StoreInfoScreen() {
         {/* ✅ ใช้ Marker แสดงสาขาทั้งหมด */}
         {filteredStores.map((store) => (
           <Marker
-          key={store.id}
-          coordinate={{
-            latitude: store.latitude,
-            longitude: store.longitude,
-          }}
-          title={store.name}
-          description={store.description}
-          onPress={() => toggleModal(store)}
-        >
-          {/* ใช้ Image แทนไอคอน */}
-          <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
-        </Marker>
-        ))}
-      </MapView>
+            key={store.id}
+            coordinate={{
+              latitude: store.latitude,
+              longitude: store.longitude,
+              backgroundColor: '#3180E1',
+            }} 
 
-      {/* ✅ ปุ่มกลับไปยังตำแหน่งของผู้ใช้ */}
+          title = { store.name }
+          description = { store.description }
+          onPress = {() => toggleModal(store)}
+        >
+        {/* ใช้ Image แทนไอคอน */}
+        <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
+      </Marker>
+        ))}
+    </MapView>
+
+      {/* ✅ ปุ่มกลับไปยังตำแหน่งของผู้ใช้ */ }
       <TouchableOpacity style={styles.locationButton} onPress={() => {
         if (userLocation) {
           setRegion({
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
-            latitudeDelta: 0.05,
+            latitudeDelta: 0.05,    backgroundColor: '#3180E1',
+
             longitudeDelta: 0.05,
           });
         }
@@ -205,7 +208,7 @@ export default function StoreInfoScreen() {
 
 
 
-    </View>
+    </View >
   );
 }
 
@@ -248,8 +251,6 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: 'flex-end',
     margin: 0,
-
-
   },
 
 
@@ -342,7 +343,7 @@ const styles = StyleSheet.create({
   // ปุ่มนำทาง
   navigateButton: {
     backgroundColor: '#3180E1',
-    // borderColor: '#3180E1',
+    //borderColor: '#fff',
     // borderWidth: 0,
     padding: 8,
     marginTop: 5,
@@ -353,7 +354,7 @@ const styles = StyleSheet.create({
 
   locationButton: {
     position: 'absolute',
-    bottom: 100, // ปรับตำแหน่งให้อยู่ด้านล่าง
+    bottom: 120, // ปรับตำแหน่งให้อยู่ด้านล่าง
     right: 20,  // ปรับให้อยู่ด้านขวา
     backgroundColor: '#3180E1',
     padding: 12,

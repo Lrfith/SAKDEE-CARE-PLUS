@@ -14,6 +14,8 @@ import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
 import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
+import ChatScreen from "./src/screens/ChatScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -49,7 +51,7 @@ const App = () => {
           name="Profile"
           component={ProfileScreen}
           options={({ navigation }) => ({
-            headerShown: true,  
+            headerShown: true,
             headerTitleStyle: {
               fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
               fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
@@ -63,6 +65,29 @@ const App = () => {
             ),
           })}
         />
+
+        <Stack.Screen
+          name="ChatBoard"
+          component={ChatScreen} // ชื่อที่ใช้ต้องตรงกับ import
+          
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
+
+
 
         {/* Main App Screens */}
         <Stack.Screen name="Home" component={Home} />
