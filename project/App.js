@@ -12,13 +12,9 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
-<<<<<<< HEAD
-=======
-import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
-import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
+
 import ChatScreen from "./src/screens/ChatScreen";
 
->>>>>>> feature/home-page
 
 const Stack = createNativeStackNavigator();
 
