@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text } from 'react-native';
 import React, { useState } from 'react';
 
 const SymbolsScreen = () => {
@@ -19,66 +19,15 @@ const SymbolsScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* Symbol 1 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(1)}>
+    <View style={styles.containerOne}>
+      {/* Display Card 1 */}
         <View style={styles.symbolContainer}>
           <Image
             source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
             style={getSymbolStyle(1)}
           />
         </View>
-      </TouchableOpacity>
-
-      {/* Symbol 2 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(2)}>
-        <View style={styles.symbolContainer}>
-          <Image
-            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
-            style={getSymbolStyle(2)}
-          />
-        </View>
-      </TouchableOpacity>
-
-      {/* Symbol 3 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(3)}>
-        <View style={styles.symbolContainer}>
-          <Image
-            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
-            style={getSymbolStyle(3)}
-          />
-        </View>
-      </TouchableOpacity>
-
-      {/* Symbol 4 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(4)}>
-        <View style={styles.symbolContainer}>
-          <Image
-            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
-            style={getSymbolStyle(4)}
-          />
-        </View>
-      </TouchableOpacity>
-
-      {/* Symbol 5 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(5)}>
-        <View style={styles.symbolContainer}>
-          <Image
-            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
-            style={getSymbolStyle(5)}
-          />
-        </View>
-      </TouchableOpacity>
-
-      {/* Symbol 6 */}
-      <TouchableOpacity onPress={() => handleSymbolPress(6)}>
-        <View style={styles.symbolContainer}>
-          <Image
-            source={require('../../assets/laundry_symbols/question.png')} // replace with your logo path
-            style={getSymbolStyle(6)}
-          />
-        </View>
-      </TouchableOpacity>
+      <Text style={{fontSize: 16, }}>กรุณาเลือกสัญลักษณ์เพื่อแสดงคำแนะนำ</Text>
     </View>
   );
 };
@@ -88,6 +37,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    marginTop: 20,
+  },
+  containerOne: {
+    flex: 1,
     marginTop: 20,
   },
   symbolContainer: {
@@ -109,6 +62,7 @@ const styles = StyleSheet.create({
     height: 50,
     tintColor: '#3180E1', // Change color to red when selected (change to any color of your choice)
   },
+  
 });
 
 export default SymbolsScreen;

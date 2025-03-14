@@ -30,7 +30,7 @@ const LoginScreen = () => {
   };
 
   const handleLogin = () => {
-    // Check if email or password is empty
+    // // Check if email or password is empty
     // if (!email || !password) {
     //   Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     //   return;

@@ -7,6 +7,7 @@ import { getDistance } from 'geolib';
 import { Platform, Linking } from 'react-native';
 import stores from '../components/dataDept';
 import Feather from '@expo/vector-icons/Feather';
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 export default function StoreInfoScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -16,6 +17,9 @@ export default function StoreInfoScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  const [region, setRegion] = useState(null); // ✅ ตั้งค่าเริ่มต้นเป็น null
+
+  // ✅ สร้าง state สำหรับเก็บ region ของแผนที่
   useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -25,6 +29,14 @@ export default function StoreInfoScreen() {
       }
       let location = await Location.getCurrentPositionAsync({});
       setUserLocation(location.coords);
+
+      // ✅ อัปเดต region ให้แผนที่โฟกัสที่ตำแหน่งผู้ใช้
+      setRegion({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      });
     };
     getLocation();
   }, []);
@@ -86,46 +98,75 @@ export default function StoreInfoScreen() {
         />
       )}
 
+
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: 13.7563,
-          longitude: 100.5018,
-          latitudeDelta: 10,
-          longitudeDelta: 10,
-        }}>
+        region={region} // ✅ ให้แผนที่ใช้ค่า region ของผู้ใช้
+        onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
+        scrollEnabled={true}
+        zoomEnabled={true}
+        pitchEnabled={true}
+        rotateEnabled={true}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+      // showsCompass={true}
+      >
+        {/* ✅ ใช้ Marker แสดงสาขาทั้งหมด */}
         {filteredStores.map((store) => (
           <Marker
             key={store.id}
             coordinate={{
               latitude: store.latitude,
               longitude: store.longitude,
-            }}
-            title={store.name}
-            description={store.description}
-            onPress={() => toggleModal(store)}
-          />
-        ))}
-      </MapView>
+              backgroundColor: '#3180E1',
+            }} 
 
-      {/* Modal แสดงที่ด้านล่างของจอ */}
+          title = { store.name }
+          description = { store.description }
+          onPress = {() => toggleModal(store)}
+        >
+        {/* ใช้ Image แทนไอคอน */}
+        <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
+      </Marker>
+        ))}
+    </MapView>
+
+      {/* ✅ ปุ่มกลับไปยังตำแหน่งของผู้ใช้ */ }
+      <TouchableOpacity style={styles.locationButton} onPress={() => {
+        if (userLocation) {
+          setRegion({
+            latitude: userLocation.latitude,
+            longitude: userLocation.longitude,
+            latitudeDelta: 0.05,    backgroundColor: '#3180E1',
+
+            longitudeDelta: 0.05,
+          });
+        }
+      }}>
+        <Feather name="map-pin" size={24} color="white" />
+      </TouchableOpacity>
+
+
+
       <Modal
         isVisible={isModalVisible}
         onBackdropPress={() => setIsModalVisible(false)}
         style={styles.bottomModal}
-
-        // coverScreen={false} // ✅ ทำให้หน้าหลังยังสามารถกดได้
-        // backdropOpacity={0}  // ✅ เอาเงาดำออกเพื่อให้ดูเป็นส่วนหนึ่งของ UI
       >
         {selectedStore && (
           <View style={styles.modalContent}>
-            <Image source={{ uri: selectedStore?.image }} style={styles.modalImage} />
-            <View style={styles.modalTextContainer}>
+
+            {/* แถวบน แบ่ง2คอลัม */}
+            {/* คอลัมน์ที่ 1: รูปภาพสาขา) */}
+            <View style={styles.imageColumn}>
+              <Image source={{ uri: selectedStore?.image }} style={styles.modalImage} />
+            </View>
+
+            {/* คอลัมน์ที่ 2: ข้อความ + ปุ่มนำทาง) */}
+            <View style={styles.textColumn}>
               <Text style={styles.modalTitle}>{selectedStore?.name || 'ไม่มีข้อมูล'}</Text>
               <Text style={styles.modalDescription}>{selectedStore?.description || 'ไม่มีรายละเอียด'}</Text>
               <Text style={styles.modalDescription2}>{selectedStore?.aboutdept || ''}</Text>
-
-
               <TouchableOpacity
                 style={styles.navigateButton}
                 onPress={() => openMap(selectedStore?.latitude, selectedStore?.longitude, selectedStore?.name)}
@@ -135,16 +176,39 @@ export default function StoreInfoScreen() {
                     <Feather name="map" size={24} color={'white'} style={{ marginRight: 10 }} />
                     <Text style={styles.modalDistance}>ห่างจากคุณ: ~{Math.round(distance / 1000)} กม.</Text>
                   </View>
-
-
-
                 )}
               </TouchableOpacity>
             </View>
+
+            {/* แถวล่าง (เต็มความกว้าง) */}
+            <View style={styles.fullWidthColumn}>
+              {/* ไอคอนเครื่องซักผ้าและเครื่องอบผ้า */}
+              <View style={styles.laundryIcons}>
+                {/* เครื่องซักผ้า */}
+                <View style={styles.laundryItem}>
+                  <MaterialIcons name="local-laundry-service" size={50} color='#3180E1' />
+                  <Text style={styles.laundryTitle}>{selectedStore?.washing || ''}/6</Text>
+                </View>
+
+                {/* เส้นแบ่งกลาง (แนวตั้ง) */}
+                <View style={styles.divider} />
+
+                {/* เครื่องอบผ้า */}
+                <View style={styles.laundryItem}>
+                  <MaterialCommunityIcons name="tumble-dryer" size={50} color='#3180E1' />
+                  <Text style={styles.laundryTitle}>{selectedStore?.dryer || ''}/4</Text>
+                </View>
+              </View>
+            </View>
+
+
           </View>
         )}
       </Modal>
-    </View>
+
+
+
+    </View >
   );
 }
 
@@ -163,6 +227,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     backgroundColor: '#f9f9f9',
     zIndex: 1,
+    fontFamily: 'Kanit-Regular',
   },
   dropdown: {
     position: 'absolute',
@@ -186,31 +251,75 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: 'flex-end',
     margin: 0,
-
-
   },
+
+
   modalContent: {
-    flexDirection: 'row', // จัดเรียงรูปภาพกับข้อความให้อยู่ในแนวนอน
+    flexDirection: 'row',
+    flexWrap: 'wrap', // จัดให้แถวล่างขึ้นบรรทัดใหม่
     backgroundColor: 'white',
     padding: 20,
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
-    alignItems: 'center', // จัดเนื้อหาให้อยู่ตรงกลางแนวตั้ง
-    height: '22%',
-    marginBottom: 100,
+    height: 'auto',
+    marginBottom: 120,
     margin: 10,
   },
+
+  imageColumn: {
+    flex: 2, // ให้รูปภาพใช้พื้นที่ 1 ส่วน
+    alignItems: 'center', // จัดให้อยู่ตรงกลาง
+  },
+
+  textColumn: {
+    flex: 3, // ให้ข้อความใช้พื้นที่ 2 ส่วน
+    paddingLeft: 10,
+  },
+
   modalImage: {
-    width: 100,
-    height: 120,
+    width: 120,  // ปรับขนาดให้เหมาะสม
+    height: 130,
     borderRadius: 10,
-    marginRight: 15, // ให้มีระยะห่างระหว่างภาพกับข้อความ
   },
-  modalTextContainer: {
-    flex: 1, // ให้กล่องข้อความขยายเต็มพื้นที่ที่เหลือ
+
+  fullWidthColumn: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
   },
+
+  laundryIcons: {
+    flexDirection: 'row', // จัดเรียงไอคอนให้อยู่ในบรรทัดเดียวกัน
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  laundryItem: {
+    alignItems: 'center',
+    flexDirection: 'row', // จัดให้ไอคอนกับตัวเลขอยู่ในแนวนอน
+    paddingHorizontal: 20, // ให้แต่ละไอคอนมีระยะห่างที่เหมาะสม
+  },
+
+  divider: {
+    width: 2, // ความกว้างของเส้น
+    height: '80%', // ความสูงของเส้น (ทำให้เส้นสูงขึ้นเล็กน้อย)
+    backgroundColor: 'gray',
+    marginHorizontal: 10, // ระยะห่างจากไอคอน
+  },
+
+  laundryTitle: {
+    fontSize: 38,
+    fontFamily: 'Kanit-Regular',
+    marginLeft: 5, // เพิ่มระยะห่างระหว่างไอคอนกับตัวเลข
+    color: 'gray',
+  },
+
+
+
+
+
   modalTitle: {
-    fontSize: 18, 
+    fontSize: 18,
     fontFamily: 'Kanit-Regular',
 
   },
@@ -230,14 +339,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Kanit-Regular',
     color: 'white',
   },
+
+  // ปุ่มนำทาง
   navigateButton: {
-    backgroundColor: '#00a14b',
-    borderColor: '#3180E1',
-    borderWidth: 0,
+    backgroundColor: '#3180E1',
+    //borderColor: '#fff',
+    // borderWidth: 0,
     padding: 8,
     marginTop: 5,
     alignSelf: 'flex-start', // จัดปุ่มให้ชิดซ้าย
     borderRadius: 30,
 
   },
+
+  locationButton: {
+    position: 'absolute',
+    bottom: 120, // ปรับตำแหน่งให้อยู่ด้านล่าง
+    right: 20,  // ปรับให้อยู่ด้านขวา
+    backgroundColor: '#3180E1',
+    padding: 12,
+    borderRadius: 30,
+    elevation: 5, // เงา (Android)
+    shadowColor: '#000', // เงา (iOS)
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
+
 });
