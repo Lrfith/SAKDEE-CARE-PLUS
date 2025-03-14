@@ -1,6 +1,14 @@
 import { Platform, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+
+  headerRightText: {
+    marginRight: 15,
+    fontSize: 16,
+    color: 'black',
+    fontFamily: 'Kanit-Regular',
+  },
+
   container: {
     flex: 1,
   },

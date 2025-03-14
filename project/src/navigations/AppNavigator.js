@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { styles } from '../styles/app.styles'; // Import styles
 
 import HomeScreen from "../screens/HomeScreen";
 import SymbolsScreen from "../screens/SymbolsScreen";
@@ -21,20 +22,30 @@ const AppNavigator = () => {
       screenOptions={({ route }) => ({
         headerStyle: {
           height: 100,
-          // backgroundColor: '#3180e1',
+          // backgroundColor: '#459bec',
         },
+        headerLeft: () => (
+          <Image
+            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
+            style={{ width: '100%', height: 40, marginLeft: 10, }}
+          />
+        ),
+        headerTitle: '', // เอาชื่อออก
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: '#fff', 
-          height: 80, 
-          shadowColor: '#000', 
-          shadowOpacity: 0.1, 
-          shadowRadius: 10, 
-          shadowOffset: { width: 0, height: -4 }, 
-          elevation: 5, 
-          position: 'absolute', 
-
+          backgroundColor: '#fff',
+          height: 100,
+          shadowColor: '#000',
+          shadowOpacity: 0.1,
+          shadowRadius: 10,
+          shadowOffset: { width: 0, height: -4 },
+          elevation: 5,
+          position: 'absolute',
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          paddingTop: 10,
         },
+
         tabBarIcon: ({ focused, color, size }) => {
           const icons = {
             Home: "home",
@@ -55,34 +66,34 @@ const AppNavigator = () => {
         },
       })}
     >
+
       <Tab.Screen name="Home" component={HomeScreen} options={{
-        headerTintColor: '#fff', headerLeft: () => (
-          <Image
-            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
-            style={{ width: '100%', height: 40, marginLeft: 10 }}
-          />
-        ),
+        headerStyle: {
+          backgroundColor: '#459bec',
+          height: 100, // เพิ่มความสูงของ header
+        },
         headerRight: () => (
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <Ionicons name="person-circle" size={40} color='#6c757d' style={{ marginRight: 15, marginTop: 2 }} />
+            {/* <Ionicons name="person-circle" size={40} color='#6c757d' style={{ marginRight: 15, marginTop: 2 }} /> */}
+            <Image
+              source={require('../../assets/profile-icon.png')} // replace with your logo path
+              style={{ width: 40, height: 40, marginRight: 15, marginTop: 2, borderRadius: 100, }} />
           </TouchableOpacity>
         ),
-      }}
-      />
-      <Tab.Screen name="Symbols" component={SymbolsScreen} />
-      <Tab.Screen name="Camera" component={CameraScreen} />
-      <Tab.Screen name="Store" component={StoreScreen} options={{
-        headerTintColor: '#fff', headerLeft: () => (
-          <Image
-            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
-            style={{ width: '100%', height: 40, marginLeft: 10 }}
-          />
-        ),
-        headerRight: () => (
-          <Text style={{ marginRight: 15, fontSize: 16, color: 'black', fontFamily: 'Kanit-Regular', }}>ค้นหาสาขา</Text>
-        ),
       }} />
-      <Tab.Screen name="Tips" component={TipsScreen} />
+
+      <Tab.Screen name="Symbols" component={SymbolsScreen} options={{ headerRight: () => (
+          <Text style={styles.headerRightText}>สัญลักษณ์ผ้าบอกอะไร</Text> ), }} />
+
+      <Tab.Screen name="Camera" component={CameraScreen} options={{ headerRight: () => (
+          <Text style={styles.headerRightText}>สแกนชำระเงิน</Text> ), }} />
+
+      <Tab.Screen name="Store" component={StoreScreen} options={{ headerRight: () => (
+          <Text style={styles.headerRightText}>ค้นหาสาขา</Text> ), }} />
+
+      <Tab.Screen name="Tips" component={TipsScreen} options={{ headerRight: () => (
+          <Text style={styles.headerRightText}>Tips</Text> ), }} />
+
     </Tab.Navigator>
   );
 };

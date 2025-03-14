@@ -124,7 +124,7 @@ export default function StoreInfoScreen() {
           onPress={() => toggleModal(store)}
         >
           {/* ใช้ Image แทนไอคอน */}
-          <Image source={require('../../assets/store-icon.png')} style={{ width: 30, height: 30 }} />
+          <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
         </Marker>
         ))}
       </MapView>
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
     height: 'auto',
-    marginBottom: 100,
+    marginBottom: 120,
     margin: 10,
   },
 

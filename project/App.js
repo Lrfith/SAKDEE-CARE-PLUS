@@ -50,6 +50,10 @@ const App = () => {
           component={ProfileScreen}
           options={({ navigation }) => ({
             headerShown: true,  
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
