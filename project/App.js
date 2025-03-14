@@ -12,8 +12,6 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
-import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
-import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
 
 const Stack = createNativeStackNavigator();
 
@@ -61,8 +59,6 @@ const App = () => {
         />
 
         {/* Main App Screens */}
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="TipsScreen" component={TipsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
