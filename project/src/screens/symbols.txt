@@ -203,3 +203,421 @@ const styles = StyleSheet.create({
 });
 
 export default SymbolsScreen;
+
+Default State:
+
+A single placeholder symbol (question mark) with an instruction.
+Select State:
+
+Selected symbols get highlighted.
+The instruction remains without a green border.
+Display State:
+
+Selected symbols appear at the top.
+Submit button is added.
+The layout aligns with your reference.
+Now, I'll update your code accordingly.
+
+Default State:
+
+A single question mark icon with instruction text.
+Category buttons (like “ทั้งหมด” highlighted in blue).
+Laundry symbols displayed in grey.
+Select State:
+
+When a symbol is selected, it gets a blue highlight (border or background).
+The instruction text remains unchanged.
+Other symbols stay the same.
+Display State:
+
+The selected symbol appears in a new 6-box grid with blue borders.
+A large blue “submit” button appears below.
+
+
+correct 
+import { StyleSheet, View, Image, Text, FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import ButtonCustom from "../components/ButtonCustom";
+
+const SymbolsScreen = () => {
+  const [selectedSymbols, setSelectedSymbols] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("1"); // Default to "ทั้งหมด" (All)
+  const flatListRef = useRef(null);
+
+  // Laundry Categories
+  const categories = [
+    { id: "1", title: "ทั้งหมด" },
+    { id: "2", title: "การซัก" },
+    { id: "3", title: "อุณหภูมิ" },
+    { id: "4", title: "การซักแห้ง" },
+    { id: "5", title: "การใช้สารฟอกขาว" },
+    { id: "6", title: "การอบแห้ง" },
+    { id: "7", title: "การตากผ้า" },
+    { id: "8", title: "การรีด" },
+  ];
+
+  // Symbols for different categories
+  const Washing_symbols = [
+    { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
+    { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
+    { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
+  ];
+
+  const Temperature_symbols = [
+    { id: "1", image: require("../../assets/laundry_symbols/Temperature/cold.png") },
+    { id: "2", image: require("../../assets/laundry_symbols/Temperature/warm.png") },
+    { id: "3", image: require("../../assets/laundry_symbols/Temperature/hot.png") },
+    { id: "4", image: require("../../assets/laundry_symbols/Temperature/hot4.png") },
+    { id: "5", image: require("../../assets/laundry_symbols/Temperature/hot5.png") },
+    { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot6.png") },
+  ];
+
+  // Select the correct set of symbols based on category
+  const getSymbolsByCategory = () => {
+    switch (selectedCategory) {
+      case "2":
+        return Washing_symbols;
+      case "3":
+        return Temperature_symbols;
+      default:
+        return [...Washing_symbols, ...Temperature_symbols]; // Show all symbols
+    }
+  };
+
+  // Handle category selection
+  const handleCategorySelect = (id, name) => {
+    setSelectedCategory(id);
+    console.log(`id: ${id}, name: ${name}, click: true`);
+  };
+
+  // Handle symbol selection
+  const handleSymbolSelect = (id) => {
+    setSelectedSymbols((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((symbolId) => symbolId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Display Card */}
+      <View style={styles.displayCard}>
+        <View style={[styles.symbolContainer, { backgroundColor: "#C0C0C0FF" }]}>
+          <Image
+            source={require("../../assets/laundry_symbols/question.png")}
+            style={styles.symbol}
+          />
+        </View>
+        <Text style={styles.instructionText}>
+          กรุณาเลือกสัญลักษณ์เพื่อแสดงคำแนะนำ
+        </Text>
+      </View>
+
+      {/* Category Selection */}
+      <View style={styles.categoryContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={categories}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ButtonCustom
+              lable={item.title}
+              color={selectedCategory === item.id ? "#3180E1" : "#C0C0C0FF"}
+              colorText={selectedCategory === item.id ? "#fff" : "grey"}
+              onPress={() => handleCategorySelect(item.id, item.title)}
+              style={styles.buttonCategory}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+
+      {/* Display Selected Category Name */}
+      <Text style={styles.categoryTitle}>
+        {categories.find((cat) => cat.id === selectedCategory)?.title}
+      </Text>
+
+      {/* Symbols Section */}
+      <View style={styles.symbolsContainer}>
+        {getSymbolsByCategory().map((symbol) => {
+          const isSelected = selectedSymbols.includes(symbol.id);
+          return (
+            <TouchableOpacity key={symbol.id} style={styles.symbolTouchable}>
+              <ButtonCustom
+                color={isSelected ? "#3180E1" : "#C0C0C0FF"} // Change color when selected
+                style={styles.symbolContainer}
+                tintColor={isSelected ? "#3180E1" : "#6c757d"} // Change tint when selected
+                image={symbol.image}
+                onPress={() => handleSymbolSelect(symbol.id)}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  displayCard: {
+    flexDirection: "row", // Make text and image side by side
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+  },
+  symbolContainer: {
+    backgroundColor: "#C0C0C0FF",
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  instructionText: {
+    fontSize: 17,
+    fontWeight: "500",
+  },
+  symbol: {
+    width: 50,
+    height: 50,
+    tintColor: "#6c757d",
+  },
+  selectedSymbol: {
+    width: 50,
+    height: 50,
+    tintColor: "#3180E1",
+  },
+  categoryContainer: {
+    height: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+  buttonCategory: {
+    alignItems: "center",
+    borderRadius: 50,
+    height: 35,
+    borderWidth: 2,
+    justifyContent: "center",
+    width: 100,
+  },
+  categoryTitle: {
+    fontSize: 24,
+    margin: 10,
+    fontFamily: "Kanit-Regular",
+  },
+  symbolsContainer: {
+    flexDirection: "row",
+    gap: 15,
+    marginLeft: 5,
+    flexWrap: "wrap",
+  },
+  symbolTouchable: {
+    width: 80,
+    height: 80,
+  },
+});
+
+export default SymbolsScreen;
+
+
+most correct
+import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useRef } from "react";
+import ButtonCustom from "../components/ButtonCustom";
+
+const SymbolsScreen = () => {
+  const [selectedSymbols, setSelectedSymbols] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("1"); // Default to "ทั้งหมด"
+  const flatListRef = useRef(null);
+
+  // Laundry Categories
+  const categories = [
+    { id: "1", title: "ทั้งหมด" },
+    { id: "2", title: "การซัก" },
+    { id: "3", title: "อุณหภูมิ" },
+  ];
+
+  // Symbols for each category
+  const allSymbols = [
+    {
+      id: "2",
+      title: "การซัก",
+      symbols: [
+        { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
+        { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
+        { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
+      ],
+    },
+    {
+      id: "3",
+      title: "อุณหภูมิ",
+      symbols: [
+        { id: "4", image: require("../../assets/laundry_symbols/Temperature/cold.png") },
+        { id: "5", image: require("../../assets/laundry_symbols/Temperature/warm.png") },
+        { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot.png") },
+        { id: "7", image: require("../../assets/laundry_symbols/Temperature/hot4.png") },
+        { id: "8", image: require("../../assets/laundry_symbols/Temperature/hot5.png") },
+        { id: "9", image: require("../../assets/laundry_symbols/Temperature/hot6.png") },
+      ],
+    },
+  ];
+
+  // Get symbols based on selected category
+  const getFilteredSymbols = () => {
+    if (selectedCategory === "1") {
+      return allSymbols; // Show all categories
+    }
+    return allSymbols.filter((category) => category.id === selectedCategory);
+  };
+
+  // Toggle symbol selection
+  const handleSymbolSelect = (id) => {
+    setSelectedSymbols((prevSelected) =>
+      prevSelected.includes(id)
+        ? prevSelected.filter((symbolId) => symbolId !== id)
+        : [...prevSelected, id]
+    );
+  };
+
+  // Handle category selection
+  const handleCategorySelect = (id, name) => {
+    setSelectedCategory(id);
+    console.log(`id: ${id}, name: ${name}, click: true`);
+  };
+
+  return (
+    <View style={styles.container}>
+      {/* Display Card */}
+      <View style={styles.displayCard}>
+        <View style={[styles.symbolContainer, { backgroundColor: "#C0C0C0FF" }]}>
+          <Image
+            source={require("../../assets/laundry_symbols/question.png")}
+            style={styles.symbol}
+          />
+        </View>
+        <Text style={styles.instructionText}>
+          กรุณาเลือกสัญลักษณ์เพื่อแสดงคำแนะนำ
+        </Text>
+      </View>
+
+      {/* FlatList for Category Selection */}
+      <View style={styles.categoryContainer}>
+        <FlatList
+          ref={flatListRef}
+          data={categories}
+          horizontal
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ButtonCustom
+              lable={item.title}
+              color={selectedCategory === item.id ? "#3180E1" : "#C0C0C0FF"}
+              colorText={selectedCategory === item.id ? "#fff" : "grey"}
+              onPress={() => handleCategorySelect(item.id, item.title)}
+              style={styles.buttonCategory}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+
+      {/* ScrollView for Symbols */}
+      <ScrollView style={styles.scrollContainer}>
+        {getFilteredSymbols().map((category) => (
+          <View key={category.id} style={styles.categorySection}>
+            {/* Category Title */}
+            <Text style={styles.categoryTitle}>{category.title}</Text>
+
+            {/* Symbol Grid */}
+            <View style={styles.symbolsContainer}>
+              {category.symbols.map((symbol) => {
+                const isSelected = selectedSymbols.includes(symbol.id);
+                return (
+                  <TouchableOpacity key={symbol.id} style={styles.symbolTouchable}>
+                    <ButtonCustom
+                      color={isSelected ? "#3180E1" : "#C0C0C0FF"} // Change color when selected
+                      style={styles.symbolContainer}
+                      tintColor={isSelected ? "#3180E1" : "#6c757d"} // Change tint when selected
+                      image={symbol.image}
+                      onPress={() => handleSymbolSelect(symbol.id)}
+                    />
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  displayCard: {
+    flexDirection: "row", // Make text and image side by side
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 10,
+  },
+  symbolContainer: {
+    backgroundColor: "#C0C0C0FF",
+    width: 80,
+    height: 80,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  instructionText: {
+    fontSize: 17,
+    fontWeight: "500",
+  },
+  categoryContainer: {
+    height: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+  scrollContainer: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+  categorySection: {
+    marginBottom: 20,
+  },
+  categoryTitle: {
+    fontSize: 24,
+    fontFamily: "Kanit-Regular",
+    marginBottom: 10,
+  },
+  symbolsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 15,
+  },
+  symbolTouchable: {
+    width: 80,
+    height: 80,
+  },
+  buttonCategory: {
+    alignItems: "center",
+    borderRadius: 50,
+    height: 35,
+    borderWidth: 2,
+    justifyContent: "center",
+    width: 100,
+  },
+});
+
+export default SymbolsScreen;
