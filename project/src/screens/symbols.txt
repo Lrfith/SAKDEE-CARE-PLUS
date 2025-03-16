@@ -1,10 +1,9 @@
-import { StyleSheet, View, Image, Text, FlatList, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, Text, FlatList } from "react-native";
 import React, { useState, useRef } from "react";
 import ButtonCustom from "../components/ButtonCustom";
 
 const SymbolsScreen = () => {
-  // const [selectedSymbols, setSelectedSymbols] = useState([1, 2, 3, 4, 5, 6]);
-  const [selectedSymbols, setSelectedSymbols] = useState([]); // Ensure IDs are strings
+  const [selectedSymbols, setSelectedSymbols] = useState([1, 2, 3, 4, 5, 6]);
   const [selectedCategory, setSelectedCategory] = useState("1");
   const getSymbolStyle = (index) =>
     selectedSymbols.includes(index) ? styles.selectedSymbol : styles.symbol;
@@ -22,11 +21,10 @@ const SymbolsScreen = () => {
     { id: "8", title: "การรีด" },
   ];
 
-  const Washing_symbols = [
+  const symbols = [
     { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
     { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
     { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
-    //{ id: "4", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
   ];
 
   // Function to handle category selection
@@ -48,7 +46,7 @@ const SymbolsScreen = () => {
     <View style={styles.container}>
       {/* Display Card */}
       <View style={styles.displayCard}>
-        <View style={[styles.symbolContainer, { backgroundColor: "#C0C0C0FF" }]}>
+        <View style={styles.symbolContainer}>
           <Image
             source={require("../../assets/laundry_symbols/question.png")}
             style={styles.symbol}
@@ -86,30 +84,61 @@ const SymbolsScreen = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
+
+      
+      {/* All Symbols */}
       <View style={{ backgroundColor: "", flex: 1 }}>
         <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
           การซัก
         </Text>
-
-        <View style={{ flexDirection: "row", gap: 15, marginLeft: 5 }}>
-          {Washing_symbols.map((symbol) => {
-            const isSelected = selectedSymbols.includes(symbol.id);
-            return (
-              <TouchableOpacity
-                key={symbol.id}
-                style={{ width: 80, height: 80 }}
-              >
-                <ButtonCustom
-                  color={isSelected ? "#3180E1" : "#C0C0C0FF"} // Change color when selected
-                  style={styles.symbolContainer}
-                  tintColor={isSelected ? "#3180E1" : "#6c757d"} // Change tint when selected
-                  image={symbol.image}
-                  onPress={() => handleSymbolSelect(symbol.id)}
-                />
-              </TouchableOpacity>
-            );
-          })}
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <View style={{ width: 80, height: 80 }}>
+            <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/hand-wash.png")}
+            />
+          </View>
+          <View style={{ width: 80, height: 80 }}>
+          <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/hand-dry-wash.png")}
+            />
+          </View>
+          <View style={{ width: 80, height: 80 }}>
+          <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/dry-wash.png")}
+            />
+          </View>
         </View>
+
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          อุณหภูมิ
+        </Text>
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          การซักแห้ง
+        </Text>
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          การใช้สารฟอกขาว
+        </Text>
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          การอบแห้ง
+        </Text>
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          การตากผ้า
+        </Text>
+        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+          การรีด
+        </Text>
       </View>
     </View>
   );
