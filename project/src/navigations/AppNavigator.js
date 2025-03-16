@@ -121,7 +121,7 @@ const AppNavigator = () => {
           <Text style={styles.headerRightText}>Tips</Text>),
       }} />
 
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
 
     </Tab.Navigator>
   );
