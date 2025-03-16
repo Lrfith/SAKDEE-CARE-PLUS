@@ -80,12 +80,12 @@ const AppNavigator = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
 
               <TouchableOpacity onPress={() => navigation.navigate('ChatBoard')}>
-                <Ionicons name="chatbubbles-outline" size={32} color="black" paddingRight={20} />
+                <Ionicons name="chatbubbles-outline" size={32} color="white" paddingRight={20} />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 20 }}>
                 <Image
-                  source={require('../../assets/profile-icon.png')}
+                  source={require('../../assets/icon.png')}
                   style={{
                     width: 40,
                     height: 40,
@@ -121,6 +121,7 @@ const AppNavigator = () => {
           <Text style={styles.headerRightText}>Tips</Text>),
       }} />
 
+      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
       {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
 
     </Tab.Navigator>
