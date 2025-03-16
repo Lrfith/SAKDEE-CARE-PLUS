@@ -33,15 +33,15 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = () => {
-    if (!userName || !email || !password) {
-      Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
-      return;
-    }
+    // if (!userName || !email || !password) {
+    //   Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
+    //   return;
+    // }
 
-    if (!email.includes("@gmail.com")) {
-      Alert.alert("อีเมลไม่ถูกต้อง");
-      return;
-    }
+    // if (!email.includes("@gmail.com")) {
+    //   Alert.alert("อีเมลไม่ถูกต้อง");
+    //   return;
+    // }
 
     navigation.navigate("Verification");
   };

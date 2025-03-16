@@ -20,6 +20,7 @@ const SymbolsScreen = () => {
     { id: "7", title: "การตากผ้า" },
     { id: "8", title: "การรีด" },
   ];
+
   // Function to handle category selection
   const handleCategorySelect = (id, name) => {
     setSelectedCategory(id);
@@ -73,9 +74,37 @@ const SymbolsScreen = () => {
         <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
           การซัก
         </Text>
-        <Image source={require("../../assets/laundry_symbols/question.png")}
-            style={styles.symbol}/>
-        <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <View style={{ width: 80, height: 80 }}>
+            <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/hand-wash.png")}
+            />
+          </View>
+          <View style={{ width: 80, height: 80 }}>
+          <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/hand-dry-wash.png")}
+            />
+          </View>
+          <View style={{ width: 80, height: 80 }}>
+          <ButtonCustom
+              color="#C0C0C0FF"
+              colorText="grey"
+              style={styles.symbolContainer}
+              tintColor='#6c757d'
+              image={require("../../assets/laundry_symbols/Washing/dry-wash.png")}
+            />
+          </View>
+        </View>
+
+        {/* <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
           อุณหภูมิ
         </Text>
         <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
@@ -92,7 +121,7 @@ const SymbolsScreen = () => {
         </Text>
         <Text style={{ fontSize: 24, margin: 10, fontFamily: "Kanit-Regular" }}>
           การรีด
-        </Text>
+        </Text> */}
       </View>
     </View>
   );

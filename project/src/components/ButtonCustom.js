@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { styles } from "../styles/app.styles";
 
-const ButtonCustom = ({ lable, onPress, color, colorText, border, style }) => {
+const ButtonCustom = ({ lable, onPress, color, colorText, border, style, image, tintColor }) => {
   return (
     <TouchableOpacity
+    
       style={[
         styles.button,
         {
@@ -12,12 +13,22 @@ const ButtonCustom = ({ lable, onPress, color, colorText, border, style }) => {
           borderColor: border || color,
           flex: 1,
           marginHorizontal: 5,
+          flexDirection: 'row', // Arrange image and text horizontally
+          alignItems: 'center', // Center vertically
+          justifyContent: 'center', // Center horizontally
         },
         style,
       ]}
       onPress={onPress}
       activeOpacity={0.7}
     >
+      {image && (
+        <Image
+          source={image}
+          style={{ width: 50, height: 50, marginLeft: 5, tintColor: tintColor}} // Adjust size & spacing
+          resizeMode="contain"
+        />
+      )}
       <Text style={[styles.defaultText, { color: colorText }]}>{lable}</Text>
     </TouchableOpacity>
   );
