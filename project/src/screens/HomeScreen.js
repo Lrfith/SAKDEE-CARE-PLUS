@@ -58,6 +58,7 @@ const tips = [
 ];
 
 const Home = () => {
+  
   const [weatherData, setWeatherData] = useState({});
 
   useEffect(() => {

@@ -11,6 +11,7 @@ import SymbolsScreen from "../screens/SymbolsScreen";
 import CameraScreen from "../screens/CameraScreen";
 import StoreScreen from "../screens/StoreScreen";
 import TipsScreen from "../screens/TipsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -119,6 +120,8 @@ const AppNavigator = () => {
         headerRight: () => (
           <Text style={styles.headerRightText}>Tips</Text>),
       }} />
+
+      <Tab.Screen name="Profile" component={ProfileScreen} />
 
     </Tab.Navigator>
   );

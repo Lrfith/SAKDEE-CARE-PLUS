@@ -15,14 +15,18 @@ import ProfileScreen from "./src/screens/ProfileScreen";
 import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
 import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
 import ChatScreen from "./src/screens/ChatScreen";
+import CustomDrawer from "./src/screens/ProfileScreen";
 
 
 const Stack = createNativeStackNavigator();
+
+
 
 const App = () => {
   const [fontsLoaded] = useFonts({
     "Kanit-Regular": require("./assets/fonts/Kanit-Regular.ttf"),
     "Kanit-Bold": require("./assets/fonts/Kanit-Bold.ttf"),
+    "Kanit-Thin":  require("./assets/fonts/Kanit-Thin.ttf"),
   });
 
   if (!fontsLoaded) {
