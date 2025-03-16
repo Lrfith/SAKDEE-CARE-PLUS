@@ -120,7 +120,7 @@ const Home = () => {
       resizeMode="cover" // ปรับขนาดรูปให้เต็มจอ
     >
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
           {/* // Greeting Section */}
           <Text style={styles.sectionGeeting}>{getGreeting()}, Nuttamon!</Text>

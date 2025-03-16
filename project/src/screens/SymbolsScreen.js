@@ -159,7 +159,8 @@ const SymbolsScreen = () => {
       </View>
 
       {/* ✅ Symbols Display (Scrollable) */}
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}
+      >
         {getFilteredSymbols().map((category) => (
           <View key={category.id} style={styles.categorySection}>
             {/* Category Title */}
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginBottom: 100
+    marginBottom: 100,
   },
   categorySection: {
     marginBottom: 20,
