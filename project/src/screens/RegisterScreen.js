@@ -7,6 +7,8 @@ import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"; // Import KeyboardAwareScrollView
+import { auth, db, createUserWithEmailAndPassword, setDoc, doc } from "../components/firebaseConfig";
+import { sendEmailVerification } from "firebase/auth"; // เพิ่มบรรทัดนี้
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -32,18 +34,37 @@ const RegisterScreen = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleRegister = () => {
-    // if (!userName || !email || !password) {
-    //   Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
-    //   return;
-    // }
-
-    // if (!email.includes("@gmail.com")) {
-    //   Alert.alert("อีเมลไม่ถูกต้อง");
-    //   return;
-    // }
-
-    navigation.navigate("Verification");
+  const handleRegister = async () => {
+    if (!userName || !email || !password) {
+      Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
+      return;
+    }
+  
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      Alert.alert("อีเมลไม่ถูกต้อง", "กรุณากรอกอีเมลในรูปแบบที่ถูกต้อง เช่น example@example.com");
+      return;
+    }
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // ส่งอีเมลยืนยัน
+      await sendEmailVerification(user);
+      
+      await setDoc(doc(db, "users", user.uid), {
+        userName: userName,
+        email: email,
+        createdAt: new Date(),
+        verified: false, // เก็บสถานะว่าอีเมลยังไม่ได้ยืนยัน
+      });
+  
+      Alert.alert("สมัครสมาชิกสำเร็จ", "กรุณาตรวจสอบอีเมลของคุณเพื่อยืนยันบัญชี");
+      navigation.navigate("Login");
+    } catch (error) {
+      Alert.alert("เกิดข้อผิดพลาด", error.message);
+    }
   };
 
   return (
