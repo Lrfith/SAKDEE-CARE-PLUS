@@ -68,7 +68,7 @@ const LoginScreen = () => {
                 onSubmitEditing={() => passwordRef.current.focus()}
               />
               <Text style={styles.defaultText}>รหัสผ่าน</Text>
-              <View style={{ position: "relative"}}>
+              <View style={{ position: "relative" }}>
                 <TextInput
                   style={styles.input}
                   placeholder="กรอกรหัสผ่าน"
@@ -82,6 +82,12 @@ const LoginScreen = () => {
                   <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={30} color="grey" />
                 </TouchableOpacity>
               </View>
+            </View>
+
+            <View style={{ flexDirection: "row", justifyContent: 'flex-end', alignItems: "center" }}>
+              <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+                <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey' }]}>ลืมรหัสผ่าน?</Text>
+              </TouchableOpacity>
             </View>
 
             <View style={{ flexDirection: "row", marginTop: 30, marginBottom: 30 }}>

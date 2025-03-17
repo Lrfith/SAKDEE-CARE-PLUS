@@ -26,14 +26,14 @@ const VerificationScreen = () => {
           <View style={styles.screenContainer}>
             <Image
               source={require('../../assets/image/IconSymbols.png')}
-              style={{ width: 140, height: 160, marginTop: 30 }}
+              style={{ width: 140, height: 160, marginTop: 130 }}
             />
           </View>
 
           {/* Animated Card */}
           <Animated.View style={[
             styles.card,
-            { height: 600 },
+            { height: 400 },
             { transform: [{ translateY: slideAnim }] },
           ]}>
             <Text style={styles.title}>การยืนยัน</Text>
