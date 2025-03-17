@@ -202,6 +202,7 @@ const SymbolsScreen = () => {
             </View>
           </View>
         ))}
+        <View style={{ height: 100 }} />
       </ScrollView>
     </View>
   );
@@ -248,7 +249,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     paddingHorizontal: 10,
-    marginBottom: 100,
   },
   categorySection: {
     marginBottom: 20,

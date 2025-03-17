@@ -4,6 +4,9 @@ import { Card } from "@rneui/themed";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { auth, db } from '../components/firebaseConfig';
+import { onAuthStateChanged } from "firebase/auth";
+import { getDoc, doc } from "firebase/firestore";
 
 const getGreeting = () => {
   const hour = new Date().getHours();
@@ -60,6 +63,22 @@ const tips = [
 const Home = () => {
   
   const [weatherData, setWeatherData] = useState({});
+  const [userName, setUserName] = useState("User");
+
+    // Fetch user's name from Firebase Authentication or Firestore
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        if (currentUser) {
+          const userDocRef = doc(db, "users", currentUser.uid);
+          const userSnap = await getDoc(userDocRef);
+          if (userSnap.exists()) {
+            setUserName(userSnap.data().userName || "User");
+          }
+        }
+      });
+  
+      return () => unsubscribe();
+    }, []);
 
   useEffect(() => {
     const located = "Bangkok,TH"; // ตำแหน่งที่ตั้ง
@@ -124,7 +143,7 @@ const Home = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
           {/* // Greeting Section */}
-          <Text style={styles.sectionGeeting}>{getGreeting()}, Nuttamon!</Text>
+          <Text style={styles.sectionGeeting}>{getGreeting()}, {userName}!</Text>
           {/* <Text style={styles.sectionGeeting}>{getGreeting()}, Guest User!</Text> */}
 
           {/* // Weather Section */}

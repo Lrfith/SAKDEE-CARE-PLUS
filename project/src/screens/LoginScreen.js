@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Platform } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert } from "react-native";
 import { Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,6 +16,10 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  
+  // Refs for input fields
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   useEffect(() => {
     Animated.timing(slideAnim, {
@@ -30,13 +34,13 @@ const LoginScreen = () => {
   };
 
   const handleLogin = async () => {
-    if (!email || !password) {
+    if (!email.trim() || !password) {
       Alert.alert("ข้อผิดพลาด", "กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
       return;
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email.trim().toLowerCase(), password);
       const user = userCredential.user;
 
       // ตรวจสอบว่าอีเมลได้รับการยืนยันแล้ว
@@ -45,14 +49,12 @@ const LoginScreen = () => {
         return;
       }
 
-      // Alert.alert("เข้าสู่ระบบสำเร็จ", `ยินดีต้อนรับ ${user.displayName}`);
       Alert.alert("เข้าสู่ระบบสำเร็จ", `ยินดีต้อนรับ ${user.email}`);
       navigation.navigate("AppNavigator"); // เปลี่ยนไปหน้าแอปหลัก
     } catch (error) {
-      Alert.alert("เข้าสู่ระบบไม่สำเร็จ", "\nอีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง\n" + error.message );
+      Alert.alert("เข้าสู่ระบบไม่สำเร็จ", "อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง\n" + error.message);
     }
   };
-
 
   return (
     <KeyboardAwareScrollView
@@ -79,26 +81,30 @@ const LoginScreen = () => {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                autoCorrect={false}
+                ref={emailRef}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordRef.current?.focus()}
               />
 
               <Text style={styles.defaultText}>รหัสผ่าน</Text>
-              <View style={{ position: "relative" }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { flex: 1 }]}
                   placeholder="กรอกรหัสผ่าน"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry={!passwordVisible}
-                  ref={passwordRef}
                   returnKeyType="done"
+                  ref={passwordRef}
                 />
-                <TouchableOpacity style={styles.eyeIcon} onPress={togglePasswordVisibility}>
-                  <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={30} color="grey" />
+                <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
+                  <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={25} color="grey" />
                 </TouchableOpacity>
               </View>
             </View>
 
-            <View style={{ flexDirection: "row", justifyContent: 'flex-end', alignItems: "center" }}>
+            <View style={{ flexDirection: "row", justifyContent: 'flex-end', alignItems: "center", marginTop: 10 }}>
               <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
                 <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey' }]}>ลืมรหัสผ่าน?</Text>
               </TouchableOpacity>

@@ -5,18 +5,14 @@ import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../components/firebaseConfig" // นำเข้า Firebase ที่ตั้งค่าไว้
 
 const ForgotPassword = () => {
     const navigation = useNavigation();
     const slideAnim = useRef(new Animated.Value(500)).current;
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
 
     useEffect(() => {
         Animated.timing(slideAnim, {
@@ -26,8 +22,19 @@ const ForgotPassword = () => {
         }).start();
     }, []);
 
-    const handleForgotPassword = () => {
-        navigation.navigate("Login");
+    const handleForgotPassword = async () => {
+        if (!email.trim()) {
+            alert("กรุณากรอกอีเมล");
+            return;
+        }
+    
+        try {
+            await sendPasswordResetEmail(auth, email);
+            alert("เราได้ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้ว!");
+            navigation.navigate("Login"); // กลับไปหน้า Login หลังส่งอีเมล
+        } catch (error) {
+            alert("เกิดข้อผิดพลาด: " + error.message);
+        }
     };
 
     return (
@@ -59,9 +66,9 @@ const ForgotPassword = () => {
                                 value={email}
                                 onChangeText={setEmail}
                                 keyboardType="email-address"
-                                ref={emailRef}
-                                returnKeyType="next"
-                                onSubmitEditing={() => passwordRef.current.focus()}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                onSubmitEditing={handleForgotPassword}
                             />
 
 
