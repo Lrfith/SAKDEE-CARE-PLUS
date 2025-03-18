@@ -63,7 +63,7 @@ const tips = [
 const Home = () => {
   
   const [weatherData, setWeatherData] = useState({});
-  const [userName, setUserName] = useState("User");
+  const [userName, setUserName] = useState("Guest User");
 
     // Fetch user's name from Firebase Authentication or Firestore
     useEffect(() => {

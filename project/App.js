@@ -16,6 +16,7 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 
 import ChatScreen from "./src/screens/ChatScreen";
 import CustomDrawer from "./src/screens/ProfileScreen";
+import DisplaySymbols from "./src/screens/DisplaySymbols";
 
 
 const Stack = createNativeStackNavigator();
@@ -26,7 +27,7 @@ const App = () => {
   const [fontsLoaded] = useFonts({
     "Kanit-Regular": require("./assets/fonts/Kanit-Regular.ttf"),
     "Kanit-Bold": require("./assets/fonts/Kanit-Bold.ttf"),
-    "Kanit-Thin":  require("./assets/fonts/Kanit-Thin.ttf"),
+    "Kanit-Thin": require("./assets/fonts/Kanit-Thin.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -41,8 +42,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false, // DONT FORGET TO CHANGE TO 'FALSE'
-          gestureEnabled: true,
+          headerShown: false, 
+          gestureEnabled: true, // DONT FORGET TO CHANGE TO 'FALSE'
         }}
       >
         {/* Authentication Screens */}
@@ -74,7 +75,7 @@ const App = () => {
         <Stack.Screen
           name="ChatBoard"
           component={ChatScreen} // ชื่อที่ใช้ต้องตรงกับ import
-          
+
           options={({ navigation }) => ({
             headerShown: true,
             headerTitleStyle: {
@@ -90,11 +91,22 @@ const App = () => {
             ),
           })}
         />
-
-
-
-
-        {/* Main App Screens */}
+        <Stack.Screen name="DisplaySymbols" component={DisplaySymbols}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

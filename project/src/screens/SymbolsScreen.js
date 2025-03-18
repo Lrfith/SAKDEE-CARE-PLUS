@@ -1,12 +1,15 @@
 import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import React, { useState, useRef } from "react";
 import ButtonCustom from "../components/ButtonCustom";
+import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
+import { styles } from '../styles/app.styles';
 
 const SymbolsScreen = () => {
   const [selectedSymbols, setSelectedSymbols] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("1"); // Default to "ทั้งหมด"
   const flatListRef = useRef(null);
-
+  const navigation = useNavigation();
+  
   // Laundry Categories
   const categories = [
     { id: "1", title: "ทั้งหมด" },
@@ -107,18 +110,18 @@ const SymbolsScreen = () => {
     return allSymbols.filter((category) => category.id === selectedCategory);
   };
 
-    // Toggle symbol selection (limit to 6)
-    const handleSymbolSelect = (id) => {
-      setSelectedSymbols((prevSelected) => {
-        if (prevSelected.includes(id)) {
-          // If already selected, remove from the list
-          return prevSelected.filter((symbolId) => symbolId !== id);
-        } else {
-          // If not selected and less than 6 selections, add it
-          return prevSelected.length < 6 ? [...prevSelected, id] : prevSelected;
-        }
-      });
-    };
+  // Toggle symbol selection (limit to 6)
+  const handleSymbolSelect = (id) => {
+    setSelectedSymbols((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        // If already selected, remove from the list
+        return prevSelected.filter((symbolId) => symbolId !== id);
+      } else {
+        // If not selected and less than 6 selections, add it
+        return prevSelected.length < 6 ? [...prevSelected, id] : prevSelected;
+      }
+    });
+  };
 
   // Handle category selection
   const handleCategorySelect = (id, name) => {
@@ -130,29 +133,29 @@ const SymbolsScreen = () => {
     <View style={styles.container}>
       {/* ✅ Display Card (Unchanged) */}
       <View style={styles.displayCard}>
-  {selectedSymbols.length > 0 ? (
-    <View style={styles.selectedSymbolsGrid}>
-      {selectedSymbols.map((symbolId) => {
-        // Find the selected symbol from allSymbols array
-        const symbol = allSymbols.flatMap((category) => category.symbols).find((s) => s.id === symbolId);
-        return (
-          <TouchableOpacity key={symbol.id} onPress={() => handleSymbolSelect(symbol.id)}>
-            <View style={styles.symbolContainerDisplay}>
-              <Image source={symbol.image} style={[styles.symbolImage, {tintColor: '#3180E1'}]} resizeMode="contain" />
+        {selectedSymbols.length > 0 ? (
+          <View style={styles.selectedSymbolsGrid}>
+            {selectedSymbols.map((symbolId) => {
+              // Find the selected symbol from allSymbols array
+              const symbol = allSymbols.flatMap((category) => category.symbols).find((s) => s.id === symbolId);
+              return (
+                <TouchableOpacity key={symbol.id} onPress={() => handleSymbolSelect(symbol.id)}>
+                  <View style={[styles.symbolContainerDisplay, styles.shadowStyle]}>
+                    <Image source={symbol.image} style={[styles.symbolImage, { tintColor: '#3180E1' }]} resizeMode="contain" />
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ) : (
+          <View style={styles.placeholderContainer}>
+            <View style={[styles.symbolContainer, styles.shadowStyle]}>
+              <Image source={require("../../assets/laundry_symbols/question.png")} style={styles.symbolImage} resizeMode="contain" />
             </View>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  ) : (
-    <View style={styles.placeholderContainer}>
-      <View style={styles.symbolContainer}>
-        <Image source={require("../../assets/laundry_symbols/question.png")} style={styles.symbolImage} resizeMode="contain" />
+            <Text style={styles.instructionText}>กรุณาเลือกสัญลักษณ์เพื่อแสดงคำแนะนำ</Text>
+          </View>
+        )}
       </View>
-      <Text style={styles.instructionText}>กรุณาเลือกสัญลักษณ์เพื่อแสดงคำแนะนำ</Text>
-    </View>
-  )}
-</View>
 
 
       {/* ✅ Category Selection with FlatList */}
@@ -174,7 +177,19 @@ const SymbolsScreen = () => {
           showsHorizontalScrollIndicator={false}
         />
       </View>
-
+      {/* ปุ่มเมื่อเลือก symbols */}
+      {selectedSymbols.length > 0 && (
+        <View style={styles.floatingButton}>
+          <ButtonCustom
+            lable="ยืนยัน"
+            color="#3180E1"
+            colorText="#fff"
+            onPress={() => navigation.navigate('DisplaySymbols')}
+            style={styles.confirmButton}
+          />
+        </View>
+      )}
+      
       {/* ✅ Symbols Display (Scrollable) */}
       <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}
       >
@@ -188,10 +203,10 @@ const SymbolsScreen = () => {
               {category.symbols.map((symbol) => {
                 const isSelected = selectedSymbols.includes(symbol.id);
                 return (
-                  <TouchableOpacity key={symbol.id} style={styles.symbolTouchable}>
+                  <TouchableOpacity key={symbol.id} style={[ styles.symbolTouchable, styles.shadowStyle]}>
                     <ButtonCustom
-                      color="#DDDDDDFF" 
-                      style={styles.symbolContainer}
+                      color="#fff"
+                      style={[styles.symbolContainer, styles.shadowStyle]}
                       tintColor={isSelected ? "#3180E1" : "#6c757d"} // Change tint when selected
                       image={symbol.image}
                       onPress={() => handleSymbolSelect(symbol.id)}
@@ -202,106 +217,11 @@ const SymbolsScreen = () => {
             </View>
           </View>
         ))}
-        <View style={{ height: 100 }} />
+
+        <View style={{ height: 170 }} />
       </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  displayCard: {
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    padding: 15,
-    borderRadius: 15,
-    minHeight: 100,
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  symbolContainer: {
-    backgroundColor: "#DDDDDDFF",
-    width: 80,
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  questionImage: {
-    width: 50, // ✅ Fixed size
-    height: 50, // ✅ Fixed size
-    tintColor: 'grey'
-  },
-  instructionText: {
-    fontSize: 17,
-    fontWeight: "500",
-  },
-  categoryContainer: {
-    height: 60,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 10,
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-  categorySection: {
-    marginBottom: 20,
-  },
-  categoryTitle: {
-    fontSize: 24,
-    fontFamily: "Kanit-Regular",
-    marginBottom: 10,
-  },
-  symbolsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 15,
-  },
-  symbolTouchable: {
-    width: 80,
-    height: 80,
-  },
-  buttonCategory: {
-    alignItems: "center",
-    borderRadius: 50,
-    height: 35,
-    borderWidth: 2,
-    justifyContent: "center",
-    width: 100,
-  },
-  symbolImage: {
-    width: 50,
-    height: 50,
-    
-  },
-  selectedSymbolsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-  },
-  placeholderContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  symbolContainerDisplay: {
-    backgroundColor: "#DDDDDDFF",
-    width: 80,
-    height: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  
-});
 
 export default SymbolsScreen;
