@@ -57,6 +57,7 @@ const RegisterScreen = () => {
       await setDoc(doc(db, "users", user.uid), {
         userName: userName,
         email: email,
+        password: password,
         createdAt: new Date(),
         verified: false, // เก็บสถานะว่าอีเมลยังไม่ได้ยืนยัน
       });

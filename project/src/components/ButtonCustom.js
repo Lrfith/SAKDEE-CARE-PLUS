@@ -25,7 +25,7 @@ const ButtonCustom = ({ lable, onPress, color, colorText, border, style, image, 
       {image && (
         <Image
           source={image}
-          style={{ width: 50, height: 50, marginLeft: 5, tintColor: tintColor}} // Adjust size & spacing
+          style={{ width: 40, height: 40, marginLeft: 5, tintColor: tintColor}} // Adjust size & spacing
           resizeMode="contain"
         />
       )}

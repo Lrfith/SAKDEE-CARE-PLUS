@@ -4,110 +4,116 @@ import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
 import { styles } from '../styles/app.styles';
 
+// Laundry Categories
+const categories = [
+  { id: "1", title: "ทั้งหมด" },
+  { id: "2", title: "การซัก" },
+  { id: "3", title: "อุณหภูมิ" },
+  { id: "4", title: "การซักแห้ง" },
+  { id: "5", title: "สารฟอกขาว" },
+  { id: "6", title: "การอบแห้ง" },
+  { id: "7", title: "การตากผ้า" },
+  { id: "8", title: "การรีด" },
+];
+
+// Symbols for each category
+const allSymbols = [
+  {
+    id: "2",
+    title: "การซัก",
+    symbols: [
+      { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
+      { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
+      { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
+    ],
+  },
+  {
+    id: "3",
+    title: "อุณหภูมิ",
+    symbols: [
+      { id: "4", image: require("../../assets/laundry_symbols/Temperature/cold.png") },
+      { id: "5", image: require("../../assets/laundry_symbols/Temperature/warm.png") },
+      { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot.png") },
+      { id: "7", image: require("../../assets/laundry_symbols/Temperature/hot4.png") },
+      { id: "8", image: require("../../assets/laundry_symbols/Temperature/hot5.png") },
+      { id: "9", image: require("../../assets/laundry_symbols/Temperature/hot6.png") },
+    ],
+  },
+  {
+    id: "4",
+    title: 'การซักแห้ง',
+    symbols: [
+      { id: "10", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-clean.png") },
+      { id: "11", image: require("../../assets/laundry_symbols/Dry_Cleaning/do-not-dry.png") },
+      { id: "12", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-non-chlorine.png") },
+      { id: "13", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-hydrocarbon.png") },
+      { id: "14", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-all.png") },
+    ],
+  },
+  {
+    id: "5",
+    title: 'การใช้สารฟอกขาว',
+    symbols: [
+      { id: "15", image: require("../../assets/laundry_symbols/Bleaching/bleach.png") },
+      { id: "16", image: require("../../assets/laundry_symbols/Bleaching/not-bleach.png") },
+      { id: "17", image: require("../../assets/laundry_symbols/Bleaching/chlorine.png") },
+      { id: "18", image: require("../../assets/laundry_symbols/Bleaching/non-chlorine.png") },
+    ],
+  },
+  {
+    id: "6",
+    title: 'การอบแห้ง',
+    symbols: [
+      { id: "19", image: require("../../assets/laundry_symbols/Tumble_Drying/tumble-dry.png") },
+      { id: "20", image: require("../../assets/laundry_symbols/Tumble_Drying/low.png") },
+      { id: "21", image: require("../../assets/laundry_symbols/Tumble_Drying/medium.png") },
+      { id: "22", image: require("../../assets/laundry_symbols/Tumble_Drying/high.png") },
+      { id: "23", image: require("../../assets/laundry_symbols/Tumble_Drying/do-not-tumble-dry.png") },
+    ],
+  },
+  {
+    id: "7",
+    title: 'การตากผ้า',
+    symbols: [
+      { id: "24", image: require("../../assets/laundry_symbols/Line_Drying/hang.png") },
+      { id: "25", image: require("../../assets/laundry_symbols/Line_Drying/drip-dry.png") },
+      { id: "26", image: require("../../assets/laundry_symbols/Line_Drying/dry.png") },
+      { id: "27", image: require("../../assets/laundry_symbols/Line_Drying/shade.png") },
+      { id: "28", image: require("../../assets/laundry_symbols/Line_Drying/wring.png") },
+    ],
+  },
+  {
+    id: "8",
+    title: 'การรีด',
+    symbols: [
+      { id: "29", image: require("../../assets/laundry_symbols/Ironing/iron.png") },
+      { id: "30", image: require("../../assets/laundry_symbols/Ironing/no-iron.png") },
+      { id: "31", image: require("../../assets/laundry_symbols/Ironing/high-temperature.png") },
+      { id: "32", image: require("../../assets/laundry_symbols/Ironing/medium-temperature.png") },
+      { id: "33", image: require("../../assets/laundry_symbols/Ironing/low-temperature.png") },
+      { id: "34", image: require("../../assets/laundry_symbols/Ironing/no-steam.png") },
+    ],
+  },
+];
+
 const SymbolsScreen = () => {
   const [selectedSymbols, setSelectedSymbols] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("1"); // Default to "ทั้งหมด"
+  const [selectedCategory, setSelectedCategory] = useState("1");
   const flatListRef = useRef(null);
   const navigation = useNavigation();
-  
-  // Laundry Categories
-  const categories = [
-    { id: "1", title: "ทั้งหมด" },
-    { id: "2", title: "การซัก" },
-    { id: "3", title: "อุณหภูมิ" },
-    { id: "4", title: "การซักแห้ง" },
-    { id: "5", title: "สารฟอกขาว" },
-    { id: "6", title: "การอบแห้ง" },
-    { id: "7", title: "การตากผ้า" },
-    { id: "8", title: "การรีด" },
-  ];
 
-  // Symbols for each category
-  const allSymbols = [
-    {
-      id: "2",
-      title: "การซัก",
-      symbols: [
-        { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
-        { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
-        { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
-      ],
-    },
-    {
-      id: "3",
-      title: "อุณหภูมิ",
-      symbols: [
-        { id: "4", image: require("../../assets/laundry_symbols/Temperature/cold.png") },
-        { id: "5", image: require("../../assets/laundry_symbols/Temperature/warm.png") },
-        { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot.png") },
-        { id: "7", image: require("../../assets/laundry_symbols/Temperature/hot4.png") },
-        { id: "8", image: require("../../assets/laundry_symbols/Temperature/hot5.png") },
-        { id: "9", image: require("../../assets/laundry_symbols/Temperature/hot6.png") },
-      ],
-    },
-    {
-      id: "4",
-      title: 'การซักแห้ง',
-      symbols: [
-        { id: "10", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-clean.png") },
-        { id: "11", image: require("../../assets/laundry_symbols/Dry_Cleaning/do-not-dry.png") },
-        { id: "12", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-non-chlorine.png") },
-        { id: "13", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-hydrocarbon.png") },
-        { id: "14", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-all.png") },
-      ],
-    },
-    {
-      id: "5",
-      title: 'การใช้สารฟอกขาว',
-      symbols: [
-        { id: "15", image: require("../../assets/laundry_symbols/Bleaching/bleach.png") },
-        { id: "16", image: require("../../assets/laundry_symbols/Bleaching/not-bleach.png") },
-        { id: "17", image: require("../../assets/laundry_symbols/Bleaching/chlorine.png") },
-        { id: "18", image: require("../../assets/laundry_symbols/Bleaching/non-chlorine.png") },
-      ],
-    },
-    {
-      id: "6",
-      title: 'การอบแห้ง',
-      symbols: [
-        { id: "19", image: require("../../assets/laundry_symbols/Tumble_Drying/tumble-dry.png") },
-        { id: "20", image: require("../../assets/laundry_symbols/Tumble_Drying/low.png") },
-        { id: "21", image: require("../../assets/laundry_symbols/Tumble_Drying/medium.png") },
-        { id: "22", image: require("../../assets/laundry_symbols/Tumble_Drying/high.png") },
-        { id: "23", image: require("../../assets/laundry_symbols/Tumble_Drying/do-not-tumble-dry.png") },
-      ],
-    },
-    {
-      id: "7",
-      title: 'การตากผ้า',
-      symbols: [
-        { id: "24", image: require("../../assets/laundry_symbols/Line_Drying/hang.png") },
-        { id: "25", image: require("../../assets/laundry_symbols/Line_Drying/drip-dry.png") },
-        { id: "26", image: require("../../assets/laundry_symbols/Line_Drying/dry.png") },
-        { id: "27", image: require("../../assets/laundry_symbols/Line_Drying/shade.png") },
-        { id: "28", image: require("../../assets/laundry_symbols/Line_Drying/wring.png") },
-      ],
-    },
-    {
-      id: "8",
-      title: 'การรีด',
-      symbols: [
-        { id: "29", image: require("../../assets/laundry_symbols/Ironing/iron.png") },
-        { id: "30", image: require("../../assets/laundry_symbols/Ironing/no-iron.png") },
-        { id: "31", image: require("../../assets/laundry_symbols/Ironing/high-temperature.png") },
-        { id: "32", image: require("../../assets/laundry_symbols/Ironing/medium-temperature.png") },
-        { id: "33", image: require("../../assets/laundry_symbols/Ironing/low-temperature.png") },
-        { id: "34", image: require("../../assets/laundry_symbols/Ironing/no-steam.png") },
-      ],
-    },
-  ];
-
-  // Get symbols based on selected category
+  // Handle Filter selection
   const getFilteredSymbols = () => {
     if (selectedCategory === "1") {
-      return allSymbols; // Show all categories
+      return allSymbols;
     }
     return allSymbols.filter((category) => category.id === selectedCategory);
+  };
+
+  // Handle category selection
+  const handleCategorySelect = (id, name) => {
+    setSelectedCategory(id);
+    console.log(`id: ${id}, name: ${name}, click: true`);
   };
 
   // Toggle symbol selection (limit to 6)
@@ -123,15 +129,10 @@ const SymbolsScreen = () => {
     });
   };
 
-  // Handle category selection
-  const handleCategorySelect = (id, name) => {
-    setSelectedCategory(id);
-    console.log(`id: ${id}, name: ${name}, click: true`);
-  };
-
   return (
     <View style={styles.container}>
-      {/* ✅ Display Card (Unchanged) */}
+      
+      {/* ✅ Display Card */}
       <View style={styles.displayCard}>
         {selectedSymbols.length > 0 ? (
           <View style={styles.selectedSymbolsGrid}>
@@ -189,7 +190,7 @@ const SymbolsScreen = () => {
           />
         </View>
       )}
-      
+
       {/* ✅ Symbols Display (Scrollable) */}
       <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}
       >
@@ -200,10 +201,11 @@ const SymbolsScreen = () => {
 
             {/* Symbol Grid */}
             <View style={styles.symbolsContainer}>
+
               {category.symbols.map((symbol) => {
                 const isSelected = selectedSymbols.includes(symbol.id);
                 return (
-                  <TouchableOpacity key={symbol.id} style={[ styles.symbolTouchable, styles.shadowStyle]}>
+                  <TouchableOpacity key={symbol.id} style={[styles.symbolTouchable, styles.shadowStyle]}>
                     <ButtonCustom
                       color="#fff"
                       style={[styles.symbolContainer, styles.shadowStyle]}
@@ -214,11 +216,13 @@ const SymbolsScreen = () => {
                   </TouchableOpacity>
                 );
               })}
+
             </View>
           </View>
         ))}
 
         <View style={{ height: 170 }} />
+
       </ScrollView>
     </View>
   );
