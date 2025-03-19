@@ -12,15 +12,22 @@ import WelcomeScreen from "./src/screens/WelcomeScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
-import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
-import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
+import ForgotPassword from "./src/screens/ForgotPassword";
+
+import ChatScreen from "./src/screens/ChatScreen";
+import CustomDrawer from "./src/screens/ProfileScreen";
+import DisplaySymbols from "./src/screens/DisplaySymbols";
+
 
 const Stack = createNativeStackNavigator();
+
+
 
 const App = () => {
   const [fontsLoaded] = useFonts({
     "Kanit-Regular": require("./assets/fonts/Kanit-Regular.ttf"),
     "Kanit-Bold": require("./assets/fonts/Kanit-Bold.ttf"),
+    "Kanit-Thin": require("./assets/fonts/Kanit-Thin.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -35,8 +42,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false, // DONT FORGET TO CHANGE TO 'FALSE'
-          gestureEnabled: true,
+          headerShown: false, 
+          gestureEnabled: true, // DONT FORGET TO CHANGE TO 'FALSE'
         }}
       >
         {/* Authentication Screens */}
@@ -45,11 +52,16 @@ const App = () => {
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
           options={({ navigation }) => ({
-            headerShown: true,  
+            headerShown: true,
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => navigation.goBack()}
@@ -60,9 +72,41 @@ const App = () => {
           })}
         />
 
-        {/* Main App Screens */}
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="TipsScreen" component={TipsScreen} />
+        <Stack.Screen
+          name="ChatBoard"
+          component={ChatScreen} // ชื่อที่ใช้ต้องตรงกับ import
+
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen name="DisplaySymbols" component={DisplaySymbols}
+          options={({ navigation }) => ({
+            headerShown: true,
+            headerTitleStyle: {
+              fontFamily: 'Kanit-Regular',  // เปลี่ยนฟอนต์ของชื่อ header
+              fontSize: 20,  // สามารถปรับขนาดฟอนต์ได้
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+              >
+                <Ionicons name="chevron-back" size={30} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

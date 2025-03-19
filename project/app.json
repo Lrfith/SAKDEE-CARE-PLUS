@@ -12,6 +12,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#3180E1"
     },
+    "extra": {
+      "API_KEY": "AIzaSyB4SFGhmMeiot_VoSfw1r8cE4NeHNfqmt0",
+      "AUTH_DOMAIN": "cpe451-db.firebaseapp.com",
+      "PROJECT_ID": "cpe451-db",
+      "STORAGE_BUCKET": "cpe451-db.firebasestorage.app",
+      "MESSAGING_SENDER_ID": "372742236026",
+      "APP_ID": "1:372742236026:web:626ac2c3dc1e0eb1c918c3",
+      "MEASUREMENT_ID": "G-B55218B1V0"
+    },
     "ios": {
       "supportsTablet": true
     },
