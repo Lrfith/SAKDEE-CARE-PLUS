@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
 import { styles } from '../styles/app.styles';
@@ -22,76 +22,76 @@ const allSymbols = [
     id: "2",
     title: "การซัก",
     symbols: [
-      { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png") },
-      { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png") },
-      { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png") },
+      { id: "1", image: require("../../assets/laundry_symbols/Washing/hand-wash.png"), info: "ซักมือเท่านั้น"},
+      { id: "2", image: require("../../assets/laundry_symbols/Washing/hand-dry-wash.png"), info: "ซัดได้ทั้งมือและเครื่องซักผ้า"},
+      { id: "3", image: require("../../assets/laundry_symbols/Washing/dry-wash.png"), info: "ห้ามซักแบบปกติ(ควรซักแห้ง)"},
     ],
   },
   {
     id: "3",
     title: "อุณหภูมิ",
     symbols: [
-      { id: "4", image: require("../../assets/laundry_symbols/Temperature/cold.png") },
-      { id: "5", image: require("../../assets/laundry_symbols/Temperature/warm.png") },
-      { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot.png") },
-      { id: "7", image: require("../../assets/laundry_symbols/Temperature/hot4.png") },
-      { id: "8", image: require("../../assets/laundry_symbols/Temperature/hot5.png") },
-      { id: "9", image: require("../../assets/laundry_symbols/Temperature/hot6.png") },
+      { id: "4", image: require("../../assets/laundry_symbols/Temperature/cold.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 30°"},
+      { id: "5", image: require("../../assets/laundry_symbols/Temperature/warm.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 40°"},
+      { id: "6", image: require("../../assets/laundry_symbols/Temperature/hot.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 50°"},
+      { id: "7", image: require("../../assets/laundry_symbols/Temperature/hot4.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 60°"},
+      { id: "8", image: require("../../assets/laundry_symbols/Temperature/hot5.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 70°"},
+      { id: "9", image: require("../../assets/laundry_symbols/Temperature/hot6.png"), info: "ใช้อุณหภูมิน้ำในการซักได้ไม่เกิน 95°"},
     ],
   },
   {
     id: "4",
     title: 'การซักแห้ง',
     symbols: [
-      { id: "10", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-clean.png") },
-      { id: "11", image: require("../../assets/laundry_symbols/Dry_Cleaning/do-not-dry.png") },
-      { id: "12", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-non-chlorine.png") },
-      { id: "13", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-hydrocarbon.png") },
-      { id: "14", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-all.png") },
+      { id: "10", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-clean.png"), info: "สามารถซักแห้งได้"},
+      { id: "11", image: require("../../assets/laundry_symbols/Dry_Cleaning/do-not-dry.png"), info: "ห้ามซักแห้ง"},
+      { id: "12", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-non-chlorine.png"), info: "ซักแห้งได้ด้วยน้ำยาซักแห้งได้ทุกชนิด\nยกเว้นไตรคลอโรเอทีลีน"},
+      { id: "13", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-hydrocarbon.png"), info: "ใช้น้ำยาซักแห้งประเภทไฮโดรคาร์บอน\nเท่านั้น"},
+      { id: "14", image: require("../../assets/laundry_symbols/Dry_Cleaning/dry-all.png"), info: "ซักแห้งได้ด้วยตัวน้ำยาซักแห้งทุกชนิด"},
     ],
   },
   {
     id: "5",
     title: 'การใช้สารฟอกขาว',
     symbols: [
-      { id: "15", image: require("../../assets/laundry_symbols/Bleaching/bleach.png") },
-      { id: "16", image: require("../../assets/laundry_symbols/Bleaching/not-bleach.png") },
-      { id: "17", image: require("../../assets/laundry_symbols/Bleaching/chlorine.png") },
-      { id: "18", image: require("../../assets/laundry_symbols/Bleaching/non-chlorine.png") },
+      { id: "15", image: require("../../assets/laundry_symbols/Bleaching/bleach.png"), info: "สามารถใช้สารฟอกขาวได้ทุกชนิด" },
+      { id: "16", image: require("../../assets/laundry_symbols/Bleaching/not-bleach.png"), info: "ห้ามใช้สารฟอกขาวเด็ดขาด" },
+      { id: "17", image: require("../../assets/laundry_symbols/Bleaching/chlorine.png"), info: "สามารถใช้สารฟอกขาวที่มีส่วนผสมของ\nคลอรีน บรีซได้" },
+      { id: "18", image: require("../../assets/laundry_symbols/Bleaching/non-chlorine.png"), info: "ห้ามใช้สารฟอกขาวที่มีส่วนผสมของ\nคลอรีน บรีซ" },
     ],
   },
   {
     id: "6",
     title: 'การอบแห้ง',
     symbols: [
-      { id: "19", image: require("../../assets/laundry_symbols/Tumble_Drying/tumble-dry.png") },
-      { id: "20", image: require("../../assets/laundry_symbols/Tumble_Drying/low.png") },
-      { id: "21", image: require("../../assets/laundry_symbols/Tumble_Drying/medium.png") },
-      { id: "22", image: require("../../assets/laundry_symbols/Tumble_Drying/high.png") },
-      { id: "23", image: require("../../assets/laundry_symbols/Tumble_Drying/do-not-tumble-dry.png") },
+      { id: "19", image: require("../../assets/laundry_symbols/Tumble_Drying/tumble-dry.png"), info: "อบแห้งได้แบบไม่จำกัดอุณหภูมิ" },
+      { id: "20", image: require("../../assets/laundry_symbols/Tumble_Drying/low.png"), info: "อบแห้งได้โดยใช้อุณหภูมิต่ำ" },
+      { id: "21", image: require("../../assets/laundry_symbols/Tumble_Drying/medium.png"), info: "อบแห้งได้โดยใช้อุณหภูมิกลาง" },
+      { id: "22", image: require("../../assets/laundry_symbols/Tumble_Drying/high.png"), info: "อบแห้งได้โดยใช้อุณหภูมิสูง" },
+      { id: "23", image: require("../../assets/laundry_symbols/Tumble_Drying/do-not-tumble-dry.png"), info: "ห้ามอบแห้งเด็ดขาด" },
     ],
   },
   {
     id: "7",
     title: 'การตากผ้า',
     symbols: [
-      { id: "24", image: require("../../assets/laundry_symbols/Line_Drying/hang.png") },
-      { id: "25", image: require("../../assets/laundry_symbols/Line_Drying/drip-dry.png") },
-      { id: "26", image: require("../../assets/laundry_symbols/Line_Drying/dry.png") },
-      { id: "27", image: require("../../assets/laundry_symbols/Line_Drying/shade.png") },
-      { id: "28", image: require("../../assets/laundry_symbols/Line_Drying/wring.png") },
+      { id: "24", image: require("../../assets/laundry_symbols/Line_Drying/hang.png"), info: "ตากผ้าด้วยวิธีการแขวน" },
+      { id: "25", image: require("../../assets/laundry_symbols/Line_Drying/drip-dry.png"), info: "ไม่ควรบิดผ้าก่อนตาก" },
+      { id: "26", image: require("../../assets/laundry_symbols/Line_Drying/dry.png"), info: "ตากผ้าด้วยวางแนวราบ" },
+      { id: "27", image: require("../../assets/laundry_symbols/Line_Drying/shade.png"), info: "ให้ตากในที่ร่ม" },
+      { id: "28", image: require("../../assets/laundry_symbols/Line_Drying/wring.png"), info: "ห้ามบิดผ้า" },
     ],
   },
   {
     id: "8",
     title: 'การรีด',
     symbols: [
-      { id: "29", image: require("../../assets/laundry_symbols/Ironing/iron.png") },
-      { id: "30", image: require("../../assets/laundry_symbols/Ironing/no-iron.png") },
-      { id: "31", image: require("../../assets/laundry_symbols/Ironing/high-temperature.png") },
-      { id: "32", image: require("../../assets/laundry_symbols/Ironing/medium-temperature.png") },
-      { id: "33", image: require("../../assets/laundry_symbols/Ironing/low-temperature.png") },
-      { id: "34", image: require("../../assets/laundry_symbols/Ironing/no-steam.png") },
+      { id: "29", image: require("../../assets/laundry_symbols/Ironing/iron.png"), info: "สามารถใช้อุณหภูมิใดก็ได้ในการรีดผ้า" },
+      { id: "30", image: require("../../assets/laundry_symbols/Ironing/no-iron.png"), info: "ห้ามรีด" },
+      { id: "31", image: require("../../assets/laundry_symbols/Ironing/high-temperature.png"), info: "ใช้อุณหภูมิสูงในการรีดผ้าได้\n(อุณหภูมิความร้อนประมาณ 200°C)" },
+      { id: "32", image: require("../../assets/laundry_symbols/Ironing/medium-temperature.png"), info: "ใช้อุณหภูมิปานกลางในการรีดผ้าได้\n(อุณหภูมิความร้อนประมาณ 150°C)" },
+      { id: "33", image: require("../../assets/laundry_symbols/Ironing/low-temperature.png"), info: "ใช้อุณหภูมิต่ำในการรีดผ้าได้\n(อุณหภูมิความร้อนประมาณ 100°C)" },
+      { id: "34", image: require("../../assets/laundry_symbols/Ironing/no-steam.png"), info: "ห้ามรีดด้วยเตารีดไอน้ำ" },
     ],
   },
 ];
@@ -102,6 +102,17 @@ const SymbolsScreen = () => {
   const flatListRef = useRef(null);
   const navigation = useNavigation();
 
+  // Reset selectedSymbols when navigating to a new screen
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // Clear selectedSymbols every time the screen is focused
+      setSelectedSymbols([]);
+    });
+
+    // Cleanup listener when component unmounts
+    return unsubscribe;
+  }, [navigation]);
+  
   // Handle Filter selection
   const getFilteredSymbols = () => {
     if (selectedCategory === "1") {
@@ -185,7 +196,7 @@ const SymbolsScreen = () => {
             lable="ยืนยัน"
             color="#3180E1"
             colorText="#fff"
-            onPress={() => navigation.navigate('DisplaySymbols')}
+            onPress={() => navigation.navigate('DisplaySymbols', { selectedSymbols: selectedSymbols, allSymbols: allSymbols })}
             style={styles.confirmButton}
           />
         </View>
