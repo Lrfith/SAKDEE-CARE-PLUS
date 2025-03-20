@@ -26,7 +26,7 @@ const RegisterScreen = () => {
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 500,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -63,7 +63,7 @@ const RegisterScreen = () => {
       });
 
       Alert.alert("สมัครสมาชิกสำเร็จ", "กรุณาตรวจสอบอีเมลของคุณเพื่อยืนยันบัญชี");
-      navigation.navigate("Login");
+      navigation.replace("Login");
     } catch (error) {
       Alert.alert("เกิดข้อผิดพลาด", error.message);
     }
@@ -121,6 +121,7 @@ const RegisterScreen = () => {
                   onChangeText={setPassword}
                   secureTextEntry={!passwordVisible}
                   ref={passwordRef}
+                  returnKeyType="done"
                 />
                 <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
                   <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={25} color="grey" />
@@ -139,7 +140,7 @@ const RegisterScreen = () => {
 
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <Text style={{ fontSize: 16, fontFamily: 'Kanit-Regular' }}>หากเป็นสมาชิกแล้ว </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <TouchableOpacity onPress={() => navigation.replace("Login")}>
                 <Text style={[styles.linkText, { marginLeft: 5, fontFamily: 'Kanit-Regular' }]}>
                   เข้าสู่ระบบ
                 </Text>

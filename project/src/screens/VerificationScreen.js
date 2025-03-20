@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Text, View, Animated, Image, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Text, View, Animated, Image, TouchableOpacity, } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/app.styles';
 import ButtonCustom from '../components/ButtonCustom';
@@ -8,18 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 const VerificationScreen = () => {
   const slideAnim = useRef(new Animated.Value(500)).current;
   const navigation = useNavigation();
-  const otpRef = useRef(null);
 
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 500,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }}>
       <View style={styles.container}>
         {/* Linear Gradient Background */}
         <LinearGradient colors={['#68B9F2', '#3180E1']} style={{ flex: 1 }}>
@@ -31,11 +29,7 @@ const VerificationScreen = () => {
           </View>
 
           {/* Animated Card */}
-          <Animated.View style={[
-            styles.card,
-            { height: 400 },
-            { transform: [{ translateY: slideAnim }] },
-          ]}>
+          <Animated.View style={[styles.card, { height: 400 }, { transform: [{ translateY: slideAnim }] },]}>
             <Text style={styles.title}>การยืนยัน</Text>
             <Text style={[styles.defaultText, { marginBottom: 20 }]}>
               กรุณาตรวจสอบอีเมลของท่านตามที่ระบุไว้{"\n"}เพื่อยืนยันการลงทะเบียน
@@ -68,7 +62,6 @@ const VerificationScreen = () => {
           </Animated.View>
         </LinearGradient>
       </View>
-    </ScrollView>
   );
 };
 

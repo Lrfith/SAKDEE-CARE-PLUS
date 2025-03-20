@@ -6,6 +6,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5F5F58F'
   },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#459bec',
+  },
   headerRightText: {
     marginRight: 15,
     fontSize: 16,

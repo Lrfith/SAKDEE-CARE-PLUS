@@ -24,7 +24,7 @@ const LoginScreen = () => {
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 500,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -50,17 +50,14 @@ const LoginScreen = () => {
       }
 
       Alert.alert("เข้าสู่ระบบสำเร็จ", `ยินดีต้อนรับ ${user.email}`);
-      navigation.navigate("AppNavigator"); // เปลี่ยนไปหน้าแอปหลัก
+      navigation.replace("AppNavigator"); // เปลี่ยนไปหน้าแอปหลัก
     } catch (error) {
       Alert.alert("เข้าสู่ระบบไม่สำเร็จ", "อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง\n" + error.message);
     }
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      extraScrollHeight={20} // Adjusts scrolling to keep the password field visible
-    >
+    <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20}>
       <View style={styles.container}>
         <LinearGradient colors={["#68B9F2", "#3180E1"]} style={{ flex: 1 }}>
           <View style={styles.screenContainer}>
@@ -105,7 +102,7 @@ const LoginScreen = () => {
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: 'flex-end', alignItems: "center", marginTop: 10 }}>
-              <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+              <TouchableOpacity onPress={() => navigation.replace("ForgotPassword")}>
                 <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey' }]}>ลืมรหัสผ่าน?</Text>
               </TouchableOpacity>
             </View>
@@ -116,7 +113,7 @@ const LoginScreen = () => {
 
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <Text style={{ fontSize: 16, fontFamily: "Kanit-Regular" }}>ยังไม่ได้เป็นสมาชิก? </Text>
-              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+              <TouchableOpacity onPress={() => navigation.replace("Register")}>
                 <Text style={[styles.linkText, { marginLeft: 5, fontFamily: "Kanit-Regular" }]}>สมัครสมาชิก</Text>
               </TouchableOpacity>
             </View>

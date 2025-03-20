@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, Text, ScrollView, FlatList, TouchableOpacity } from "react-native";
 import React, { useState, useRef, useEffect } from "react";
 import ButtonCustom from "../components/ButtonCustom";
-import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
+import { useNavigation } from '@react-navigation/native'; 
 import { styles } from '../styles/app.styles';
 
 // Laundry Categories
@@ -97,19 +97,16 @@ const allSymbols = [
 ];
 
 const SymbolsScreen = () => {
-  const [selectedSymbols, setSelectedSymbols] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("1");
+  const [selectedSymbols, setSelectedSymbols] = useState([]);
   const flatListRef = useRef(null);
   const navigation = useNavigation();
 
   // Reset selectedSymbols when navigating to a new screen
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Clear selectedSymbols every time the screen is focused
       setSelectedSymbols([]);
     });
-
-    // Cleanup listener when component unmounts
     return unsubscribe;
   }, [navigation]);
   
@@ -122,9 +119,8 @@ const SymbolsScreen = () => {
   };
 
   // Handle category selection
-  const handleCategorySelect = (id, name) => {
+  const handleCategorySelect = (id) => {
     setSelectedCategory(id);
-    console.log(`id: ${id}, name: ${name}, click: true`);
   };
 
   // Toggle symbol selection (limit to 6)
@@ -143,7 +139,7 @@ const SymbolsScreen = () => {
   return (
     <View style={styles.container}>
       
-      {/* ✅ Display Card */}
+      {/* Display Card */}
       <View style={styles.displayCard}>
         {selectedSymbols.length > 0 ? (
           <View style={styles.selectedSymbolsGrid}>
@@ -170,7 +166,7 @@ const SymbolsScreen = () => {
       </View>
 
 
-      {/* ✅ Category Selection with FlatList */}
+      {/* Category Selection with FlatList */}
       <View style={styles.categoryContainer}>
         <FlatList
           ref={flatListRef}
@@ -202,9 +198,8 @@ const SymbolsScreen = () => {
         </View>
       )}
 
-      {/* ✅ Symbols Display (Scrollable) */}
-      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}
-      >
+      {/* Symbols Display (Scrollable) */}
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         {getFilteredSymbols().map((category) => (
           <View key={category.id} style={styles.categorySection}>
             {/* Category Title */}

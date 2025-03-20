@@ -1,17 +1,13 @@
-import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Image, ScrollView, Text, View, } from 'react-native'
 import React from 'react'
 import { styles } from '../styles/app.styles'
 import ButtonCustom from "../components/ButtonCustom";
-import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
-import SymbolsScreen from './SymbolsScreen';
+import { useNavigation } from '@react-navigation/native'; 
 
 const DisplaySymbols = ({ route }) => {
     const { selectedSymbols, allSymbols } = route.params; // รับข้อมูลจาก SymbolsScreen
     const navigation = useNavigation();
 
-    const handleBackPress = () => {
-        navigation.goBack();
-    };
     return (
         <View style={styles.container}>
             <View style={{ height: 10 }} />
@@ -45,3 +41,5 @@ const DisplaySymbols = ({ route }) => {
 
 
 export default DisplaySymbols
+
+  
