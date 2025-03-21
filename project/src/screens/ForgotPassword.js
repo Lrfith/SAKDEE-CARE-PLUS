@@ -5,7 +5,6 @@ import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../components/firebaseConfig"; // นำเข้า Firebase ที่ตั้งค่าไว้
@@ -19,7 +18,7 @@ const ForgotPassword = () => {
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: 0,
-            duration: 500,
+            duration: 1000,
             useNativeDriver: true,
         }).start();
     }, []);
@@ -29,22 +28,18 @@ const ForgotPassword = () => {
             alert("กรุณากรอกอีเมล");
             return;
         }
-    
+
         try {
             await sendPasswordResetEmail(auth, email);
             alert("เราได้ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลของคุณแล้ว!");
-            navigation.navigate("Login"); // กลับไปหน้า Login หลังส่งอีเมล
+            navigation.replace("Login"); // กลับไปหน้า Login หลังส่งอีเมล
         } catch (error) {
             alert("เกิดข้อผิดพลาด: " + error.message);
         }
-        navigation.navigate("Login");
     };
 
     return (
-        <KeyboardAwareScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
-            extraScrollHeight={20} // Adjusts scrolling to keep the password field visible
-        >
+        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20}>
             <View style={styles.container}>
                 <LinearGradient colors={["#68B9F2", "#3180E1"]} style={{ flex: 1 }}>
                     <View style={styles.screenContainer}>
@@ -80,6 +75,13 @@ const ForgotPassword = () => {
                             </View>
 
                         </View>
+
+                        <View style={{ justifyContent: 'center', alignItems: "center" }}>
+                            <TouchableOpacity onPress={() => navigation.replace("Login")}>
+                                <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey', fontSize: 16 }]}>กลับ</Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </Animated.View>
                 </LinearGradient>
             </View>

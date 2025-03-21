@@ -313,11 +313,7 @@ const styles = StyleSheet.create({
     marginLeft: 5, // เพิ่มระยะห่างระหว่างไอคอนกับตัวเลข
     color: 'gray',
   },
-
-
-
-
-
+  
   modalTitle: {
     fontSize: 18,
     fontFamily: 'Kanit-Regular',

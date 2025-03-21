@@ -3,22 +3,23 @@ import { Text, View, Animated, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from '../styles/app.styles';
 import ButtonCustom from '../components/ButtonCustom';
-import { useNavigation } from '@react-navigation/native';  // ✅ Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
   const slideAnim = useRef(new Animated.Value(500)).current;
-  const navigation = useNavigation();  // ✅ ใช้ navigation object
+  const navigation = useNavigation();  // navigation object
 
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 500,
-      useNativeDriver: true,
+      duration: 2000,
+      useNativeDriver: false,
     }).start();
   }, []);
 
   return (
     <View style={styles.container}>
+      
       {/* Linear Gradient Background */}
       <LinearGradient colors={['#68B9F2', '#3180E1']} style={{ flex: 1 }}>
         <View style={styles.screenContainer}>
@@ -39,14 +40,14 @@ const WelcomeScreen = () => {
               lable='เข้าสู่ระบบ' 
               color='#3180E1' 
               colorText='#fff' 
-              onPress={() => navigation.navigate('Login')} 
+              onPress={() => navigation.replace('Login')} 
             />
             <ButtonCustom 
               lable='สมัครสมาชิก' 
               color='#fff' 
               colorText='#3180E1' 
               border='#3180E1' 
-              onPress={() => navigation.navigate('Register')} 
+              onPress={() => navigation.replace('Register')} 
             />
           </View>
         </Animated.View>

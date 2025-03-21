@@ -142,7 +142,7 @@ const Home = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
           {/* // Greeting Section */}
-          <Text style={styles.sectionGeeting}>{getGreeting()}, {user?.userName || "Guest"}!</Text>
+          <Text style={styles.sectionGeeting}>{getGreeting()}, Nuttamon!</Text>
           {/* <Text style={styles.sectionGeeting}>{getGreeting()}, Guest User!</Text> */}
 
           {/* // Weather Section */}

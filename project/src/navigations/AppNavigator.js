@@ -3,9 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Text, Image, TouchableOpacity, View } from "react-native";
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useNavigation } from '@react-navigation/native'; 
 import { styles } from '../styles/app.styles'; // Import styles
 
+// Stack Screen
 import HomeScreen from "../screens/HomeScreen";
 import SymbolsScreen from "../screens/SymbolsScreen";
 import CameraScreen from "../screens/CameraScreen";
@@ -23,7 +24,6 @@ const AppNavigator = () => {
       screenOptions={({ route }) => ({
         headerStyle: {
           height: 100,
-          // backgroundColor: '#459bec',
         },
         headerLeft: () => (
           <Image
@@ -93,8 +93,6 @@ const AppNavigator = () => {
                   }}
                 />
               </TouchableOpacity>
-
-
             </View>
           ),
         }}
