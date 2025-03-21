@@ -11,7 +11,7 @@ import SymbolsScreen from "../screens/SymbolsScreen";
 import CameraScreen from "../screens/CameraScreen";
 import StoreScreen from "../screens/StoreScreen";
 import TipsScreen from "../screens/TipsScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+
 
 const Tab = createBottomTabNavigator();
 
@@ -28,7 +28,7 @@ const AppNavigator = () => {
         headerLeft: () => (
           <Image
             source={require('../../assets/image/TopIcon.png')} // replace with your logo path
-            style={{ width: '100%', height: 40, marginLeft: 10, }}
+            style={{ width: '100%', height: 50, marginLeft: 10, }}
           />
         ),
         headerTitle: '', // เอาชื่อออก
@@ -80,7 +80,7 @@ const AppNavigator = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center', }}>
 
               <TouchableOpacity onPress={() => navigation.navigate('ChatBoard')}>
-                <Ionicons name="chatbubbles-outline" size={32} color="white" paddingRight={20} />
+                <Ionicons name="chatbubbles" size={32} color="white" paddingRight={20} />
               </TouchableOpacity>
 
               <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 20 }}>

@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet } from "react-native";
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, StyleSheet, Alert, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import * as ImagePicker from 'expo-image-picker';
-import { auth, db, storage } from '../components/firebaseConfig.js'; // นำเข้า storage จาก firebaseConfig
-import { getDoc, doc, updateDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { auth, db } from '../components/firebaseConfig.js';
+import { getDoc, doc } from 'firebase/firestore';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 const menuItems = [
   { title: "ค้นหาสาขา", route: "Store" },
   { title: "สัญลักษณ์บนป้ายผ้า", route: "Symbols" },
-  { title: "แจ้งเตือน", route: "Notifications" },
-  { title: "แจ้งปัญหา", route: "ReportIssue" },
-  { title: "ออกจากระบบ", route: "Login" }
+  { title: "เปลี่ยนภาษา", route: "" },
+  { title: "แจ้งปัญหา", route: "" }
 ];
 
 const ProfileMenu = () => {
   const navigation = useNavigation();
-
-  const handleTabNavigation = (route) => {
-    navigation.replace(route); // ใช้ replace แทน navigate
-  };
-
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageUri, setImageUri] = useState(null);
@@ -33,7 +25,7 @@ const ProfileMenu = () => {
         const userSnap = await getDoc(userDocRef);
         if (userSnap.exists()) {
           setUser(userSnap.data());
-          setImageUri(userSnap.data()?.profileImage);  // โหลด URL ของภาพโปรไฟล์
+          setImageUri(userSnap.data()?.profileImage || null);
         }
       }
       setLoading(false);
@@ -42,45 +34,13 @@ const ProfileMenu = () => {
     return () => unsubscribe();
   }, []);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      uploadImage(result.uri);
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigation.replace("Login"); // Redirect to Login after logout
+    } catch (error) {
+      Alert.alert("ข้อผิดพลาด", "ออกจากระบบไม่สำเร็จ");
     }
-  };
-
-  const uploadImage = async (uri) => {
-    const userId = auth.currentUser.uid;
-    const storageRef = ref(storage, `profileImages/${userId}`);
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const uploadTask = uploadBytesResumable(storageRef, blob);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        console.error("Upload error: ", error);
-      },
-      async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        updateUserProfileImage(downloadURL);
-      }
-    );
-  };
-
-  const updateUserProfileImage = async (url) => {
-    const userDocRef = doc(db, "users", auth.currentUser.uid);
-    await updateDoc(userDocRef, {
-      profileImage: url
-    });
-    setImageUri(url);
   };
 
   if (loading) {
@@ -88,34 +48,47 @@ const ProfileMenu = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={pickImage}>
+    <ImageBackground
+      source={require('../../assets/image/ProfilePageBackground.png')} // เปลี่ยนเป็น path ของรูปที่ต้องการใช้
+      style={styles.background} // ใช้ styles
+      resizeMode="cover" // ปรับขนาดรูปให้เต็มจอ
+    >
+
+      <View style={styles.container}>
+        {/* Displaying the Profile Image without TouchableOpacity */}
         <Image
           source={imageUri ? { uri: imageUri } : require('../../assets/icon.png')}
           style={styles.profileImage}
         />
-      </TouchableOpacity>
-      <Text style={styles.userName}>Name: {user?.userName}</Text>
-      <Text style={styles.userEmail}>Email: {user?.email}</Text>
-      {menuItems.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.menuItem}
-          onPress={() => handleTabNavigation(item.route)}
-        >
-          <Text style={styles.menuText}>{item.title}</Text>
+
+        <Text style={styles.userName}>{user?.userName}</Text>
+        <Text style={styles.userEmail}>{user?.email}</Text>
+
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.menuItem}
+            onPress={() => navigation.navigate("AppNavigator", { screen: item.route })}
+          >
+            <Text style={styles.menuText}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
+
+        {/* Logout Button */}
+        <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
+          <Text style={[styles.menuText, { color: "red" }]}>ออกจากระบบ</Text>
         </TouchableOpacity>
-      ))}
-    </View>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     padding: 20,
-    alignItems: "center"
+    alignItems: "center",
   },
   profileImage: {
     width: 120,
@@ -129,9 +102,10 @@ const styles = StyleSheet.create({
     fontFamily: "Kanit-Regular"
   },
   userEmail: {
-    fontSize: 14,
+    fontSize: 16,
     color: "gray",
-    fontFamily: "Kanit-Regular"
+    fontFamily: "Kanit-Regular",
+    paddingBottom: 20,
   },
   menuItem: {
     paddingVertical: 15,
@@ -139,7 +113,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#eee",
   },
   menuText: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "Kanit-Regular",
     color: "#333"
   },
@@ -147,7 +121,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  }
+  },
+  background: {
+    flex: 1,
+  },
 });
 
 export default ProfileMenu;

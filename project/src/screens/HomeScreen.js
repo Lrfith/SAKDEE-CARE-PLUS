@@ -1,40 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Image, ScrollView, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, ImageBackground } from "react-native";
 import { Card } from "@rneui/themed";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+// import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { auth, db } from '../components/firebaseConfig.js';
+import { getDoc, doc } from 'firebase/firestore';
+import { onAuthStateChanged } from "firebase/auth"; // Import onAuthStateChanged
+import { Animated, Easing } from "react-native";
 
-const getGreeting = () => {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) {
-    return "สวัสดีตอนเช้า";
-  } else if (hour >= 12 && hour < 15) {
-    return "สวัสดีตอนเที่ยง";
-  } else if (hour >= 15 && hour < 18) {
-    return "สวัสดีตอนบ่าย";
-  } else if (hour >= 18 && hour < 22) {
-    return "สวัสดีตอนเย็น";
-  } else {
-    return "สวัสดีตอนดึก";
-  }
-};
-
-// Function to map weather conditions to icons
-const getWeatherIcon = (condition) => {
-  switch (condition.toLowerCase()) {
-    case "clear":
-      return "weather-sunny";
-    case "clouds":
-      return "weather-cloudy";
-    case "rain":
-      return "weather-rainy";
-    case "snow":
-      return "weather-snowy";
-    default:
-      return "weather-sunny"; blocationButorderRadius
-  }
-};
 
 const tips = [
   {
@@ -57,22 +32,73 @@ const tips = [
   },
 ];
 
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return "สวัสดีตอนเช้า";
+  if (hour >= 12 && hour < 15) return "สวัสดีตอนเที่ยง";
+  if (hour >= 15 && hour < 18) return "สวัสดีตอนบ่าย";
+  if (hour >= 18 && hour < 22) return "สวัสดีตอนเย็น";
+  return "สวัสดีตอนดึก";
+};
+
+const getWeatherIcon = (condition) => {
+  switch (condition.toLowerCase()) {
+    case "clear": return "weather-sunny";
+    case "clouds": return "weather-cloudy";
+    case "rain": return "weather-rainy";
+    case "snow": return "weather-snowy";
+    default: return "weather-sunny";
+  }
+};
+
 const Home = () => {
-  
+  const [user, setUser] = useState(null);
   const [weatherData, setWeatherData] = useState({});
+  const navigation = useNavigation();
+  const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const located = "Bangkok,TH"; // ตำแหน่งที่ตั้ง
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(animatedValue, {
+          toValue: -5, // ขยับขึ้น
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedValue, {
+          toValue: 5, // ขยับลง
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, []);
 
-    // Fetch weather data from OpenWeatherMap API (example)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userSnap = await getDoc(userDocRef);
+        if (userSnap.exists()) {
+          setUser(userSnap.data());
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
     const fetchWeather = async () => {
       try {
         const response = await axios.get("http://api.openweathermap.org/data/2.5/weather", {
           params: {
-            q: located, // Change the location to your preferred city
-            appid: "c125eee6cba494a329341c56fcfbb227", // Replace with your OpenWeatherMap API key
-            units: "metric", // To get temperature in Celsius
-            lang: "th", // Thai language for weather conditions
+            q: "Bangkok,TH",
+            appid: "c125eee6cba494a329341c56fcfbb227",
+            units: "metric",
+            lang: "th",
           },
         });
 
@@ -84,7 +110,7 @@ const Home = () => {
         const icon = getWeatherIcon(data.weather[0].main);
 
         setWeatherData({
-          location: located,  // You can change this based on the response if needed
+          location: "Bangkok",
           temperature,
           humidity,
           rainChance,
@@ -101,30 +127,22 @@ const Home = () => {
 
   const getLaundryRecommendation = () => {
     if (!weatherData.rainChance || !weatherData.humidity) return "กำลังโหลด...";
-
-    const rain = parseInt(weatherData.rainChance); // แปลงเป็นตัวเลข
+    const rain = parseInt(weatherData.rainChance);
     const humidity = parseInt(weatherData.humidity);
-
-    if (rain < 30 && humidity < 70) {
-      return "เหมาะสำหรับซักผ้า";
-    } else {
-      return "ไม่เหมาะสำหรับซักผ้า";
-    }
+    return rain < 30 && humidity < 70 ? "เหมาะสำหรับซักผ้า" : "ไม่เหมาะสำหรับซักผ้า";
   };
-
-  const navigation = useNavigation(); // Get navigation object
 
   return (
     <ImageBackground
-      source={require('../../assets/HomeBackground.png')} // เปลี่ยนเป็น path ของรูปที่ต้องการใช้
+      source={require('../../assets/image/HomeBackground.png')} // เปลี่ยนเป็น path ของรูปที่ต้องการใช้
       style={styles.background} // ใช้ styles
       resizeMode="cover" // ปรับขนาดรูปให้เต็มจอ
     >
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
           {/* // Greeting Section */}
-          <Text style={styles.sectionGeeting}>{getGreeting()}, Nuttamon!</Text>
+          <Text style={styles.sectionGeeting}>{getGreeting()}, {user?.userName || "Guest"}!</Text>
           {/* <Text style={styles.sectionGeeting}>{getGreeting()}, Guest User!</Text> */}
 
           {/* // Weather Section */}
@@ -137,7 +155,9 @@ const Home = () => {
             </View>
 
             <View style={styles.weatherContent}>
-              <MaterialCommunityIcons name={weatherData.icon} size={85} color="orange" style={styles.weatherIcon} />
+              <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
+                <MaterialCommunityIcons name={weatherData.icon} size={85} color="orange" marginRight={15}/>
+              </Animated.View>
               <View style={styles.weatherText}>
                 <Text style={styles.temp}>{weatherData.temperature}</Text>
                 <View style={styles.weatherDetails}>
@@ -269,9 +289,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  weatherIcon: {
-    marginRight: 15,
-  },
   weatherText: {
     flex: 1,
   },
@@ -353,7 +370,7 @@ const styles = StyleSheet.create({
   tipImage: {
     width: "100%",
     height: 200,
-    borderRadius: 5, 
+    borderRadius: 5,
   },
   tipTitle: {
     fontFamily: 'Kanit-Regular',
