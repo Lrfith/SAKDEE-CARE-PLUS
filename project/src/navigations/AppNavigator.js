@@ -2,16 +2,14 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Text, Image, TouchableOpacity, View } from "react-native";
+import { Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation
-import { styles } from '../styles/app.styles'; // Import styles
 
 import HomeScreen from "../screens/HomeScreen";
 import SymbolsScreen from "../screens/SymbolsScreen";
 import CameraScreen from "../screens/CameraScreen";
 import StoreScreen from "../screens/StoreScreen";
 import TipsScreen from "../screens/TipsScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -23,30 +21,20 @@ const AppNavigator = () => {
       screenOptions={({ route }) => ({
         headerStyle: {
           height: 100,
-          // backgroundColor: '#459bec',
+          // backgroundColor: '#3180e1',
         },
-        headerLeft: () => (
-          <Image
-            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
-            style={{ width: '100%', height: 50, marginLeft: 10, }}
-          />
-        ),
-        headerTitle: '', // เอาชื่อออก
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: '#fff',
-          height: 100,
+          height: 80,
           shadowColor: '#000',
           shadowOpacity: 0.1,
           shadowRadius: 10,
           shadowOffset: { width: 0, height: -4 },
           elevation: 5,
           position: 'absolute',
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
-          paddingTop: 20,
-        },
 
+        },
         tabBarIcon: ({ focused, color, size }) => {
           const icons = {
             Home: "home",
@@ -67,65 +55,78 @@ const AppNavigator = () => {
         },
       })}
     >
-
+      <Tab.Screen name="Home" component={HomeScreen} options={{
+        headerTintColor: '#fff', headerLeft: () => (
+          <Image
+            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
+            style={{ width: '100%', height: 40, marginLeft: 10 }}
+          />
+        ),
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Ionicons name="person-circle" size={40} color='#6c757d' style={{ marginRight: 15, marginTop: 2 }} />
+          </TouchableOpacity>
+        ),
+      }}
+      />
+      <Tab.Screen name="Symbols" component={SymbolsScreen} />
+      <Tab.Screen name="Camera" component={CameraScreen} />
+      <Tab.Screen name="Store" component={StoreScreen} options={{
+        headerTintColor: '#fff',
+        headerLeft: () => (
+          <Image
+            source={require('../../assets/image/TopIcon.png')} // replace with your logo path
+            style={{ width: '100%', height: 40, marginLeft: 10 }}
+          />
+        ),
+        headerRight: () => (
+          <Text style={{ marginRight: 15, fontSize: 16, color: 'black', fontFamily: 'Kanit-Regular', }}>ค้นหาสาขา</Text>
+        ),
+      }} />
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Tips"
+        component={TipsScreen}
         options={{
+          title: 'Tips & การดูแล',
+          headerShown: true,
+          headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: '#459bec',
-            height: 100, // เพิ่มความสูงของ header
+            backgroundColor: '#F6F6F6',
+            borderBottomWidth: 1,
+            borderBottomColor: '#F6F6F6',
           },
-          headerRight: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-
-              <TouchableOpacity onPress={() => navigation.navigate('ChatBoard')}>
-                <Ionicons name="chatbubbles-outline" size={32} color="white" paddingRight={20} />
-              </TouchableOpacity>
-
-              <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 20 }}>
-                <Image
-                  source={require('../../assets/icon.png')}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 100,
-                  }}
-                />
-              </TouchableOpacity>
-
-
-            </View>
+          headerLeft: () => (
+            <Image
+              source={require('../../assets/image/TopIcon.png')} // replace with your logo path
+              style={{ width: '100%', height: 40, marginLeft: 10, marginTop: 5 }}
+            />
           ),
+          headerTitle: () => <></>,
+          headerShadowVisible: false,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => console.log('Search icon pressed')}
+              style={styles.headerRight}
+            >
+              <Text style={styles.iconText}>🔍</Text>
+            </TouchableOpacity>
+          ),
+
         }}
       />
-
-
-      <Tab.Screen name="Symbols" component={SymbolsScreen} options={{
-        headerRight: () => (
-          <Text style={styles.headerRightText}>สัญลักษณ์ผ้าบอกอะไร</Text>),
-      }} />
-
-      <Tab.Screen name="Camera" component={CameraScreen} options={{
-        headerRight: () => (
-          <Text style={styles.headerRightText}>สแกนชำระเงิน</Text>),
-      }} />
-
-      <Tab.Screen name="Store" component={StoreScreen} options={{
-        headerRight: () => (
-          <Text style={styles.headerRightText}>ค้นหาสาขา</Text>),
-      }} />
-
-      <Tab.Screen name="Tips" component={TipsScreen} options={{
-        headerRight: () => (
-          <Text style={styles.headerRightText}>Tips</Text>),
-      }} />
-
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
-
     </Tab.Navigator>
   );
 };
 
+const styles = StyleSheet.create({
+  headerRight: {
+    paddingRight: 16,
+  },
+  iconText: {
+    fontSize: 24,
+  },
+  tabIcon: {
+    fontSize: 28,
+  },
+});
 export default AppNavigator;
