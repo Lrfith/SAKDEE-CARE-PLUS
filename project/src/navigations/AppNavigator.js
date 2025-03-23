@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Text, Image, TouchableOpacity, View } from "react-native";
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 import { styles } from '../styles/app.styles'; // Import styles
 
 // Stack Screen
@@ -118,7 +118,6 @@ const AppNavigator = () => {
         headerRight: () => (
           <Text style={styles.headerRightText}>Tips</Text>),
       }} />
-
       {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
       {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
 

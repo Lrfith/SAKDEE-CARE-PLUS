@@ -10,6 +10,7 @@ import { styles } from "./src/styles/app.styles";
 import LoginScreen from "./src/screens/LoginScreen";
 import AppNavigator from "./src/navigations/AppNavigator";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
+import TipDetailScreen from "./src/screens/TipDetailScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import VerificationScreen from "./src/screens/VerificationScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
@@ -17,6 +18,8 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import ChatScreen from "./src/screens/ChatScreen";
 import CustomDrawer from "./src/screens/ProfileScreen";
 import DisplaySymbols from "./src/screens/DisplaySymbols";
+import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
+import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +54,7 @@ const App = () => {
         <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="TipDetail" component={TipDetailScreen} />
         
         {/* Profile Screen Setting */}
         <Stack.Screen name="Profile" component={ProfileScreen}
@@ -106,6 +110,8 @@ const App = () => {
             ), 
           })}
         />
+        {/* Main App Screens */}
+        <Stack.Screen name="TipsScreen" component={TipsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

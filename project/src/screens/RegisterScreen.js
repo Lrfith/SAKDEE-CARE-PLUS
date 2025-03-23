@@ -27,7 +27,7 @@ const RegisterScreen = () => {
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 1000,
+      duration: 750,
       useNativeDriver: true,
     }).start();
   }, []);
@@ -77,12 +77,12 @@ const RegisterScreen = () => {
           <View style={styles.screenContainer}>
             <Image
               source={require("../../assets/image/IconSymbols.png")}
-              style={{ width: 140, height: 160, marginTop: 30 }}
+              style={{ width: 140, height: 160, marginTop: 20 }}
             />
           </View>
 
           {/* Animated Card */}
-          <Animated.View style={[styles.card, { height: 600, transform: [{ translateY: slideAnim }] }]}>
+          <Animated.View style={[styles.card, { height: 620, transform: [{ translateY: slideAnim }] }]}>
             <Text style={styles.title}>สมัครสมาชิก</Text>
             <Text style={styles.defaultText}>
               ในการเริ่มต้นกรุณาเข้าสู่ระบบหรือสร้างบัญชีผู้ใช้งานด้วยบัญชีอีเมลของคุณ
@@ -91,6 +91,7 @@ const RegisterScreen = () => {
             {/* Form */}
             <View style={{ marginTop: 20 }}>
               <Text style={styles.defaultText}>ชื่อผู้ใช้</Text>
+              <Text style={{ fontSize: 12, fontFamily: 'Kanit-Regular', color: 'gray', }}>**(ชื่อผู้ใช้ สามารถตั้งได้เพียงครั้งเดียวเท่านั้น)** </Text>
               <TextInput
                 style={styles.input}
                 placeholder="กรอกชื่อผู้ใช้"

@@ -7,7 +7,6 @@ import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { auth } from "../components/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -27,7 +26,7 @@ const LoginScreen = () => {
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 1000,
+      duration: 750,
       useNativeDriver: true,
     }).start();
   }, []);

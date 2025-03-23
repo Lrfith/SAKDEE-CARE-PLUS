@@ -45,11 +45,14 @@ const getWeatherIcon = (condition) => {
   switch (condition.toLowerCase()) {
     case "clear": return "weather-sunny";
     case "clouds": return "weather-cloudy";
+    // case "clouds": return "cloud";
     case "rain": return "weather-rainy";
     case "snow": return "weather-snowy";
     default: return "weather-sunny";
   }
 };
+
+
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -142,7 +145,7 @@ const Home = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
 
           {/* // Greeting Section */}
-          <Text style={styles.sectionGeeting}>{getGreeting()}, Nuttamon!</Text>
+          <Text style={styles.sectionGeeting}>{getGreeting()}, {user?.userName}!</Text>
           {/* <Text style={styles.sectionGeeting}>{getGreeting()}, Guest User!</Text> */}
 
           {/* // Weather Section */}
@@ -203,7 +206,7 @@ const Home = () => {
               showsHorizontalScrollIndicator={false}
             />
 
-            <View style={styles.sectionTitleTip}>
+            {/* <View style={styles.sectionTitleTip}>
               <Text style={styles.sectionTitleTipText}>Tips ในการดูแลผ้า</Text>
               <TouchableOpacity onPress={() => navigation.navigate('Tips')}>
                 <Text style={styles.sectionTitleTipText2}>ดูทั้งหมด</Text>
@@ -225,7 +228,7 @@ const Home = () => {
                 </View>
               )}
               showsHorizontalScrollIndicator={false}
-            />
+            /> */}
 
 
           </View>

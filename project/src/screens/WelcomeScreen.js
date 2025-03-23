@@ -12,7 +12,7 @@ const WelcomeScreen = () => {
   useEffect(() => {
     Animated.timing(slideAnim, {
       toValue: 0,
-      duration: 2000,
+      duration: 750,
       useNativeDriver: false,
     }).start();
   }, []);

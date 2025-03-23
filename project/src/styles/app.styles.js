@@ -110,7 +110,7 @@ export const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
-    paddingHorizontal: 8, //
+    paddingHorizontal: 10, //
   },
   categorySection: {
     marginBottom: 20,
@@ -119,6 +119,7 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: "Kanit-Regular",
     marginBottom: 10,
+    marginLeft: 10
   },
   symbolsContainer: {
     flexDirection: "row",
@@ -184,10 +185,20 @@ export const styles = StyleSheet.create({
   shadowStyle:
   {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5, // For Android
+  },
+
+  headerRight: {
+    paddingRight: 16,
+  },
+  iconText: {
+    fontSize: 24,
+  },
+  tabIcon: {
+    fontSize: 28,
   },
     
 });
