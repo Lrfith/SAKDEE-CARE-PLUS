@@ -190,4 +190,66 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5, // For Android
   },
+
+  // Home store
+  displayCard: {
+    flexDirection: "column",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 15,
+    minHeight: 120,
+    margin: 15,
+    marginTop: 10,
+  },
+  titleText: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  detailText: {
+    fontSize: 18,
+    marginTop: 10,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingLeft: 20,
+    marginTop: 5,
+  },
+  machineCard: {
+    margin: 20,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 15,
+    minHeight: 260,
+    justifyContent: "space-around",
+  },
+  machineTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+    marginLeft: 15,
+  },
+  machineRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  machineIcon: {
+    width: 60,
+    height: 60,
+    tintColor: "#3180E1",
+  },
+  controlButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: '70%',
+    alignSelf: 'center',
+  },
+  circleProfile: {
+    shardowColor: '#000',
+    shadowOffset: { width: 0, height: 3},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  }
 });

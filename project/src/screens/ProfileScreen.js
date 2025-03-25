@@ -11,7 +11,7 @@ const menuItems = [
   { title: "ค้นหาสาขา", route: "Store" },
   { title: "สัญลักษณ์บนป้ายผ้า", route: "Symbols" },
   { title: "แจ้งปัญหา", route: "" },
-  { title: "สำหรับผู้ดูแลร้านค้า", route: ""}
+  // { title: "สำหรับผู้ดูแลร้านค้า", route: "CustomerNavigator"}
 ];
 
 const ProfileMenu = () => {
@@ -52,12 +52,12 @@ const ProfileMenu = () => {
 
   const showLanguageAlert = () => {
     Alert.alert(
-      "เลือกภาษา", 
+      "เลือกภาษา",
       "กรุณาเลือกภาษาที่ต้องการ",
       [
         { text: "ไทย", onPress: () => handleLanguageChange('th') },
         { text: "English", onPress: () => handleLanguageChange('en') },
-        { text: "ยกเลิก", style: "cancel"}
+        { text: "ยกเลิก", style: "cancel" }
       ]
     );
   };
@@ -91,6 +91,10 @@ const ProfileMenu = () => {
             <Text style={styles.menuText}>{item.title}</Text>
           </TouchableOpacity>
         ))}
+        {/* Customer */}
+        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace("CustomerNavigator")}>
+          <Text style={[styles.menuText]}>สำหรับผู้ดูแลร้านค้า</Text>
+        </TouchableOpacity>
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
@@ -101,6 +105,8 @@ const ProfileMenu = () => {
       <TouchableOpacity style={styles.translateBTN} onPress={showLanguageAlert}>
         <Ionicons name="language-outline" size={50} color="white" />
       </TouchableOpacity>
+
+
 
     </ImageBackground>
   );
