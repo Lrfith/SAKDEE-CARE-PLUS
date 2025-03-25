@@ -190,15 +190,4 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5, // For Android
   },
-
-  headerRight: {
-    paddingRight: 16,
-  },
-  iconText: {
-    fontSize: 24,
-  },
-  tabIcon: {
-    fontSize: 28,
-  },
-    
 });

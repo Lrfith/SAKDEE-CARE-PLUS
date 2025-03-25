@@ -4,12 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../components/firebaseConfig.js';
 import { getDoc, doc } from 'firebase/firestore';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 
 const menuItems = [
   { title: "ค้นหาสาขา", route: "Store" },
   { title: "สัญลักษณ์บนป้ายผ้า", route: "Symbols" },
-  { title: "เปลี่ยนภาษา", route: "" },
-  { title: "แจ้งปัญหา", route: "" }
+  { title: "แจ้งปัญหา", route: "" },
+  { title: "สำหรับผู้ดูแลร้านค้า", route: ""}
 ];
 
 const ProfileMenu = () => {
@@ -43,6 +45,23 @@ const ProfileMenu = () => {
     }
   };
 
+  const handleLanguageChange = (language) => {
+    // ใส่โค้ดที่เกี่ยวข้องกับการเปลี่ยนภาษาที่นี่
+    console.log(`Language changed to: ${language}`);
+  };
+
+  const showLanguageAlert = () => {
+    Alert.alert(
+      "เลือกภาษา", 
+      "กรุณาเลือกภาษาที่ต้องการ",
+      [
+        { text: "ไทย", onPress: () => handleLanguageChange('th') },
+        { text: "English", onPress: () => handleLanguageChange('en') },
+        { text: "ยกเลิก", style: "cancel"}
+      ]
+    );
+  };
+
   if (loading) {
     return <ActivityIndicator size="large" style={styles.loader} />;
   }
@@ -53,7 +72,6 @@ const ProfileMenu = () => {
       style={styles.background} // ใช้ styles
       resizeMode="cover" // ปรับขนาดรูปให้เต็มจอ
     >
-
       <View style={styles.container}>
         {/* Displaying the Profile Image without TouchableOpacity */}
         <Image
@@ -79,6 +97,11 @@ const ProfileMenu = () => {
           <Text style={[styles.menuText, { color: "red" }]}>ออกจากระบบ</Text>
         </TouchableOpacity>
       </View>
+
+      <TouchableOpacity style={styles.translateBTN} onPress={showLanguageAlert}>
+        <Ionicons name="language-outline" size={50} color="white" />
+      </TouchableOpacity>
+
     </ImageBackground>
   );
 };
@@ -86,7 +109,6 @@ const ProfileMenu = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
     padding: 20,
     alignItems: "center",
   },
@@ -124,6 +146,20 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
+  },
+
+  translateBTN: {
+    position: 'absolute',
+    bottom: 50,
+    right: 20,
+    backgroundColor: '#3180E1',
+    padding: 12,
+    borderRadius: 100,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
   },
 });
 

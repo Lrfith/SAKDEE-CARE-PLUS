@@ -222,7 +222,7 @@ const careData = [
   },
 ];
 
-const tipsData = [
+export const tipsData = [
   {
     id: '1',
     title: 'อย่าเทน้ำยาปรับผ้านุ่มใส่ผ้าโดยตรง ถ้าไม่อยากเจอปัญหาแบบนี้!',
@@ -318,7 +318,7 @@ const tipsData = [
 ];
 
 
-const imageMap = {
+export const imageMap = {
   't11.png': require('../../assets/image/tips/t01.jpg'),
   't12.png': require('../../assets/image/tips/t02.jpg'),
   't13.png': require('../../assets/image/tips/t03.jpg'),

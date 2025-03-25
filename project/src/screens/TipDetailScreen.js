@@ -19,7 +19,11 @@ const imageMap = {
   't26.png': require('../../assets/image/tips/t113.jpg'),
 };
 
+
+
 export default function TipDetailScreen({ route, navigation }) {
+    const { item } = route.params; // ดึง item ออกมาก่อน
+
     const { id, title, description, image, details } = route.params; // Use route.params from React Navigation
 
     const imageSource = image && typeof image === 'string' ? imageMap[image] : null;

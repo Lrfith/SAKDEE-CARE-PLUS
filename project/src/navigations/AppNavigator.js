@@ -116,7 +116,7 @@ const AppNavigator = () => {
 
       <Tab.Screen name="Tips" component={TipsScreen} options={{
         headerRight: () => (
-          <Text style={styles.headerRightText}>Tips</Text>),
+          <Text style={styles.headerRightText}>TIPS | คำแนะนำ</Text>),
       }} />
       {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
       {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}

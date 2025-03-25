@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, } from "react";
 import { View, Text, Image, ScrollView, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, ImageBackground } from "react-native";
 import { Card } from "@rneui/themed";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,28 +9,8 @@ import { auth, db } from '../components/firebaseConfig.js';
 import { getDoc, doc } from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth"; // Import onAuthStateChanged
 import { Animated, Easing } from "react-native";
+import { tipsData, imageMap } from '../screens/TipsScreen'; // นำเข้าข้อมูลจาก TipsScreen.js
 
-
-const tips = [
-  {
-    id: "1",
-    title: "5 เคล็ดลับซักผ้าให้สะอาด",
-    description: "เคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาด",
-    image: require("../../assets/TipSection-img/TipSec-img1.png"),
-  },
-  {
-    id: "2",
-    title: "4 วิธีตากผ้าในวันที่ไม่มีแดด",
-    description: "เคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาด",
-    image: require("../../assets/TipSection-img/TipSec-img2.png"),
-  },
-  {
-    id: "3",
-    title: "ซักผ้าให้หอมติดทนนาน",
-    description: "เคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาดเคล็ดลับซักผ้าให้สะอาด",
-    image: require("../../assets/TipSection-img/TipSec-img3.png"),
-  },
-];
 
 const getGreeting = () => {
   const hour = new Date().getHours();
@@ -45,20 +25,18 @@ const getWeatherIcon = (condition) => {
   switch (condition.toLowerCase()) {
     case "clear": return "weather-sunny";
     case "clouds": return "weather-cloudy";
-    // case "clouds": return "cloud";
     case "rain": return "weather-rainy";
     case "snow": return "weather-snowy";
     default: return "weather-sunny";
   }
 };
 
-
-
 const Home = () => {
   const [user, setUser] = useState(null);
   const [weatherData, setWeatherData] = useState({});
   const navigation = useNavigation();
   const animatedValue = useRef(new Animated.Value(0)).current;
+
 
   useEffect(() => {
     Animated.loop(
@@ -135,6 +113,11 @@ const Home = () => {
     return rain < 30 && humidity < 70 ? "เหมาะสำหรับซักผ้า" : "ไม่เหมาะสำหรับซักผ้า";
   };
 
+  const [tips, setTips] = useState([]);
+  useEffect(() => {
+    setTips(tipsData); // ตั้งค่าข้อมูล Tips ใน Home
+  }, []);
+
   return (
     <ImageBackground
       source={require('../../assets/image/HomeBackground.png')} // เปลี่ยนเป็น path ของรูปที่ต้องการใช้
@@ -159,7 +142,7 @@ const Home = () => {
 
             <View style={styles.weatherContent}>
               <Animated.View style={{ transform: [{ translateY: animatedValue }] }}>
-                <MaterialCommunityIcons name={weatherData.icon} size={85} color="orange" marginRight={15}/>
+                <MaterialCommunityIcons name={weatherData.icon} size={85} color="orange" marginRight={15} />
               </Animated.View>
               <View style={styles.weatherText}>
                 <Text style={styles.temp}>{weatherData.temperature}</Text>
@@ -193,49 +176,29 @@ const Home = () => {
               data={tips}
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
-                <View style={styles.tipCard}>
-                  <Image source={item.image} style={styles.tipImage} />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("TipDetail", {
+                    id: item.id, // ส่ง id
+                    title: item.title, // ส่ง title
+                    description: item.description, // ส่ง description
+                    image: item.image, // ส่ง image
+                    details: JSON.stringify(item.details), // ส่ง details (แปลงเป็น JSON string ถ้าจำเป็น)
+                  })}
+                  style={styles.tipCard}
+                >
+                  <Image source={imageMap[item.image]} style={styles.tipImage} />
                   <Text style={styles.tipTitle} numberOfLines={1} ellipsizeMode="tail">
                     {item.title}
                   </Text>
                   <Text style={styles.tipDesc} numberOfLines={2} ellipsizeMode="tail">
                     {item.description}
                   </Text>
-                </View>
+                </TouchableOpacity>
               )}
               showsHorizontalScrollIndicator={false}
             />
 
-            {/* <View style={styles.sectionTitleTip}>
-              <Text style={styles.sectionTitleTipText}>Tips ในการดูแลผ้า</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('Tips')}>
-                <Text style={styles.sectionTitleTipText2}>ดูทั้งหมด</Text>
-              </TouchableOpacity>
-            </View>
-            <FlatList
-              horizontal
-              data={tips}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.tipCard}>
-                  <Image source={item.image} style={styles.tipImage} />
-                  <Text style={styles.tipTitle} numberOfLines={1} ellipsizeMode="tail">
-                    {item.title}
-                  </Text>
-                  <Text style={styles.tipDesc} numberOfLines={2} ellipsizeMode="tail">
-                    {item.description}
-                  </Text>
-                </View>
-              )}
-              showsHorizontalScrollIndicator={false}
-            /> */}
-
-
           </View>
-
-
-
-
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>

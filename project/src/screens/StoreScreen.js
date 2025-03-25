@@ -8,6 +8,7 @@ import { Platform, Linking } from 'react-native';
 import stores from '../components/dataDept';
 import Feather from '@expo/vector-icons/Feather';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Rating } from 'react-native-ratings';
 
 export default function StoreInfoScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -73,6 +74,17 @@ export default function StoreInfoScreen() {
     Linking.openURL(url).catch((err) => console.error('ไม่สามารถเปิดแผนที่ได้:', err));
   };
 
+  const [rating, setRating] = useState(0);
+
+  <Rating
+    type="star"
+    ratingCount={5}
+    imageSize={30}
+    startingValue={rating}
+    onFinishRating={(value) => setRating(value)}
+    style={{ paddingVertical: 10 }}
+  />
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -119,25 +131,25 @@ export default function StoreInfoScreen() {
               latitude: store.latitude,
               longitude: store.longitude,
               backgroundColor: '#3180E1',
-            }} 
+            }}
 
-          title = { store.name }
-          description = { store.description }
-          onPress = {() => toggleModal(store)}
-        >
-        {/* ใช้ Image แทนไอคอน */}
-        <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
-      </Marker>
+            title={store.name}
+            description={store.description}
+            onPress={() => toggleModal(store)}
+          >
+            {/* ใช้ Image แทนไอคอน */}
+            <Image source={require('../../assets/store-icon.png')} style={{ width: 40, height: 40 }} />
+          </Marker>
         ))}
-    </MapView>
+      </MapView>
 
-      {/* ✅ ปุ่มกลับไปยังตำแหน่งของผู้ใช้ */ }
+      {/* ✅ ปุ่มกลับไปยังตำแหน่งของผู้ใช้ */}
       <TouchableOpacity style={styles.locationButton} onPress={() => {
         if (userLocation) {
           setRegion({
             latitude: userLocation.latitude,
             longitude: userLocation.longitude,
-            latitudeDelta: 0.05,    backgroundColor: '#3180E1',
+            latitudeDelta: 0.05, backgroundColor: '#3180E1',
 
             longitudeDelta: 0.05,
           });
@@ -200,6 +212,19 @@ export default function StoreInfoScreen() {
                 </View>
               </View>
             </View>
+
+            <View style={styles.fullWidthColumn}>
+              <View style={{ alignItems: 'center', marginVertical: 5, flexDirection: 'row' }}>
+                <Text style={{ fontSize: 16, fontFamily: 'Kanit-Regular' }}>ให้คะแนนสาขานี้</Text>
+                <Rating
+                  type="star"
+                  ratingCount={5}
+                  imageSize={20}
+                  startingValue={rating}
+                  onFinishRating={(value) => setRating(value)}
+                  style={{ paddingLeft: 10 }}
+                />
+              </View></View>
 
 
           </View>
@@ -313,7 +338,7 @@ const styles = StyleSheet.create({
     marginLeft: 5, // เพิ่มระยะห่างระหว่างไอคอนกับตัวเลข
     color: 'gray',
   },
-  
+
   modalTitle: {
     fontSize: 18,
     fontFamily: 'Kanit-Regular',
@@ -360,6 +385,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
+  },
+
+  rating: {
+
   },
 
 });
