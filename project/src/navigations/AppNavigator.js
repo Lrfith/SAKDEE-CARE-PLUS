@@ -85,7 +85,7 @@ const AppNavigator = () => {
 
               <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 20 }}>
                 <Image
-                  source={require('../../assets/icon.png')}
+                  source={require('../../assets/image/profile.png')}
                   style={{
                     width: 40,
                     height: 40,

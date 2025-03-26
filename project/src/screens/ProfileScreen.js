@@ -5,13 +5,13 @@ import { auth, db } from '../components/firebaseConfig.js';
 import { getDoc, doc } from 'firebase/firestore';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { Linking } from "react-native";
 
 
 const menuItems = [
   { title: "ค้นหาสาขา", route: "Store" },
   { title: "สัญลักษณ์บนป้ายผ้า", route: "Symbols" },
-  { title: "แจ้งปัญหา", route: "" },
-  { title: "สำหรับผู้ดูแลร้านค้า", route: ""}
+  { title: "สำหรับผู้ดูแลร้านค้า", route: "" }
 ];
 
 const ProfileMenu = () => {
@@ -52,12 +52,12 @@ const ProfileMenu = () => {
 
   const showLanguageAlert = () => {
     Alert.alert(
-      "เลือกภาษา", 
+      "เลือกภาษา",
       "กรุณาเลือกภาษาที่ต้องการ",
       [
         { text: "ไทย", onPress: () => handleLanguageChange('th') },
         { text: "English", onPress: () => handleLanguageChange('en') },
-        { text: "ยกเลิก", style: "cancel"}
+        { text: "ยกเลิก", style: "cancel" }
       ]
     );
   };
@@ -75,7 +75,7 @@ const ProfileMenu = () => {
       <View style={styles.container}>
         {/* Displaying the Profile Image without TouchableOpacity */}
         <Image
-          source={imageUri ? { uri: imageUri } : require('../../assets/icon.png')}
+          source={imageUri ? { uri: imageUri } : require('../../assets/image/profile.png')}
           style={styles.profileImage}
         />
 
@@ -91,6 +91,15 @@ const ProfileMenu = () => {
             <Text style={styles.menuText}>{item.title}</Text>
           </TouchableOpacity>
         ))}
+
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => Linking.openURL("https://northsnx.github.io/SAKDEE.App/")}
+        >
+          <Text style={[styles.menuText,]}>เกี่ยวกับเรา</Text>
+        </TouchableOpacity>
+
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
