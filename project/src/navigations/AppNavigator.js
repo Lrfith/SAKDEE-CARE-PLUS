@@ -118,8 +118,6 @@ const AppNavigator = () => {
         headerRight: () => (
           <Text style={styles.headerRightText}>TIPS | คำแนะนำ</Text>),
       }} />
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
 
     </Tab.Navigator>
   );

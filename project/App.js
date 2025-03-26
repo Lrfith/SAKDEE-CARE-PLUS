@@ -20,6 +20,7 @@ import CustomDrawer from "./src/screens/ProfileScreen";
 import DisplaySymbols from "./src/screens/DisplaySymbols";
 import TipsScreen from './src/screens/TipsScreen'; // นำเข้า TipsScreen
 import Home from "./src/screens/HomeScreen"; // นำเข้า HomeScreen
+import CustomerNavigator from './src/navigations/CustomerNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,13 +46,13 @@ const App = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          gestureEnabled: true, // DONT FORGET TO CHANGE TO 'FALSE'
+          gestureEnabled: false, // DONT FORGET TO CHANGE TO 'FALSE'
         }}
       >
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        {/* <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Verification" component={VerificationScreen} />
+        <Stack.Screen name="Verification" component={VerificationScreen} /> */}
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="TipDetail" component={TipDetailScreen} />
@@ -112,6 +113,8 @@ const App = () => {
         />
         {/* Main App Screens */}
         <Stack.Screen name="TipsScreen" component={TipsScreen} />
+
+        <Stack.Screen name="CustomerNavigator" component={CustomerNavigator}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

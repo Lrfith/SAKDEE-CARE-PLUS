@@ -11,7 +11,7 @@ import { Linking } from "react-native";
 const menuItems = [
   { title: "ค้นหาสาขา", route: "Store" },
   { title: "สัญลักษณ์บนป้ายผ้า", route: "Symbols" },
-  { title: "สำหรับผู้ดูแลร้านค้า", route: "" }
+  // { title: "สำหรับผู้ดูแลร้านค้า", route: "CustomerNavigator"}
 ];
 
 const ProfileMenu = () => {
@@ -53,11 +53,12 @@ const ProfileMenu = () => {
   const showLanguageAlert = () => {
     Alert.alert(
       "เลือกภาษา",
+      "เลือกภาษา",
       "กรุณาเลือกภาษาที่ต้องการ",
       [
         { text: "ไทย", onPress: () => handleLanguageChange('th') },
         { text: "English", onPress: () => handleLanguageChange('en') },
-        { text: "ยกเลิก", style: "cancel" }
+        { text: "ยกเลิก", style: "cancel" },
       ]
     );
   };
@@ -91,8 +92,12 @@ const ProfileMenu = () => {
             <Text style={styles.menuText}>{item.title}</Text>
           </TouchableOpacity>
         ))}
+        {/* Customer */}
+        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace("CustomerNavigator")}>
+          <Text style={[styles.menuText]}>สำหรับผู้ดูแลร้านค้า</Text>
+        </TouchableOpacity>
 
-        {/* Logout Button */}
+        {/* AboutUs Button */}
         <TouchableOpacity
           style={styles.menuItem}
           onPress={() => Linking.openURL("https://northsnx.github.io/SAKDEE.App/")}
@@ -110,6 +115,8 @@ const ProfileMenu = () => {
       <TouchableOpacity style={styles.translateBTN} onPress={showLanguageAlert}>
         <Ionicons name="language-outline" size={50} color="white" />
       </TouchableOpacity>
+
+
 
     </ImageBackground>
   );

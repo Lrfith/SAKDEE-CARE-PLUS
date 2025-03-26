@@ -96,11 +96,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    marginRight: 10,
+    marginRight: 5,
   },
   instructionText: {
-    fontSize: 17,
-    fontWeight: "500",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   categoryContainer: {
     height: 60,
@@ -139,8 +139,8 @@ export const styles = StyleSheet.create({
     width: 100,
   },
   symbolImage: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
 
   },
   selectedSymbolsGrid: {
@@ -190,4 +190,74 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5, // For Android
   },
+
+  // Home store
+  displayCardStore: {
+    flexDirection: "column",
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 15,
+    minHeight: 120,
+    margin: 15,
+    marginTop: 10,
+  },
+  titleText: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  detailText: {
+    fontSize: 18,
+    marginTop: 10,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingLeft: 20,
+    marginTop: 5,
+    fontFamily: 'Kanit-Regular'
+  },
+  machineCard: {
+    margin: 20,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 15,
+    minHeight: 260,
+    justifyContent: "space-around",
+  },
+  machineTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+    marginLeft: 15,
+    fontFamily: 'Kanit-Regular'
+  },
+  machineRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 5,
+  },
+  machineIcon: {
+    width: 60,
+    height: 60,
+    tintColor: "#3180E1",
+  },
+  controlButtonRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: '70%',
+    alignSelf: 'center',
+  },
+  circleProfile: {
+    shardowColor: '#000',
+    shadowOffset: { width: 0, height: 3},
+    shadowOpacity: 0.3,
+    shadowRadius: 3
+  },
+  textCard: {
+    fontFamily: 'Kanit-Regular',
+    fontSize: 18,
+    color: '#000',
+    fontWeight: 'bold'
+  }
 });
