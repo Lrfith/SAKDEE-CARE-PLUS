@@ -140,7 +140,7 @@ const SymbolsScreen = () => {
     <View style={styles.container}>
       
       {/* Display Card */}
-      <View style={styles.displayCard}>
+      <View style={[styles.displayCard, styles.shadowStyle, {margin: 10}]}>
         {selectedSymbols.length > 0 ? (
           <View style={styles.selectedSymbolsGrid}>
             {selectedSymbols.map((symbolId) => {

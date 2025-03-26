@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, ScrollView, Switch, Image } from "react-native";
 import React, { useRef, useState, useEffect } from "react";
 import ButtonCustom from "../components/ButtonCustom";
-
+import { styles } from '../styles/app.styles'
 // Machine Categories
 const categoriesMachine = [
   { id: "1", title: "ทั้งหมด" },
@@ -13,16 +13,10 @@ const allMachine = [
   {
     id: "2",
     title: "เครื่องซักผ้า",
-    symbol: [
-      { id: "1", image: require("../../assets/laundry_symbols/washing-machine-icon.png") },
-    ]
   },
   {
     id: "3",
     title: "เครื่องอบผ้า",
-    symbol: [
-      { id: "2", image: require("../../assets/laundry_symbols/tumble-dry-icon.png") },
-    ]
   },
 ];
 
@@ -62,11 +56,11 @@ const ControlScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.displayCard}>
+      <View style={styles.displayCardStore}>
         {/* Title Section */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 10 }}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginRight: 20 }}>เครื่องซักผ้า</Text>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', marginLeft: 20 }}>เครื่องอบผ้า</Text>
+          <Text style={[styles.textCard, { textAlign: 'center', marginRight: 20 }]}>เครื่องซักผ้า</Text>
+          <Text style={[styles.textCard, { textAlign: 'center', marginLeft: 20 }]}>เครื่องอบผ้า</Text>
         </View>
 
         {/* Icon and Count Section */}
@@ -77,7 +71,7 @@ const ControlScreen = ({ navigation, route }) => {
               source={require("../../assets/laundry_symbols/washing-machine-icon.png")}
               style={{ width: 60, height: 60, tintColor: '#3180E1' }}
             />
-            <Text style={{ fontSize: 18, fontWeight: '500', marginTop: 10 }}>{countWash}/{washCount}</Text>
+            <Text style={[styles.textCard, { marginTop: 10 }]}>{countWash}/{washCount}</Text>
           </View>
 
           {/* Vertical Separator */}
@@ -89,7 +83,7 @@ const ControlScreen = ({ navigation, route }) => {
               source={require("../../assets/laundry_symbols/tumble-dry-icon.png")}
               style={{ width: 60, height: 60, tintColor: '#3180E1' }}
             />
-            <Text style={{ fontSize: 18, fontWeight: '500', marginTop: 10 }}>{countTumble}/{tumbleCount}</Text>
+            <Text style={[styles.textCard, { marginTop: 10 }]}>{countTumble}/{tumbleCount}</Text>
           </View>
         </View>
       </View>
@@ -115,10 +109,10 @@ const ControlScreen = ({ navigation, route }) => {
       </View>
 
       {/* Display Machines */}
-      <ScrollView style={[styles.scrollContainer, styles.displayCard, { marginBottom: 40 }]} showsVerticalScrollIndicator={false}>
+      <ScrollView style={[styles.scrollContainer, styles.displayCardStore, { marginBottom: 40 }]} showsVerticalScrollIndicator={false}>
         {getFilteredMachine().map((machine) => (
           <View key={machine.id} style={[styles.displayMachine, { flexDirection: 'column', justifyContent: 'flex-start' }]}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{machine.title}</Text>
+            <Text style={styles.textCard}>{machine.title}</Text>
             {/* Display Washing Machines */}
             {machine.title === "เครื่องซักผ้า" && Array.from({ length: washCount }).map((_, index) => (
               <View key={`wash-${index}`} style={[styles.displayMachine, { backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }]}>
@@ -131,7 +125,7 @@ const ControlScreen = ({ navigation, route }) => {
                     />
                   </View>
                 </View>
-                <Text style={{ fontSize: 18, width: 100 }}>
+                <Text style={[styles.textCard, { width: 100 }]}>
                   {isWashEnabled[index] ? 'กำลังทำงาน' : 'ว่าง'}
                 </Text>
                 <Switch
@@ -153,7 +147,7 @@ const ControlScreen = ({ navigation, route }) => {
                     />
                   </View>
                 </View>
-                <Text style={{ fontSize: 18, width: 100 }}>
+                <Text style={[styles.textCard, { width: 100 }]}>
                   {isTumbleEnabled[index] ? 'กำลังทำงาน' : 'ว่าง'}
                 </Text>
                 <Switch
@@ -170,66 +164,3 @@ const ControlScreen = ({ navigation, route }) => {
 };
 
 export default ControlScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E7E7E7",
-  },
-  displayCard: {
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 15,
-    minHeight: 120,
-    margin: 20,
-    marginTop: 10,
-  },
-  categoryContainer: {
-    height: 60,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 10,
-  },
-  buttonCategory: {
-    alignItems: "center",
-    borderRadius: 50,
-    height: 35,
-    justifyContent: "center",
-    width: 100,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  machineText: {
-    fontSize: 16,
-    marginTop: 5,
-    color: "black",
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingHorizontal: 8,
-  },
-  displayMachine: {
-    backgroundColor: "#fff",
-    minHeight: 100,
-    justifyContent: 'center',
-  },
-  symbolContainer: {
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-  },
-  placeholderContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  symbolImage: {
-    width: 40,
-    height: 40,
-  },
-});

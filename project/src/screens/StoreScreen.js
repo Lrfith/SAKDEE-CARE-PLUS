@@ -51,6 +51,7 @@ export default function StoreInfoScreen() {
       setDistance(distanceToStore);
     }
     setSelectedStore(store);
+    setRating(store?.rating || 0); // Set initial rating from store data
     setIsModalVisible(!isModalVisible);
   };
 
@@ -80,7 +81,7 @@ export default function StoreInfoScreen() {
     type="star"
     ratingCount={5}
     imageSize={30}
-    startingValue={rating}
+    startingValue={selectedStore?.rating || 0}
     onFinishRating={(value) => setRating(value)}
     style={{ paddingVertical: 10 }}
   />

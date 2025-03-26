@@ -4,6 +4,7 @@ import ButtonCustom from "../components/ButtonCustom";
 import { useNavigation } from "@react-navigation/native";
 import Counter from "../components/Counter";
 import { styles } from '../styles/app.styles'
+import { Rating } from 'react-native-ratings';
 
 const ConfigScreen = () => {
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ const ConfigScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.displayCard}>
+      <View style={styles.displayCardStore}>
         <View style={{ alignItems: 'center', flexDirection: 'row' }}>
           <View style={[styles.circleProfile, { width: 90, height: 90, backgroundColor: '#fff', borderRadius: 50 }]}>
             <Image
@@ -32,19 +33,27 @@ const ConfigScreen = () => {
             />
           </View>
 
-          <View style={{ width: '50%', height: 70, backgroundColor: '#fff', marginLeft: 10}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Mc Place Ramintra</Text>
-            <Text style={{fontSize: 16}}>ซอยรามอินทรา</Text>
+          <View style={{ width: '50%', height: 70, backgroundColor: '#fff', marginLeft: 15}}>
+            <Text style={styles.textCard}>Mc Place Ramintra</Text>
+            <Text style={{fontSize: 16, fontFamily: 'Kanit-Regular'}}>ซอยรามอินทรา</Text>
+            <Rating 
+              type="star"
+              ratingCount={5}
+              imageSize={20}
+              startingValue={3.5} // from database or else.
+              onFinishRating={(value) => setRating(value)}
+              style={{marginRight: 60, marginTop: 5}}
+            />
           </View>
 
-          <View style={{ width: '20%', height: 50, backgroundColor: '#fff', marginLeft: 5, paddingTop: 10 }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', textAlign: 'center'}} onPress={() => console.log("click")}>ดูรีวิว</Text>
+          <View style={{ width: '20%', height: 50, backgroundColor: '#fff', paddingTop: 15 }}>
+            <Text style={[styles.textCard, {textAlign: 'center'}]} onPress={() => console.log("click")}>ดูรีวิว</Text>
           </View>
         </View>
 
       </View>
 
-      <View style={styles.displayCard}>
+      <View style={styles.displayCardStore}>
         <Text style={[styles.titleText, { marginLeft: 20 }]}>ID Store: {storeID}</Text>
         <Text style={[styles.detailText, { marginLeft: 20 }]}>
           รายละเอียด: {"\n"}
@@ -87,7 +96,7 @@ const ConfigScreen = () => {
             colorText="#fff"
             border="#3180E1"
             onPress={() => navigation.navigate("Control", { washCount, tumbleCount })}
-            textStyle={{ fontSize: 18 }}
+            textStyle={[styles.textCard, {color: '#fff'}]}
           />
         </View>
       )}

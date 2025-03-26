@@ -96,11 +96,11 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    marginRight: 10,
+    marginRight: 5,
   },
   instructionText: {
-    fontSize: 17,
-    fontWeight: "500",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   categoryContainer: {
     height: 60,
@@ -139,8 +139,8 @@ export const styles = StyleSheet.create({
     width: 100,
   },
   symbolImage: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
 
   },
   selectedSymbolsGrid: {
@@ -192,7 +192,7 @@ export const styles = StyleSheet.create({
   },
 
   // Home store
-  displayCard: {
+  displayCardStore: {
     flexDirection: "column",
     backgroundColor: "#fff",
     padding: 20,
@@ -214,6 +214,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingLeft: 20,
     marginTop: 5,
+    fontFamily: 'Kanit-Regular'
   },
   machineCard: {
     margin: 20,
@@ -228,6 +229,7 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
     marginLeft: 15,
+    fontFamily: 'Kanit-Regular'
   },
   machineRow: {
     flexDirection: "row",
@@ -251,5 +253,11 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3},
     shadowOpacity: 0.3,
     shadowRadius: 3
+  },
+  textCard: {
+    fontFamily: 'Kanit-Regular',
+    fontSize: 18,
+    color: '#000',
+    fontWeight: 'bold'
   }
 });
