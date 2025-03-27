@@ -390,10 +390,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     flex: 1,
     backgroundColor: '#F6F6F6',
+    paddingBottom: 70,
   },
   list: {
     paddingHorizontal: 16,
-    paddingBottom: 16,
+    paddingBottom: 80,
     backgroundColor: '#F6F6F6',
   },
   item: {
