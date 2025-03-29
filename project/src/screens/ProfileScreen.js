@@ -96,6 +96,10 @@ const ProfileMenu = () => {
           <Text style={[styles.menuText]}>สำหรับผู้ดูแลร้านค้า</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace("Gallery")}>
+          <Text style={[styles.menuText]}>Gallery</Text>
+        </TouchableOpacity>
+
         {/* Logout Button */}
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
           <Text style={[styles.menuText, { color: "red" }]}>ออกจากระบบ</Text>

@@ -259,5 +259,26 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     fontWeight: 'bold'
+  },
+
+  // Image Gallery
+  GalleryContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    marginBottom: 100,
+  },
+  frameContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'grey',
+    padding: 5,
+    gap: 5,
+    alignItems: 'flex-start'
+  },
+  frameImage: {
+    width: 124,
+    height: 124,
+    backgroundColor: 'blue'
   }
 });
