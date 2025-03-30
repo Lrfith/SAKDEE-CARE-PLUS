@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { styles } from "../styles/app.styles";
 
-const ButtonCustom = ({ lable, onPress, color, colorText, border, style, image, tintColor }) => {
+const ButtonCustom = ({ lable, onPress, color, colorText, border, style, image, tintColor, textStyle }) => {
   return (
     <TouchableOpacity
       style={[
@@ -28,7 +28,7 @@ const ButtonCustom = ({ lable, onPress, color, colorText, border, style, image, 
           resizeMode="contain"
         />
       )}
-      <Text style={[styles.defaultText, { color: colorText }]}>{lable}</Text>
+      <Text style={[styles.defaultText, { color: colorText }, textStyle]}>{lable}</Text>
     </TouchableOpacity>
   );
 };

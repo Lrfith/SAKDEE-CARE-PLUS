@@ -8,14 +8,14 @@ export default function CustomAppBar({ title, onBack }) {
             <TouchableOpacity onPress={onBack} style={styles.backButton}>
                 <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>
-            <Text style={styles.title} numberOfLines={1}>{title}</Text>
+            <Text style={styles.title}>Tips</Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     appBar: {
-        height: 56,
+        height: 60,
         backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
         color: 'black',
         flex: 1,
         fontFamily: 'Kanit-Regular',
+        textAlign:'center',
     },
 });

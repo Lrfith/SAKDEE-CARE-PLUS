@@ -85,7 +85,7 @@ const AppNavigator = () => {
 
               <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginRight: 20 }}>
                 <Image
-                  source={require('../../assets/icon.png')}
+                  source={require('../../assets/image/profile.png')}
                   style={{
                     width: 40,
                     height: 40,
@@ -116,10 +116,8 @@ const AppNavigator = () => {
 
       <Tab.Screen name="Tips" component={TipsScreen} options={{
         headerRight: () => (
-          <Text style={styles.headerRightText}>Tips</Text>),
+          <Text style={styles.headerRightText}>TIPS | คำแนะนำ</Text>),
       }} />
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} /> */}
-      {/* <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarButton: () => null }}/> */}
 
     </Tab.Navigator>
   );
