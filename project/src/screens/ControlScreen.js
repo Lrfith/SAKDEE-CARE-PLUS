@@ -125,7 +125,7 @@ const ControlScreen = ({ navigation, route }) => {
                     />
                   </View>
                 </View>
-                <Text style={[styles.textCard, { width: 100 }]}>
+                <Text style={[styles.textCard, { width: 100 }, { color: isWashEnabled[index] ? 'red': 'green' }]}>
                   {isWashEnabled[index] ? 'กำลังทำงาน' : 'ว่าง'}
                 </Text>
                 <Switch
@@ -147,7 +147,8 @@ const ControlScreen = ({ navigation, route }) => {
                     />
                   </View>
                 </View>
-                <Text style={[styles.textCard, { width: 100 }]}>
+                <Text style={[styles.textCard, { width: 100 }, { color: isTumbleEnabled[index] ? 'red': 'green' }]}>
+                  
                   {isTumbleEnabled[index] ? 'กำลังทำงาน' : 'ว่าง'}
                 </Text>
                 <Switch

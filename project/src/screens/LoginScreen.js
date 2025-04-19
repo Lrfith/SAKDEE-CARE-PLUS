@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Alert } from "react-native";
-import { Animated } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert, Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
@@ -10,16 +9,14 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { auth } from "../components/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-
-
 const LoginScreen = () => {
   const navigation = useNavigation();
   const slideAnim = useRef(new Animated.Value(500)).current;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
   
-  // Refs for input fields
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -30,9 +27,8 @@ const LoginScreen = () => {
       useNativeDriver: true,
     }).start();
   }, []);
-
-  const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
-
+  
+  // Backend
   const handleLogin = async () => {
     if (!email.trim() || !password) {
       Alert.alert("ข้อผิดพลาด", "กรุณากรอกอีเมลและรหัสผ่านให้ครบถ้วน");
@@ -54,7 +50,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20}>
+    <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <LinearGradient colors={["#68B9F2", "#3180E1"]} style={{ flex: 1 }}>
           <View style={styles.screenContainer}>
@@ -97,14 +93,14 @@ const LoginScreen = () => {
                   ref={passwordRef}
                 />
                 <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIcon}>
-                  <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={25} color="grey" />
+                  <Ionicons name={passwordVisible ? "eye-off" : "eye"} size={28} color="grey" />
                 </TouchableOpacity>
               </View>
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: 'flex-end', alignItems: "center", marginTop: 10 }}>
               <TouchableOpacity onPress={() => navigation.replace("ForgotPassword")}>
-                <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey' }]}>ลืมรหัสผ่าน?</Text>
+                <Text style={[styles.defaultText, { color: 'grey' }]}>ลืมรหัสผ่าน?</Text>
               </TouchableOpacity>
             </View>
 
@@ -113,9 +109,9 @@ const LoginScreen = () => {
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-              <Text style={{ fontSize: 16, fontFamily: "Kanit-Regular" }}>ยังไม่ได้เป็นสมาชิก? </Text>
+              <Text style={styles.defaultText}>ยังไม่ได้เป็นสมาชิก? </Text>
               <TouchableOpacity onPress={() => navigation.replace("Register")}>
-                <Text style={[styles.linkText, { marginLeft: 5, fontFamily: "Kanit-Regular" }]}>สมัครสมาชิก</Text>
+                <Text style={[styles.defaultText, { color: '#3180E1', marginLeft: 5, textDecorationLine: 'underline' }]}>สมัครสมาชิก</Text>
               </TouchableOpacity>
             </View>
           </Animated.View>

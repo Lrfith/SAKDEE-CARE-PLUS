@@ -52,9 +52,9 @@ const VerificationScreen = () => {
                 marginTop: 40
               }}
             >
-              <Text style={{ fontSize: 16 }}>คุณยังไม่ได้รับอีเมลใช่หรือไม่ </Text>
+              <Text style={styles.defaultText}>คุณยังไม่ได้รับอีเมลใช่หรือไม่ </Text>
               <TouchableOpacity onPress={() => console.log('Send Verificate again.')}>
-                <Text style={[styles.linkText, { marginLeft: 5 }]}>
+                <Text style={[styles.defaultText, { color: '#3180E1', marginLeft: 5, textDecorationLine: 'underline' }]}>
                   ส่งอีเมลอีกครั้ง
                 </Text>
               </TouchableOpacity>

@@ -11,8 +11,6 @@ import { WelcomeScreen, LoginScreen, RegisterScreen, VerificationScreen, ForgotP
 
 import { AppNavigator, CustomerNavigator } from "./src/navigations";
 
-import CustomDrawer from "./src/screens/ProfileScreen";
-
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -40,10 +38,10 @@ const App = () => {
           gestureEnabled: false, // DONT FORGET TO CHANGE TO 'FALSE'
         }}
       >
-        {/* <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Verification" component={VerificationScreen} /> */}
+        <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="TipDetail" component={TipDetailScreen} />
@@ -62,7 +60,7 @@ const App = () => {
             },
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.popToTop()}
               >
                 <Ionicons name="chevron-back" size={30} color="black" />
               </TouchableOpacity>
@@ -121,11 +119,6 @@ const App = () => {
                 onPress={() => navigation.goBack()}
               >
                 <Ionicons name="chevron-back" size={30} color="black" />
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <TouchableOpacity onPress={()=> console.log("add image.")}>
-                <Ionicons name="add" size={30} color="black" />
               </TouchableOpacity>
             ),
           })}
