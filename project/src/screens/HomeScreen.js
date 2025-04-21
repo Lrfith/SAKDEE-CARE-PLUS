@@ -10,6 +10,8 @@ import { getDoc, doc } from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth"; // Import onAuthStateChanged
 import { Animated, Easing } from "react-native";
 import { tipsData, imageMap } from '../screens/TipsScreen'; // นำเข้าข้อมูลจาก TipsScreen.js
+import * as Location from 'expo-location'; // สำหรับดึงพิกัด
+
 
 
 const getGreeting = () => {
@@ -74,10 +76,29 @@ const Home = () => {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const response = await axios.get("http://api.openweathermap.org/data/2.5/weather", {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log("Permission to access location was denied");
+          return;
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+
+        // แปลงพิกัดเป็นชื่อสถานที่
+        let locationInfo = await Location.reverseGeocodeAsync({ latitude, longitude });
+        let locationName =
+          locationInfo[0]?.subDistrict ||
+          locationInfo[0]?.district ||
+          locationInfo[0]?.city ||
+          "ตำแหน่งของคุณ";
+
+        // ดึงข้อมูลอากาศ
+        const response = await axios.get("https://api.openweathermap.org/data/2.5/weather", {
           params: {
-            q: "Bangkok,TH",
-            appid: "c125eee6cba494a329341c56fcfbb227",
+            lat: latitude,
+            lon: longitude,
+            appid: "c125eee6cba494a329341c56fcfbb227", // ใส่ API key ของคุณตรงนี้
             units: "metric",
             lang: "th",
           },
@@ -86,18 +107,19 @@ const Home = () => {
         const data = response.data;
         const temperature = `${Math.round(data.main.temp)}°C`;
         const humidity = `${data.main.humidity}%`;
-        const rainChance = data.pop ? `${(data.pop * 100).toFixed(0)}%` : "0%";
+        const rainChance = data.pop ? `${(data.pop * 100).toFixed(0)}%` : "200%";
         const condition = data.weather[0].description;
         const icon = getWeatherIcon(data.weather[0].main);
 
         setWeatherData({
-          location: "Bangkok",
+          location: locationName,
           temperature,
           humidity,
           rainChance,
           condition,
           icon,
         });
+
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
@@ -106,12 +128,26 @@ const Home = () => {
     fetchWeather();
   }, []);
 
+
+
   const getLaundryRecommendation = () => {
-    if (!weatherData.rainChance || !weatherData.humidity) return "กำลังโหลด...";
-    const rain = parseInt(weatherData.rainChance);
+    if (!weatherData.temperature || !weatherData.humidity || !weatherData.condition) return "กำลังโหลด...";
+    
+    const temperature = parseInt(weatherData.temperature);
     const humidity = parseInt(weatherData.humidity);
-    return rain < 30 && humidity < 70 ? "เหมาะสำหรับซักผ้า" : "ไม่เหมาะสำหรับซักผ้า";
+    const skyCondition = weatherData.condition.toLowerCase();
+  
+    // กำหนดเงื่อนไขที่เหมาะสมในการซักผ้า
+    if (temperature >= 25 && humidity < 60 && skyCondition === 'clear') {
+      return "เหมาะสำหรับการซักผ้า";
+    } else if (temperature < 15 || humidity >= 80 || skyCondition === 'rain') {
+      return "ไม่เหมาะสำหรับการซักผ้า";
+    } else {
+      return "สามารถซักผ้าได้ แต่ต้องระวังสภาพอากาศ";
+    }
   };
+  
+
 
   const [tips, setTips] = useState([]);
   useEffect(() => {
@@ -134,7 +170,10 @@ const Home = () => {
           {/* // Weather Section */}
           <Card containerStyle={styles.weatherCard}>
             <View style={styles.weatherHeader}>
-              <Text style={styles.location}>{weatherData.location}</Text>
+              <Text style={styles.location}>
+                {weatherData.location ? weatherData.location : "กำลังโหลดตำแหน่ง..."}
+              </Text>
+
               <View style={styles.statusButton}>
                 <Text style={styles.statusText}>{getLaundryRecommendation()}</Text>
               </View>
@@ -146,6 +185,10 @@ const Home = () => {
               </Animated.View>
               <View style={styles.weatherText}>
                 <Text style={styles.temp}>{weatherData.temperature}</Text>
+                <View style={styles.weatherDetails}>
+                <MaterialCommunityIcons name="map-marker-outline" size={20} color="gray" marginRight={5}/>
+                <Text style={styles.detailText}>สภาพอากาศ: {weatherData.condition}</Text>
+                </View>
                 <View style={styles.weatherDetails}>
                   <MaterialCommunityIcons name="water" size={20} color="gray" />
                   <Text style={styles.detailText}>ความชื้น {weatherData.humidity}</Text>

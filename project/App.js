@@ -113,6 +113,7 @@ const App = () => {
         />
         {/* Main App Screens */}
         <Stack.Screen name="TipsScreen" component={TipsScreen} />
+        <Stack.Screen name="TipDetailScreen" component={TipDetailScreen} />
 
         <Stack.Screen name="CustomerNavigator" component={CustomerNavigator}/>
       </Stack.Navigator>
