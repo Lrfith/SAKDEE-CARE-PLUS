@@ -107,7 +107,7 @@ const Home = () => {
         const data = response.data;
         const temperature = `${Math.round(data.main.temp)}°C`;
         const humidity = `${data.main.humidity}%`;
-        const rainChance = data.pop ? `${(data.pop * 100).toFixed(0)}%` : "200%";
+        const rainChance = data.pop ? `${(data.pop * 100).toFixed(0)}%` : "0%";
         const condition = data.weather[0].description;
         const icon = getWeatherIcon(data.weather[0].main);
 
@@ -137,14 +137,18 @@ const Home = () => {
     const humidity = parseInt(weatherData.humidity);
     const skyCondition = weatherData.condition.toLowerCase();
   
-    // กำหนดเงื่อนไขที่เหมาะสมในการซักผ้า
-    if (temperature >= 25 && humidity < 60 && skyCondition === 'clear') {
+    if (temperature >= 28 && humidity < 60) {
+      return "เหมาะมากสำหรับการซักผ้า";
+    } else if (temperature >= 24 && humidity < 70) {
       return "เหมาะสำหรับการซักผ้า";
-    } else if (temperature < 15 || humidity >= 80 || skyCondition === 'rain') {
-      return "ไม่เหมาะสำหรับการซักผ้า";
+    } else if (temperature >= 20 && humidity < 80) {
+      return "พอซักได้ แต่ควรตากในที่โปร่ง";
+    } else if (temperature < 20 || humidity >= 80) {
+      return "ไม่แนะนำให้ซักผ้า";
     } else {
-      return "สามารถซักผ้าได้ แต่ต้องระวังสภาพอากาศ";
+      return "ซักได้ แต่ควรระวังฝนหรือความชื้น";
     }
+    
   };
   
 
@@ -186,14 +190,10 @@ const Home = () => {
               <View style={styles.weatherText}>
                 <Text style={styles.temp}>{weatherData.temperature}</Text>
                 <View style={styles.weatherDetails}>
-                <MaterialCommunityIcons name="map-marker-outline" size={20} color="gray" marginRight={5}/>
-                <Text style={styles.detailText}>สภาพอากาศ: {weatherData.condition}</Text>
-                </View>
-                <View style={styles.weatherDetails}>
-                  <MaterialCommunityIcons name="water" size={20} color="gray" />
+                <MaterialCommunityIcons name="map-marker-outline" size={20} color="gray" />
+                <Text style={styles.detailText}>{weatherData.condition}</Text>
+                  <MaterialCommunityIcons name="water" size={20} color="gray" marginLeft={15}/>
                   <Text style={styles.detailText}>ความชื้น {weatherData.humidity}</Text>
-                  <MaterialCommunityIcons name="weather-rainy" size={20} color="gray" paddingLeft={10} />
-                  <Text style={styles.detailText}> โอกาสฝนตก {weatherData.rainChance}</Text>
                 </View>
               </View>
             </View>
