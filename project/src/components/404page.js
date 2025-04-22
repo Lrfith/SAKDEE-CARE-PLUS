@@ -10,7 +10,7 @@ const Page404view = () => {
       />
       <Text style={{ fontSize: 28, position: 'absolute', top: '65%', alignSelf: 'center', fontFamily: 'Kanit-Regular', }}>กำลังสร้าง มองข้ามไปก่อน</Text>
 
-      <Text style={{ fontSize: 18, position: 'absolute', top: '72%', alignSelf: 'center', fontFamily: 'Kanit-Regular', }}>Design by North-Lake</Text>
+      <Text style={{ fontSize: 18, position: 'absolute', top: '72%', alignSelf: 'center', fontFamily: 'Kanit-Regular', }}>#วัยรุ่นสร้างแอป</Text>
 
     </View>
   )
