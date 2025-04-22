@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
   instructionText: {
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "Kanit-Regular",
   },
   categoryContainer: {
     height: 60,

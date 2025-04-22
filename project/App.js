@@ -38,10 +38,10 @@ const App = () => {
           gestureEnabled: false, // DONT FORGET TO CHANGE TO 'FALSE'
         }}
       >
-        {/* <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Verification" component={VerificationScreen} /> */}
+        <Stack.Screen name="Verification" component={VerificationScreen} />
         <Stack.Screen name="AppNavigator" component={AppNavigator} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="TipDetail" component={TipDetailScreen} />

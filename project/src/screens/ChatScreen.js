@@ -5,6 +5,8 @@ const ChatScreen = () => {
   const [messages, setMessages] = useState([
     { id: '1', text: 'สวัสดีครับ!' },
     { id: '2', text: 'สวัสดีค่ะ มีอะไรให้ช่วยไหม?' },
+    { id: '3', text: 'SAKDEE Care+' },
+    { id: '4', text: 'SAKDEE Care+' },
   ]);
   
   const [newMessage, setNewMessage] = useState('');
