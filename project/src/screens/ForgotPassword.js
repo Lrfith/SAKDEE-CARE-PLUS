@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     useEffect(() => {
         Animated.timing(slideAnim, {
             toValue: 0,
-            duration: 1000,
+            duration: 750,
             useNativeDriver: true,
         }).start();
     }, []);
