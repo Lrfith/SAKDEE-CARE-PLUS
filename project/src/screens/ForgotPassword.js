@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Platform } from "react-native";
-import { Animated } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
@@ -8,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../components/firebaseConfig"; // นำเข้า Firebase ที่ตั้งค่าไว้
-
 
 const ForgotPassword = () => {
     const navigation = useNavigation();
@@ -68,8 +66,7 @@ const ForgotPassword = () => {
                                 autoCorrect={false}
                                 onSubmitEditing={handleForgotPassword}
                             />
-
-
+                            
                             <View style={{ flexDirection: "row", marginTop: 30, marginBottom: 30 }}>
                                 <ButtonCustom lable="ส่งรหัสไปยังอีเมล" color="#3180E1" colorText="#fff" onPress={handleForgotPassword} />
                             </View>
@@ -78,7 +75,7 @@ const ForgotPassword = () => {
 
                         <View style={{ justifyContent: 'center', alignItems: "center" }}>
                             <TouchableOpacity onPress={() => navigation.replace("Login")}>
-                                <Text style={[{ fontFamily: "Kanit-Regular", color: 'grey', fontSize: 16 }]}>กลับ</Text>
+                                <Text style={[styles.defaultText, { color: 'grey'}]}>กลับ</Text>
                             </TouchableOpacity>
                         </View>
 

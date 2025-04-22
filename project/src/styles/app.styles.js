@@ -68,15 +68,11 @@ export const styles = StyleSheet.create({
     borderColor: '#C0C0C0FF',
     fontFamily: 'Kanit-Regular',
   },
-  linkText: {
-    color: '#3180E1',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-  },
   eyeIcon: {
     position: 'absolute',
-    right: 20,
-    top: '20%',
+    right: 5,
+    bottom: '25%',
+    padding: 14,
   },
   // Symbols
   displayCard: {
@@ -173,7 +169,7 @@ export const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 120,  // ระยะห่างจากด้านล่าง
+    bottom: 115,  // ระยะห่างจากด้านล่าง
     left: 80,    // ระยะห่างจากด้านซ้าย
     right: 80,   // ระยะห่างจากด้านขวา
     backgroundColor: '#3180E1',
@@ -259,5 +255,27 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     fontWeight: 'bold'
+  },
+
+  // Image Gallery
+  GalleryContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    marginBottom: 100,
+  },
+  frameContainer: {
+    justifyContent: 'center',
+    backgroundColor: '#DBE2E7FF',
+    margin: 2,
+    width: 126,
+    height: 126,
+    alignItems: 'center'
+  },
+  frameImage: {
+    width: 124,
+    height: 124,
+    backgroundColor: 'blue'
   }
 });

@@ -105,6 +105,9 @@ const ProfileMenu = () => {
           <Text style={[styles.menuText,]}>เกี่ยวกับเรา</Text>
         </TouchableOpacity>
 
+        {/* <TouchableOpacity style={styles.menuItem} onPress={() => navigation.replace("Gallery")}>
+          <Text style={[styles.menuText]}>Gallery</Text>
+        </TouchableOpacity> */}
 
         {/* Logout Button */}
         <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>

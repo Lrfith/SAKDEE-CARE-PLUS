@@ -52,6 +52,14 @@
       "Kanit-SemiBoldItalic": "./assets/fonts/Kanit-SemiBoldItalic.ttf",
       "Kanit-Thin": "./assets/fonts/Kanit-Thin.ttf",
       "Kanit-ThinItalic": "./assets/fonts/Kanit-ThinItalic.ttf"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photoPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }

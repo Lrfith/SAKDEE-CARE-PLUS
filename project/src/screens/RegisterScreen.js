@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Text, TextInput, View, Image, TouchableOpacity, Alert } from "react-native";
-import { Animated } from "react-native";
+import { Text, TextInput, View, Image, TouchableOpacity, Alert, Animated } from "react-native";
 import { styles } from "../styles/app.styles";
 import { LinearGradient } from "expo-linear-gradient";
 import ButtonCustom from "../components/ButtonCustom";
@@ -20,7 +19,6 @@ const RegisterScreen = () => {
   const [userName, setUserName] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  // Refs for each input field
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -36,6 +34,7 @@ const RegisterScreen = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  // Backend
   const handleRegister = async () => {
     if (!userName || !email || !password) {
       Alert.alert("กรุณากรอกข้อมูลให้ครบถ้วน", "ชื่อผู้ใช้, อีเมล, และรหัสผ่านจำเป็นต้องกรอก");
@@ -71,7 +70,7 @@ const RegisterScreen = () => {
   };
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20}>
+    <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} extraScrollHeight={20} showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <LinearGradient colors={["#68B9F2", "#3180E1"]} style={{ flex: 1 }}>
           <View style={styles.screenContainer}>
@@ -141,9 +140,9 @@ const RegisterScreen = () => {
             </View>
 
             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-              <Text style={{ fontSize: 16, fontFamily: 'Kanit-Regular' }}>หากเป็นสมาชิกแล้ว </Text>
+              <Text style={styles.defaultText}>หากเป็นสมาชิกแล้ว </Text>
               <TouchableOpacity onPress={() => navigation.replace("Login")}>
-                <Text style={[styles.linkText, { marginLeft: 5, fontFamily: 'Kanit-Regular' }]}>
+                <Text style={[styles.defaultText, { color: '#3180E1', marginLeft: 5, textDecorationLine: 'underline'}]}>
                   เข้าสู่ระบบ
                 </Text>
               </TouchableOpacity>
