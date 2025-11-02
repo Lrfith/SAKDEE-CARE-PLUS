@@ -5,6 +5,8 @@ The "SAKDEE CARE PLUS" App is designed to help users easily understand and inter
 ## Demo Application
 ![DEMOAPP](Demo.png)
 
+[Click here to view the live demo](https://northsnx.github.io/SAKDEE.App/index.html)
+
 ## SETUP
 npm install
 =======
